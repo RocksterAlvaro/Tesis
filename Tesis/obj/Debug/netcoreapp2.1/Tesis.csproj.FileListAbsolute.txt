@@ -63,3 +63,6 @@ C:\Users\Saito\Desktop\Tesis-master\Tesis\obj\Debug\netcoreapp2.1\Tesis.csproj.C
 C:\Users\Saito\Desktop\Tesis-master\Tesis\obj\Debug\netcoreapp2.1\Razor\Pages\Product\ProductMain.cshtml.g.cs
 C:\Users\Saito\Desktop\Tesis-master\Tesis\obj\Debug\netcoreapp2.1\Razor\Pages\Login\LoginMain.cshtml.g.cs
 C:\Users\Saito\Desktop\Tesis-master\Tesis\obj\Debug\netcoreapp2.1\Razor\Pages\Login\SigninMain.cshtml.g.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Pages\Login\LoginMain.g.cshtml.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Pages\Login\SigninMain.g.cshtml.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Pages\Product\ProductMain.g.cshtml.cs
