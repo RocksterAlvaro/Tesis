@@ -1,0 +1,73 @@
+﻿@page
+@{
+    ViewData["Title"] = "Productos";
+}
+    <div class="container">
+        <br />
+        <h1> Productos </h1>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <input class="form-control mr-sm-2 " type="search" placeholder="Buscar" aria-label="Search">
+            </div>
+            <div class="form-group col-md-2">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+            </div>
+
+            <div class="form-group col-md-3">
+            </div>
+            <div class="form-group col-md-2">
+                <button class="btn btn-primary">Crear Producto</button>
+            </div>
+            <div class="form-group col-md-1">
+                <a class="btn btn-success" href="/Inventory/InventoryMain">Movimiento de inventario</a>
+            </div>
+
+
+        </div>
+            <br /><br />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col"></th>
+                        <th scope="col" style="color:red"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Nep Nep</th>
+                        <td>Pudding</td>
+                        <td>10000</td>
+                        <td>120</td>
+                        <td>Detalles</td>
+                        <td>Modificar</td>
+                        <td>Eliminar</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Nowa Nowa</th>
+                        <td>Tsundere stuff</td>
+                        <td>50000</td>
+                        <td>30</td>
+                        <td>Detalles</td>
+                        <td>Modificar</td>
+                        <td>Eliminar</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Blanny</th>
+                        <td>Book</td>
+                        <td>70000</td>
+                        <td>90</td>
+                        <td>Detalles</td>
+                        <td>Modificar</td>
+                        <td>Eliminar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+

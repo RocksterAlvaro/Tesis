@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj": {}
+    "C:\\Users\\Saito\\Desktop\\TesisNoire\\Tesis\\Tesis.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj": {
+    "C:\\Users\\Saito\\Desktop\\TesisNoire\\Tesis\\Tesis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj",
+        "projectUniqueName": "C:\\Users\\Saito\\Desktop\\TesisNoire\\Tesis\\Tesis.csproj",
         "projectName": "Tesis",
-        "projectPath": "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj",
+        "projectPath": "C:\\Users\\Saito\\Desktop\\TesisNoire\\Tesis\\Tesis.csproj",
         "packagesPath": "C:\\Users\\Saito\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\obj\\",
+        "outputPath": "C:\\Users\\Saito\\Desktop\\TesisNoire\\Tesis\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
