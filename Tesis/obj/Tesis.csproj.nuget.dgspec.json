@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Saito\\Desktop\\Tesis-master - Copy - Copy\\Tesis\\Tesis.csproj": {}
+    "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Saito\\Desktop\\Tesis-master - Copy - Copy\\Tesis\\Tesis.csproj": {
+    "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Saito\\Desktop\\Tesis-master - Copy - Copy\\Tesis\\Tesis.csproj",
+        "projectUniqueName": "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj",
         "projectName": "Tesis",
-        "projectPath": "C:\\Users\\Saito\\Desktop\\Tesis-master - Copy - Copy\\Tesis\\Tesis.csproj",
+        "projectPath": "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\Tesis.csproj",
         "packagesPath": "C:\\Users\\Saito\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Saito\\Desktop\\Tesis-master - Copy - Copy\\Tesis\\obj\\",
+        "outputPath": "C:\\Users\\Saito\\Documents\\GitHub\\Tesis\\Tesis\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -46,11 +46,6 @@
               "target": "Package",
               "version": "[2.1.1, )",
               "autoReferenced": true
-            },
-            "Microsoft.AspNetCore.Razor.Design": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.2.0, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
