@@ -11,6 +11,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
     <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap-grid.css" />
     <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap-reboot.css" />
@@ -18,17 +19,9 @@
 </head>
 <body>
 
-    <div class="pos-f-t">
-        <div class="collapse" id="navbarToggleExternalContent">
-            <div class="bg-dark p-4">
-                <a href="/index" type="button" class="btn btn-outline-light">Home</a>
-                <a href="/Sell/SellingMainPage" type="button" class="btn btn-outline-light">Vender</a>
-                <a href="/Product/ProductMain" type="button" class="btn btn-outline-light">Productos</a>
-                <a href="/Login/LoginMain" type="button" class="btn btn-outline-light">Login</a>
+    <div class="pos-f-t fixed-top">
 
-            </div>
-        </div>
-        <nav class="navbar navbar-fixed-top navbar-dark bg-dark">
+        <nav class="navbar navbar-fixed-top navbar-dark bg-primary">
             <a class="navbar-brand" href="/index">Tesis POS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
@@ -36,12 +29,23 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         </nav>
+
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-primary p-4">
+                <a href="/index" type="button" class="btn btn-outline-light">Home</a>
+                <a href="/Sell/SellingMainPage" type="button" class="btn btn-outline-light">Vender</a>
+                <a href="/Product/ProductMain" type="button" class="btn btn-outline-light">Productos</a>
+                <a href="/Login/LoginMain" type="button" class="btn btn-outline-light">Login</a>
+
+            </div>
+        </div>
     </div>
 
 
     <partial name="_CookieConsentPartial" />
 
     <div class="container-fluid body-content">
+        <br /><br /><br />
         @RenderBody()
         
         <footer class="footer">
