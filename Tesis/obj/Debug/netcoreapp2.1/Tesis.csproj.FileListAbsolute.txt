@@ -102,3 +102,4 @@ C:\Users\Saito\Desktop\TesisNoire\Tesis\obj\Debug\netcoreapp2.1\Tesis.Views.pdb
 C:\Users\Saito\Desktop\TesisNoire\Tesis\obj\Debug\netcoreapp2.1\Tesis.dll
 C:\Users\Saito\Desktop\TesisNoire\Tesis\obj\Debug\netcoreapp2.1\Tesis.pdb
 C:\Users\Saito\Desktop\TesisNoire\Tesis\obj\Debug\netcoreapp2.1\Tesis.csproj.CopyComplete
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Pages\Inventory\InventoryMain.g.cshtml.cs

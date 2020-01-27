@@ -51,8 +51,9 @@ GO
 /* Create table AspNetProducts */
 CREATE TABLE [dbo].[AspNetProducts](
 	[Id] [nvarchar](36) NOT NULL,
-	[Stock] [int] NULL,
-	[Price] [int] NULL,
+	[ProductName] [nvarchar] (256) NULL,
+	[ProductStock] [int] NULL,
+	[ProductPrice] [int] NULL,
  CONSTRAINT [PK_AspNetProducts] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
