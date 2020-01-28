@@ -12,7 +12,7 @@
     <div class="form-row">
 
         <div class="form-group col-md-5">
-            <input id="SearchBar" class="form-control mr-sm-2 " type="search" placeholder="Buscar" aria-label="Search">
+            <input id="SearchBar" oninput="SearchProduct(this.value)" class="form-control mr-sm-2 " type="search" placeholder="Buscar" aria-label="Search">
         </div>
 
         <div class="form-group col-md-1">
@@ -32,49 +32,152 @@
             <ul id="SearchProducts" class="list-group">
                 <li class="list-group-item">Nep's pudding</li>
                 <li class="list-group-item">Tsundere cake</li>
-                <li class="list-group-item">Blanc dessert</li>
-                <li class="list-group-item">Vert, just vert</li>
-                <li class="list-group-item">Gear's robot</li>
             </ul>
         </div>
         <div class="form-group col-md-6">
             <h4>Productos en movimiento</h4>
-            <ul class="list-group">
-                <li class="list-group-item">Nep's pudding</li>
-                
+            <ul id="EditProducts" class="list-group">
+                <li class="list-group-item"> No se ha añadido ningún producto </li>
             </ul>
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary col-md-2 offset-10">Guardar Cambios</button>
+    <button type="button" class="btn btn-primary pull-right">Guardar Cambios</button>
     <br />
 </div>
 
 <script>
 
-    $('#SearchBar').on('input', function () {
-        $.ajax({
-            type: "GET",
-            url: "/Products/SearchProduct",
-            dataType: "json",
-            data: {
-                SearchString: $(this).val()
-            },
-            contentType: 'application/json; charset=utf-8',
-            //Here I'm
-            success: function (response) {
+    // Global variables
+    var SearchApprovedBool = true;
+    var SearchProductsList = [];
+    var EditProductsList = [];
 
-                $(SearchProducts).empty();
+    function SearchProduct(SearchWord) {
 
-                for (var i = 0; i < response.length; i++) {
-                    $("<li class=\"list-group-item\">" + response[i].productName + "</li>").appendTo(SearchProducts);
-                }
+        // If search is approved by time
+        if (SearchApprovedBool) {
 
-                //console.log("I returned from the server with this message: ", response);
+            // Clear Search Products List
+            $(SearchProducts).empty();
+
+            if (SearchWord.length > 0) {
+                // Make the AJAX request
+                $.ajax({
+                    type: "GET",
+                    url: "/Products/SearchProduct",
+                    dataType: "json",
+                    data: {
+                        SearchString: SearchWord
+                    },
+                    contentType: 'application/json; charset=utf-8',
+                    // If the request is successfull
+                    success: function (response) {
+
+                        // Set the products to the global variable
+                        SearchProductsList = Array.from(response);
+                        //console.log("Search: ", SearchProductsList);
+                        //console.log("Edit: ", EditProductsList)
+
+                        // Update Lists HTML
+                        UpdateLists();
+
+                        // Check if any product was found
+                        if (SearchProductsList.length == 0) {
+                            // No product returned by the server
+                            $("<li class=\"list-group-item\"> Ningun producto coincide con la busqueda </li>").appendTo(SearchProducts);
+                        }
+                    }
+                });
+            } else {
+                // Show the user haven't search anything
+                $("<li class=\"list-group-item\"> Ninguna busqueda realizada </li>").appendTo(SearchProducts);
             }
-        });
 
-        // $(this).val() // get the current value of the input field.
-    });
+            // Deny search
+            SearchApproved();
+        }
+    }
+
+    function AddProductToEditInventory(ProductIndex) {
+
+        // Add the product to the list of editing products
+        EditProductsList.push(SearchProductsList[ProductIndex]);
+
+        // Remove the product from the list of searched products
+        SearchProductsList.splice(ProductIndex, 1);
+
+        // Update search
+        SearchProduct($(SearchBar).val());
+    }
+
+    function RemoveProductFromEditInventory(ProductIndex) {
+        // Remove the product from the list of editing products
+        EditProductsList.splice(ProductIndex, 1);
+
+        // Clear the list of products searched
+        $(EditProducts).empty();
+
+        // Update Lists
+        UpdateLists();
+    }
+
+    // Update Lists
+    function UpdateLists() {
+        // Clear Search Products List
+        $(SearchProducts).empty();
+
+        // Fill the list with the products returned by the server
+        for (var i = 0; i < SearchProductsList.length; i++) {
+            // If the Product is not being edit yet
+            if (!EditProductsContains(SearchProductsList[i])) {
+                //console.log("2");
+                $("<li id=\"SearchProduct" + i + "\" class=\"list-group-item\">" +
+                    " <div class=\"d-flex justify-content-between\">" +
+                    "<p class=\"my-auto\">" + SearchProductsList[i].productName + "</p>" +
+                    "<button type=\"button\" onclick=\"AddProductToEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button>" +
+                    "</div > " +
+                    "</li>").appendTo(SearchProducts);
+            }
+        }
+
+        // Clear Edit Products List HTML
+        $(EditProducts).empty();
+
+        // Update Edit Products List
+        for (var i = 0; i < EditProductsList.length; i++) {
+            $("<li id=\"EditProduct" + i + "\"class=\"list-group-item\">" +
+                " <div class=\"d-flex justify-content-between\">" +
+                "<p class=\"my-auto\">" + EditProductsList[i].productName + "</p>" +
+                "<button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button>" +
+                "</div > " +
+                "</li>").appendTo(EditProducts);
+        }
+    }
+
+    // Check if EditProductsList contains a certain product
+    function EditProductsContains(SearchProduct) {
+        for (var i = 0; i < EditProductsList.length; i++) {
+            //console.log("SearchProduct", SearchProduct);
+            //console.log("EditProductsList", EditProductsList[i]);
+            if (EditProductsList[i].id == SearchProduct.id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function SearchApproved() {
+
+        // Deny search
+        SearchApprovedBool = false;
+
+        setTimeout(function () {
+            
+            // Delay next search for 1/10 second
+            SearchApprovedBool = true;
+        }, 100);
+    }
     
 </script>
