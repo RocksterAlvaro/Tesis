@@ -3,7 +3,6 @@
     ViewData["Title"] = "Inventory";
 }
 
-
 <div class="container">
     <h1>Movimiento de inventario</h1>
 
@@ -12,15 +11,29 @@
     <div class="form-row">
 
         <div class="form-group col-md-5">
-            <input id="SearchBar" oninput="SearchProduct(this.value)" class="form-control mr-sm-2 " type="search" placeholder="Buscar" aria-label="Search">
+            <p>Lupita sin br</p>
+            <input id="SearchBar"
+                   oninput="SearchProduct(this.value)"
+                   class="form-control mr-sm-2"
+                   type="search"
+                   placeholder="Buscar"
+                   aria-label="Search">
         </div>
 
-        <div class="form-group col-md-1">
-            <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
-        </div>
+        <div class="form-group col-md-2">
+            <button class="btn btn-danger my-2 my-sm-0"> Inventario en 0 </button>
 
-        <div class="form-group col-md-2 offset-4">
-            <button class="btn btn-danger my-2 my-sm-0">Inventario en 0</button>
+            <button type="button" onclick="SaveStock()" class="btn btn-primary pull-right"> Guardar </button>
+
+            <div class="custom-control custom-radio">
+                <input type="radio" id="AddStockRadioBtn" name="AddOrDeleteStockRadioBtn" class="custom-control-input" checked="">
+                <label class="custom-control-label" for="AddStockRadioBtn"> Añadir </label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="DeleteStockRadioBtn" name="AddOrDeleteStockRadioBtn" class="custom-control-input">
+                <label class="custom-control-label" for="DeleteStockRadioBtn"> Eliminar </label>
+            </div>
+
         </div>
 
     </div>
@@ -28,10 +41,9 @@
     <div class="form-row">
 
         <div class="form-group col-md-6">
-            <h4>Lista de productos</h4>
+            <h4>Inventario</h4>
             <ul id="SearchProducts" class="list-group">
-                <li class="list-group-item">Nep's pudding</li>
-                <li class="list-group-item">Tsundere cake</li>
+                <li class="list-group-item"> Ninguna busqueda realizada </li>
             </ul>
         </div>
         <div class="form-group col-md-6">
@@ -41,9 +53,28 @@
             </ul>
         </div>
     </div>
+</div>
 
-    <button type="button" class="btn btn-primary pull-right">Guardar Cambios</button>
-    <br />
+
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>l
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -53,6 +84,51 @@
     var SearchProductsList = [];
     var EditProductsList = [];
 
+    function SaveStock() {
+
+        // Update stock values
+        for (var i = 0; i < EditProductsList.length; i++) {
+            // Create a variable to save the product id of the edit products
+            var NewProductStockId = "#ProductStock" + i;
+
+            // Update the stock value of teh edit products by the user input
+            EditProductsList[i].ProductStock = $(NewProductStockId).val();
+        }
+
+        // Save the selection of add or delete
+        if ($(DeleteStockRadioBtn).is(':checked')) {
+            var AddOrDeleteRadioBtn = "Delete";
+        } else {
+            var AddOrDeleteRadioBtn = "Add";
+        }
+
+        // Make the AJAX request to save modifications in products of stock
+        $.ajax({
+            type: "POST",
+            url: "/Inventory/SaveStock",
+            data: {
+                // Send the selection of add or delete
+                AddOrDeleteString: AddOrDeleteRadioBtn,
+
+                // Send products to modify in JSON
+                EditProductsListJSON: JSON.stringify(EditProductsList)
+            },
+            // If the request is successfull
+            success: function (response) {
+
+                //console.log(response);
+
+                EditProductsList = Array.from(JSON.parse(response));
+
+                console.log(EditProductsList);
+
+                // Update the Lists
+                UpdateLists();
+            }
+        })
+    }
+
+    // Gets called to search by the search bar
     function SearchProduct(SearchWord) {
 
         // If search is approved by time
@@ -61,8 +137,11 @@
             // Clear Search Products List
             $(SearchProducts).empty();
 
+            // If the search bar has content
             if (SearchWord.length > 0) {
-                // Make the AJAX request
+                $("<li class=\"list-group-item\"> Cargando... </li>").appendTo(SearchProducts);
+
+                // Make the AJAX request to search products
                 $.ajax({
                     type: "GET",
                     url: "/Products/SearchProduct",
@@ -72,24 +151,28 @@
                     },
                     contentType: 'application/json; charset=utf-8',
                     // If the request is successfull
-                    success: function (response) {
+                    success: function (Response) {
 
                         // Set the products to the global variable
-                        SearchProductsList = Array.from(response);
-                        //console.log("Search: ", SearchProductsList);
-                        //console.log("Edit: ", EditProductsList)
+                        SearchProductsList = Array.from(JSON.parse(Response));
 
                         // Update Lists HTML
                         UpdateLists();
 
                         // Check if any product was found
                         if (SearchProductsList.length == 0) {
+                            // Clear Search Products List
+                            $(SearchProducts).empty();
+
                             // No product returned by the server
                             $("<li class=\"list-group-item\"> Ningun producto coincide con la busqueda </li>").appendTo(SearchProducts);
                         }
                     }
                 });
             } else {
+                // Clear Search Products List
+                $(SearchProducts).empty();
+
                 // Show the user haven't search anything
                 $("<li class=\"list-group-item\"> Ninguna busqueda realizada </li>").appendTo(SearchProducts);
             }
@@ -107,7 +190,7 @@
         // Remove the product from the list of searched products
         SearchProductsList.splice(ProductIndex, 1);
 
-        // Update search
+        // Update Lists
         SearchProduct($(SearchBar).val());
     }
 
@@ -115,15 +198,13 @@
         // Remove the product from the list of editing products
         EditProductsList.splice(ProductIndex, 1);
 
-        // Clear the list of products searched
-        $(EditProducts).empty();
-
-        // Update Lists
-        UpdateLists();
+         // Update Lists
+        SearchProduct($(SearchBar).val());
     }
 
     // Update Lists
     function UpdateLists() {
+
         // Clear Search Products List
         $(SearchProducts).empty();
 
@@ -131,10 +212,10 @@
         for (var i = 0; i < SearchProductsList.length; i++) {
             // If the Product is not being edit yet
             if (!EditProductsContains(SearchProductsList[i])) {
-                //console.log("2");
-                $("<li id=\"SearchProduct" + i + "\" class=\"list-group-item\">" +
-                    " <div class=\"d-flex justify-content-between\">" +
-                    "<p class=\"my-auto\">" + SearchProductsList[i].productName + "</p>" +
+                $("<li id=\"SearchProduct" + i + "\" class=\"p-2 list-group-item\">" +
+                    "<div class=\"d-flex justify-content-between\">" +
+                    "<p class=\"col-4 my-auto\">" + SearchProductsList[i].ProductName + "</p>" +
+                    "<p class=\"col-2 my-auto\">" + SearchProductsList[i].ProductStock + "</p>" +
                     "<button type=\"button\" onclick=\"AddProductToEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button>" +
                     "</div > " +
                     "</li>").appendTo(SearchProducts);
@@ -145,22 +226,37 @@
         $(EditProducts).empty();
 
         // Update Edit Products List
-        for (var i = 0; i < EditProductsList.length; i++) {
-            $("<li id=\"EditProduct" + i + "\"class=\"list-group-item\">" +
-                " <div class=\"d-flex justify-content-between\">" +
-                "<p class=\"my-auto\">" + EditProductsList[i].productName + "</p>" +
-                "<button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button>" +
-                "</div > " +
-                "</li>").appendTo(EditProducts);
+        if (EditProductsList.length == 0) {
+            // No product added to edit list
+            $("<li class=\"list-group-item\"> No se ha añadido ningún producto </li>").appendTo(EditProducts);
+        } else {
+            // Add products to edit list
+            for (var i = 0; i < EditProductsList.length; i++) {
+                $(
+                    "<li id=\"EditProduct" + i + "\"class=\"p-2 list-group-item\">" +
+                    "<div class=\"d-flex justify-content-between\">" +
+                    "<p class=\"col-4 my-auto\">" + EditProductsList[i].ProductName + "</p>" +
+                    "<p class=\"col-2 my-auto\">" + EditProductsList[i].ProductStock + "</p>" +
+                    "<input " +
+                    "id =\"ProductStock" + i + "\"" +
+                    "class=\"col-3 form-control\"" +
+                    "type=\"number\"" +
+                    "min=\"0\"" +
+                    "value=\"0\"" +
+                    "placeholder=\"Inventario\">" +
+                    "<button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button>" +
+                    "</div > " +
+                    "</li>"
+                ).appendTo(EditProducts);
+            }
         }
     }
 
-    // Check if EditProductsList contains a certain product
+    // Check if Edit Products List contains a certain product
     function EditProductsContains(SearchProduct) {
+        // Loop throught the List
         for (var i = 0; i < EditProductsList.length; i++) {
-            //console.log("SearchProduct", SearchProduct);
-            //console.log("EditProductsList", EditProductsList[i]);
-            if (EditProductsList[i].id == SearchProduct.id) {
+            if (EditProductsList[i].Id == SearchProduct.Id) {
                 return true;
             }
         }
@@ -174,10 +270,10 @@
         SearchApprovedBool = false;
 
         setTimeout(function () {
-            
+
             // Delay next search for 1/10 second
             SearchApprovedBool = true;
         }, 100);
     }
-    
+
 </script>

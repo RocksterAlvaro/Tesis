@@ -62,12 +62,12 @@ using Tesis;
             WriteLiteral("\r\n\r\n<!--Quitar esta basura-->\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n\r\n\r\n\r\n<div class=\"container\">\r\n    <div class=\"neptune\">\r\n        <div class=\"text-center\">\r\n            ");
             EndContext();
             BeginContext(232, 892, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "18c59e3fb202428e9f003afc44d884e1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "425017c239e84cf6bac90fb51528edb1", async() => {
                 BeginContext(258, 18, true);
                 WriteLiteral("\r\n                ");
                 EndContext();
                 BeginContext(276, 83, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "94e5b0b953ea498ebafb10bab45e45db", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "5aa2ed380e2c4df78f06d9a834ca1989", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

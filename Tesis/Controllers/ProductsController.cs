@@ -18,12 +18,6 @@ namespace Tesis.Controllers
             _db = db;
         }
 
-        // Index
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         // Search bar
         [HttpGet]
         [Route("/Products/SearchProduct")]

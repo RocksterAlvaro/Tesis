@@ -1,5 +1,4 @@
 /* Create TesisDB */
-
 USE [master]
 GO
 
@@ -19,6 +18,9 @@ GO
 /* Use TesisDB as [dbo] */
 USE [TesisDB]
 GO
+
+-- BEGIN TRANSACTION
+-- ROLLBACK
 
 /* Create Tables */
 
@@ -46,6 +48,16 @@ CREATE TABLE [dbo].[AspNetUsers](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+/* Create table type AspNetProducts */
+CREATE TYPE AspNetProductsType
+AS TABLE(
+	[Id] [nvarchar](36) NOT NULL,
+	[ProductName] [nvarchar] (256) NULL,
+	[ProductStock] [int] NULL,
+	[ProductPrice] [int] NULL
+);
 GO
 
 /* Create table AspNetProducts */
@@ -80,6 +92,7 @@ GO
 /* Create table AspNetProductsList */
 CREATE TABLE [dbo].[AspNetProductsList](
 	[ProductId] [nvarchar](36) NOT NULL,
+	[StockChange] [int] NULL,
 	[StockInOutId] [nvarchar] (36) NOT NULL,
  CONSTRAINT [PK_AspNetProductsList] PRIMARY KEY CLUSTERED 
 (
