@@ -3,79 +3,85 @@
     ViewData["Title"] = "Inventory";
 }
 
-<div class="container">
-    <h1>Movimiento de inventario</h1>
+    <div class="container">
+        <h1>Movimiento de inventario</h1>
 
-    <br />
+        <br />
 
-    <div class="form-row">
+        <div class="form-row">
 
-        <div class="form-group col-md-5">
-            <p>Lupita sin br</p>
-            <input id="SearchBar"
-                   oninput="SearchProduct(this.value)"
-                   class="form-control mr-sm-2"
-                   type="search"
-                   placeholder="Buscar"
-                   aria-label="Search">
+
+
+            <div class="input-group col-md-8">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <img src="~/images/icons/search.svg" width="20" height="20">
+                    </div>
+                </div>
+                <input id="SearchBar"
+                       oninput="SearchProduct(this.value)"
+                       class="form-control mr-sm-2 "
+                       type="search"
+                       placeholder="Buscar productos"
+                       aria-label="Search">
+
+
+
+                <form action="" class="neptune">
+                    <input type="radio" name="rdo" id="AddStockRadioBtn" name="AddOrDeleteStockRadioBtn" checked />
+                    <input type="radio" name="rdo" id="DeleteStockRadioBtn" name="AddOrDeleteStockRadioBtn" />
+                    <div class="switch">
+                        <label for="AddStockRadioBtn">Añadir</label>
+                        <label for="DeleteStockRadioBtn">Quitar</label>
+                        <span></span>
+                    </div>
+                </form>
+
+
+
+            </div>
         </div>
 
-        <div class="form-group col-md-2">
-            <button class="btn btn-danger my-2 my-sm-0"> Inventario en 0 </button>
 
-            <button type="button" onclick="SaveStock()" class="btn btn-primary pull-right"> Guardar </button>
 
-            <div class="custom-control custom-radio">
-                <input type="radio" id="AddStockRadioBtn" name="AddOrDeleteStockRadioBtn" class="custom-control-input" checked="">
-                <label class="custom-control-label" for="AddStockRadioBtn"> Añadir </label>
+        <!--Original add/delete inventory    <div class="custom-control custom-radio">
+        <input type="radio" id="AddStockRadioBtn" name="AddOrDeleteStockRadioBtn" class="custom-control-input" checked="">
+        <label class="custom-control-label" for="AddStockRadioBtn"> Añadir </label>
+    </div>
+    <div class="custom-control custom-radio">
+        <input type="radio" id="DeleteStockRadioBtn" name="AddOrDeleteStockRadioBtn" class="custom-control-input">
+        <label class="custom-control-label" for="DeleteStockRadioBtn"> Eliminar </label>
+    </div>
+
+        -->
+
+
+        <br /><br />
+
+
+        <div class="form-row">
+
+            <div class="form-group col-md-6">
+                <h4>Inventario</h4>
+                <ul id="SearchProducts" class="list-group">
+                    <li class="list-group-item"> Ninguna busqueda realizada </li>
+                </ul>
             </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="DeleteStockRadioBtn" name="AddOrDeleteStockRadioBtn" class="custom-control-input">
-                <label class="custom-control-label" for="DeleteStockRadioBtn"> Eliminar </label>
+            <div class="form-group col-md-6">
+                <h4>Productos en movimiento</h4>
+                <ul id="EditProducts" class="list-group">
+                    <li class="list-group-item"> No se ha añadido ningún producto </li>
+                </ul>
             </div>
-
         </div>
+
+        <button class="btn btn-outline-danger my-2 my-sm-0 SaveAndDestroy"> Inventario en 0 </button>
+
+        <button type="button" onclick="SaveStock()" class="btn btn-outline-primary pull-right offset-9 SaveAndDestroy"> Guardar </button>
+
 
     </div>
 
-    <div class="form-row">
-
-        <div class="form-group col-md-6">
-            <h4>Inventario</h4>
-            <ul id="SearchProducts" class="list-group">
-                <li class="list-group-item"> Ninguna busqueda realizada </li>
-            </ul>
-        </div>
-        <div class="form-group col-md-6">
-            <h4>Productos en movimiento</h4>
-            <ul id="EditProducts" class="list-group">
-                <li class="list-group-item"> No se ha añadido ningún producto </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>l
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Aceptar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
 
@@ -198,7 +204,7 @@
         // Remove the product from the list of editing products
         EditProductsList.splice(ProductIndex, 1);
 
-         // Update Lists
+        // Update Lists
         SearchProduct($(SearchBar).val());
     }
 
@@ -239,7 +245,7 @@
                     "<p class=\"col-2 my-auto\">" + EditProductsList[i].ProductStock + "</p>" +
                     "<input " +
                     "id =\"ProductStock" + i + "\"" +
-                    "class=\"col-3 form-control\"" +
+                    "class=\"col-3 form-control formStyle\"" +
                     "type=\"number\"" +
                     "min=\"0\"" +
                     "value=\"0\"" +
@@ -277,3 +283,181 @@
     }
 
 </script>
+
+<style>
+    .formStyle{
+        height:29px;
+    }
+    .btn-outline-primary{
+        margin-left:1035px;
+        position:absolute;
+        
+    }
+    .SaveAndDestroy{
+        position:absolute;
+        bottom:110px;
+    }
+    .list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0.25rem;
+}
+    .list-group-item:first-child {
+    border-top-left-radius: 0.25rem;
+     border-top-right-radius: 0;
+}
+    .list-group {
+        max-height: 507px;
+        
+        overflow: auto;
+    }
+
+    footer {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 1rem;
+    }
+
+    .order-scroller {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: rgb(224,224,224);
+        border-left: solid 1px rgb(200,200,200);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgb(168,168,168);
+        background: #393939;
+        min-height: 30px;
+    }
+
+
+
+    .neptune {
+        font-family: sans-serif;
+        font-weight: 700;
+    }
+
+    .switch {
+        position: relative;
+        top: 60%;
+        left: 400px;
+        width: 150px;
+        height: 50px;
+        text-align: center;
+        margin: -30px 0 0 -75px;
+        background: #00bc8c;
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
+        -ms-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        border-radius: 25px;
+    }
+
+        .switch span {
+            position: absolute;
+            width: 20px;
+            height: 4px;
+            top: 50%;
+            left: 50%;
+            margin: -2px 0px 0px -4px;
+            background: #fff;
+            display: block;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: all 0.2s ease;
+            -o-transition: all 0.2s ease;
+            -ms-transition: all 0.2s ease;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+        }
+
+            .switch span:after {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 4px;
+                height: 12px;
+                margin-top: -8px;
+                background: #fff;
+                -webkit-transition: all 0.2s ease;
+                -moz-transition: all 0.2s ease;
+                -o-transition: all 0.2s ease;
+                -ms-transition: all 0.2s ease;
+                transition: all 0.2s ease;
+                border-radius: 2px;
+            }
+
+    input[type=radio] {
+        display: none;
+    }
+
+    .switch label {
+        cursor: pointer;
+        color: rgba(0,0,0,0.2);
+        width: 60px;
+        line-height: 50px;
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
+        -ms-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+    }
+
+    label[for=AddStockRadioBtn] {
+        position: absolute;
+        left: 0px;
+        height: 20px;
+    }
+
+    label[for=DeleteStockRadioBtn] {
+        position: absolute;
+        right: 0px;
+    }
+
+    #DeleteStockRadioBtn:checked ~ .switch {
+        background: #E74C3C;
+    }
+
+        #DeleteStockRadioBtn:checked ~ .switch span {
+            background: #fff;
+            margin-left: -8px;
+        }
+
+            #DeleteStockRadioBtn:checked ~ .switch span:after {
+                background: #fff;
+                height: 20px;
+                margin-top: -8px;
+                margin-left: 8px;
+            }
+
+    #AddStockRadioBtn:checked ~ .switch label[for=AddStockRadioBtn] {
+        color: #fff;
+    }
+
+    #DeleteStockRadioBtn:checked ~ .switch label[for=DeleteStockRadioBtn] {
+        color: #fff;
+    }
+
+    footer {
+        bottom: 0;
+    }
+</style>

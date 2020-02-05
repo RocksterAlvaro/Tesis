@@ -38,33 +38,7 @@
             </tr>
         </thead>
         <tbody id="SearchProducts">
-            <tr >
-                <th scope="row">Nep Nep</th>
-                <td>Pudding</td>
-                <td>10000</td>
-                <td>120</td>
-                <td style="color:red">Detalles</td>
-                <td style="color:red">Modificar</td>
-                <td style="color:red">Eliminar</td>
-            </tr>
-            <tr>
-                <th scope="row">Nowa Nowa</th>
-                <td>Tsundere stuff</td>
-                <td>50000</td>
-                <td>30</td>
-                <td style="color:red">Detalles</td>
-                <td style="color:red">Modificar</td>
-                <td style="color:red">Eliminar</td>
-            </tr>
-            <tr>
-                <th scope="row">Blanny</th>
-                <td>Book</td>
-                <td>70000</td>
-                <td>90</td>
-                <td style="color:red">Detalles</td>
-                <td style="color:red">Modificar</td>
-                <td style="color:red">Eliminar</td>
-            </tr>
+            <tr id="ProductList"></tr>
         </tbody>
     </table>
 </div>
@@ -80,8 +54,42 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+
+
             <div class="modal-body">
-                Aquí se crearán los productos
+
+                <form>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-8 offset-2">
+                            <label for="name">Nombre del producto</label>
+                            <input type="text" class="form-control" id="Pname" placeholder="Nombre del producto">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4 center-block offset-2">
+                            <label for="id">Precio</label>
+                            <input type="number" class="form-control" id="Pprice" placeholder="Precio del producto">
+                        </div>
+                        <div class="form-group col-md-4 center-block">
+                            <label for="id">Costo de pedido</label>
+                            <input type="number" class="form-control" id="Pcostk" placeholder="Costo por ordenar el producto">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-8 center-block offset-2">
+                            <label for="user">Stock inicial</label>
+                            <input type="number" class="form-control" id="Pstock" placeholder="Numero de unidades iniciales del producto">
+                        </div>
+
+                    </div>
+
+
+                </form>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
@@ -110,7 +118,7 @@
                 $(SearchProducts).empty();
 
                 for (var i = 0; i < response.length; i++) {
-                    $("<tr >" + " <th scope=\"row\">"+ response[i].Id +"</th>" +
+                    $("<tr >" + " <th scope=\"row\">" + response[i].Id + "</th>" +
                         "<td>" + response[i].productName + "</td>" +
                         "<td>" + response[i].productPrice + "</td>" +
                         "<td>" + response[i].productStock + "</td>" +
@@ -124,5 +132,3 @@
     });
 
 </script>
-
-

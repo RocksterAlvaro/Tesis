@@ -19,27 +19,6 @@ BEGIN
 			@NewStockProductsTable
 		WHERE [@NewStockProductsTable].Id = [AspNetProducts].Id
 		
-		DECLARE @AspNetStockInOutId VARCHAR(36) = NEWID();
-
-		INSERT INTO [AspNetStockInOut]
-		VALUES
-		(
-			@AspNetStockInOutId, -- Id
-			'UserX', -- UserId
-			'20/20/20', -- Date
-			'In/Out', -- InOrOut
-			'Stock/Sale', -- StockOrSale
-			'TotalPrice (0)', -- TotalPrice
-			'Cedula' -- ClientCC
-		);
-
-		INSERT INTO [AspNetProductsList]
-		VALUES
-		(
-			
-		)
-
-		--INSERT XXXX
 	ELSE
 		UPDATE [AspNetProducts]
 		SET [AspNetProducts].[ProductStock] -= [@NewStockProductsTable].ProductStock
