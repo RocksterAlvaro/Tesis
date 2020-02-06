@@ -39,7 +39,7 @@ namespace Tesis.ClassModels
             return ("");
         }
 
-        public string AddOrDeleteStock(List<AppProducts> EditProductsList, string AddOrDeleteString)
+        public string InOrOutStock(List<AppProducts> EditProductsList, string InOrOutString, string StockOrSaleString)
         {
             // Parameters
             var NewStockProductsTable = DataTableExtensions.CreateDataTable2(EditProductsList);
@@ -48,13 +48,15 @@ namespace Tesis.ClassModels
             ParameterNewStockProductsTable.Value = NewStockProductsTable;
             ParameterNewStockProductsTable.TypeName = "[dbo].[AspNetProductsType]"; // Products Table Type
 
-            var ParameterAddOrDeleteString = new SqlParameter("@AddOrDelete", AddOrDeleteString);
+            var ParameterInOrOutString = new SqlParameter("@InOrOut", InOrOutString);
+            var ParameterStockOrSaleString = new SqlParameter("@StockOrSale", StockOrSaleString);
 
             // Update stock in database
             var AddOrDeleteStockResponse = this.Database
-                .ExecuteSqlCommand("EXEC [dbo].[SPAddOrDeleteStock] @NewStockProductsTable, @AddOrDelete",
+                .ExecuteSqlCommand("EXEC [dbo].[SPInOrOutStock] @NewStockProductsTable, @InOrOut, @StockOrSale",
                 ParameterNewStockProductsTable,
-                ParameterAddOrDeleteString);
+                ParameterInOrOutString,
+                ParameterStockOrSaleString);
 
             // If any product stock was updated
             if(AddOrDeleteStockResponse > 0)
@@ -66,6 +68,15 @@ namespace Tesis.ClassModels
             }
 
             return "";
+        }
+
+        public string ZeroStock()
+        {
+            // Set all stock to zero
+            var ZeroStockResponse = this.Database
+                .ExecuteSqlCommand("EXEC [dbo].[SPZeroStock]");
+
+            return "CHANGE";
         }
     }
 

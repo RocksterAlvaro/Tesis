@@ -28,11 +28,11 @@
 
 
                 <form action="" class="neptune">
-                    <input type="radio" name="rdo" id="AddStockRadioBtn" name="AddOrDeleteStockRadioBtn" checked />
-                    <input type="radio" name="rdo" id="DeleteStockRadioBtn" name="AddOrDeleteStockRadioBtn" />
+                    <input type="radio" name="InOrOutStockRadioBtn" id="InStockRadioBtn" checked />
+                    <input type="radio" name="InOrOutStockRadioBtn" id="OutStockRadioBtn" />
                     <div class="switch">
-                        <label for="AddStockRadioBtn">Añadir</label>
-                        <label for="DeleteStockRadioBtn">Quitar</label>
+                        <label for="InStockRadioBtn">Añadir</label>
+                        <label for="OutStockRadioBtn">Quitar</label>
                         <span></span>
                     </div>
                 </form>
@@ -75,9 +75,9 @@
             </div>
         </div>
 
-        <button class="btn btn-outline-danger my-2 my-sm-0 SaveAndDestroy"> Inventario en 0 </button>
+        <button onclick="StockZero()" class="btn btn-outline-danger my-2 my-sm-0 SaveAndDestroy"> Inventario en 0 </button>
 
-        <button type="button" onclick="SaveStock()" class="btn btn-outline-primary pull-right offset-9 SaveAndDestroy"> Guardar </button>
+        <button type="button" onclick="ModifyStock()" class="btn btn-outline-primary pull-right offset-9 SaveAndDestroy"> Guardar </button>
 
 
     </div>
@@ -90,7 +90,26 @@
     var SearchProductsList = [];
     var EditProductsList = [];
 
-    function SaveStock() {
+    function StockZero() {
+        // Make the AJAX request to make every product stock zero
+        $.ajax({
+            type: "GET",
+            url: "/Inventory/StockZero",
+            dataType: "json",
+            // If the request is successfull
+            success: function (response) {
+
+                // console.log(response);
+
+                // EditProductsList = Array.from(JSON.parse(response));
+
+                // Update the Lists
+                UpdateLists();
+            }
+        });
+    }
+
+    function ModifyStock() {
 
         // Update stock values
         for (var i = 0; i < EditProductsList.length; i++) {
@@ -101,20 +120,27 @@
             EditProductsList[i].ProductStock = $(NewProductStockId).val();
         }
 
-        // Save the selection of add or delete
-        if ($(DeleteStockRadioBtn).is(':checked')) {
-            var AddOrDeleteRadioBtn = "Delete";
+        // Save the selection of in or out
+        if ($(InStockRadioBtn).is(':checked')) {
+            var InOrOutRadioBtn = "In";
         } else {
-            var AddOrDeleteRadioBtn = "Add";
+            InOrOutRadioBtn = "Out";
         }
 
+        SaveStock(InOrOutRadioBtn);
+    }
+
+    function SaveStock(InOrOutRadioBtn) {
         // Make the AJAX request to save modifications in products of stock
         $.ajax({
             type: "POST",
             url: "/Inventory/SaveStock",
             data: {
-                // Send the selection of add or delete
-                AddOrDeleteString: AddOrDeleteRadioBtn,
+                // Send the selection of in or out
+                InOrOutString: InOrOutRadioBtn,
+
+                // Confirm is a stock movement
+                StockOrSaleString: "Stock",
 
                 // Send products to modify in JSON
                 EditProductsListJSON: JSON.stringify(EditProductsList)
@@ -126,12 +152,12 @@
 
                 EditProductsList = Array.from(JSON.parse(response));
 
-                console.log(EditProductsList);
+                //console.log(EditProductsList);
 
                 // Update the Lists
                 UpdateLists();
             }
-        })
+        });
     }
 
     // Gets called to search by the search bar
@@ -422,38 +448,38 @@
         transition: all 0.2s ease;
     }
 
-    label[for=AddStockRadioBtn] {
+    label[for=InStockRadioBtn] {
         position: absolute;
         left: 0px;
         height: 20px;
     }
 
-    label[for=DeleteStockRadioBtn] {
+    label[for=OutStockRadioBtn] {
         position: absolute;
         right: 0px;
     }
 
-    #DeleteStockRadioBtn:checked ~ .switch {
+    #OutStockRadioBtn:checked ~ .switch {
         background: #E74C3C;
     }
 
-        #DeleteStockRadioBtn:checked ~ .switch span {
+        #OutStockRadioBtn:checked ~ .switch span {
             background: #fff;
             margin-left: -8px;
         }
 
-            #DeleteStockRadioBtn:checked ~ .switch span:after {
+            #OutStockRadioBtn:checked ~ .switch span:after {
                 background: #fff;
                 height: 20px;
                 margin-top: -8px;
                 margin-left: 8px;
             }
 
-    #AddStockRadioBtn:checked ~ .switch label[for=AddStockRadioBtn] {
+    #InStockRadioBtn:checked ~ .switch label[for=InStockRadioBtn] {
         color: #fff;
     }
 
-    #DeleteStockRadioBtn:checked ~ .switch label[for=DeleteStockRadioBtn] {
+    #OutStockRadioBtn:checked ~ .switch label[for=OutStockRadioBtn] {
         color: #fff;
     }
 
