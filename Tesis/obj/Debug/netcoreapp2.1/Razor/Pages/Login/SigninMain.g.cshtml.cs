@@ -56,7 +56,7 @@ using Tesis;
             WriteLiteral("\r\n\r\n\r\n\r\n    <div class=\"container\">\r\n        <!--Luego mejoro esta cosa fea-->\r\n        <br /><br /><br /><br />\r\n        <div class=\"text-center\">\r\n        <h1>Registrate</h1>\r\n            <br /><br />\r\n        </div>\r\n\r\n        ");
             EndContext();
             BeginContext(279, 3076, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6a472e4547554d12b98ac16ab39ecc52", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a3836f6476f247d29362314655ff9cc0", async() => {
                 BeginContext(285, 2350, true);
                 WriteLiteral(@"
 
@@ -121,7 +121,7 @@ using Tesis;
                         ");
                 EndContext();
                 BeginContext(2635, 26, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4b277e86714e4164ad2276d04569352a", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ac1d048d352943fe98f49923848b65c6", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
@@ -141,7 +141,7 @@ using Tesis;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2687, 25, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "df597958093a4578a589764ef17be1e1", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7319b004fd2748c4978748368c2cecec", async() => {
                     BeginContext(2695, 8, true);
                     WriteLiteral("Vendedor");
                     EndContext();
@@ -161,7 +161,7 @@ using Tesis;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2738, 30, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "88b4f7220eda47ac85938c01942bd13f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dd96597756bc4012bb17fd7faa0cd4c1", async() => {
                     BeginContext(2746, 13, true);
                     WriteLiteral("Administrador");
                     EndContext();
@@ -181,7 +181,7 @@ using Tesis;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2794, 22, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b644a6bf1c354a51a16f5071ef3acbcf", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fa23ffb0e41342b59a1ac3180f43e30b", async() => {
                     BeginContext(2802, 5, true);
                     WriteLiteral("Otros");
                     EndContext();

@@ -8,7 +8,12 @@
     <h1> Productos </h1>
     <div class="form-row">
         <div class="form-group col-md-4">
-            <input id="SearchBar" class="form-control mr-sm-2 " type="search" placeholder="Buscar" aria-label="Search">
+            <input id="SearchBar"
+                   oninput="SearchProduct(this.value)"
+                   class="form-control mr-sm-2 "
+                   type="search"
+                   placeholder="Buscar productos"
+                   aria-label="Search">
         </div>
         <div class="form-group col-md-1">
             <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
@@ -102,7 +107,7 @@
 
 <!--Searcher-->
 <script>
-
+    /*
     $('#SearchBar').on('input', function () {
         $.ajax({
             type: "GET",
@@ -130,5 +135,5 @@
             }
         });
     });
-
+    */
 </script>

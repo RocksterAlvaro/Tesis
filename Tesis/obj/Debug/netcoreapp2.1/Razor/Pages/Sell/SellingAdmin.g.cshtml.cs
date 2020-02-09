@@ -57,7 +57,7 @@ using Tesis;
             WriteLiteral("    ");
             EndContext();
             BeginContext(70, 444, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c7ca388da274ae28536842d0ebaa83e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7941c9cd38e4b04bb09be67d34123b5", async() => {
                 BeginContext(102, 405, true);
                 WriteLiteral(@"
         <input type=""radio"" name=""rdo"" id=""AddStockRadioBtn""  name=""AddOrDeleteStockRadioBtn"" checked />
