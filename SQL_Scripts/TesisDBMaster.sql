@@ -1,4 +1,4 @@
-:setvar BasePath "C:\Users\Rockster_Laptop\Desktop\Tesis\SQL_Scripts\"
+:setvar BasePath "C:\Users\Saito\Desktop\TesisNoire\TesisGit\SQL_Scripts\"
 --:setvar BasePath "C:\Users\Rockster_Laptop\Downloads\Tesis\SQL_Scripts\"
 -- Añada aqui su direccion de ejecucion y dejela comentada cuando haga PUSH
 :setvar Create "TesisDBCreate.sql"

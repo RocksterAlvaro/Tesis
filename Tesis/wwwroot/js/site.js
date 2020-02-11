@@ -108,7 +108,7 @@ function SearchProduct(SearchWord) {
 
         // If the search bar has content
         if (SearchWord.length > 0) {
-            $("<li class=\"list-group-item\"> Cargando... </li>").appendTo(SearchProducts);
+            $("<th scope=\"row\"> Cargando... </th>").appendTo(SearchProducts);
 
             // Make the AJAX request to search products
             $.ajax({
@@ -134,7 +134,7 @@ function SearchProduct(SearchWord) {
                         $(SearchProducts).empty();
 
                         // No product returned by the server
-                        $("<li class=\"list-group-item\"> Ningun producto coincide con la busqueda </li>").appendTo(SearchProducts);
+                        $("<th scope=\"row\"><td colspan=\"3\"  style=\"height: 43vh\"> Ningun producto coincide con la busqueda</td> </th>").appendTo(SearchProducts);
                     }
                 }
             });
@@ -143,7 +143,7 @@ function SearchProduct(SearchWord) {
             $(SearchProducts).empty();
 
             // Show the user haven't search anything
-            $("<li class=\"list-group-item\"> Ninguna busqueda realizada </li>").appendTo(SearchProducts);
+            $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> Ninguna busqueda realizada</td> </th>").appendTo(SearchProducts);
         }
 
         // Deny search
@@ -181,13 +181,36 @@ function UpdateLists() {
     for (var i = 0; i < SearchProductsList.length; i++) {
         // If the Product is not being edit yet
         if (!EditProductsContains(SearchProductsList[i])) {
-            $("<li id=\"SearchProduct" + i + "\" class=\"p-2 list-group-item\">" +
+            $("<tr >" + " <th scope=\"row\">" + SearchProductsList[i].ProductName + "</th>" +
+                "<td class=\"text-center\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                "<td class=\"text-center\">" + SearchProductsList[i].ProductStock + "</td>" +
+                "<td><button type=\"button\" onclick=\"AddProductToEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button> </td>" +
+                "</tr>").appendTo(SearchProducts);
+
+
+
+            //Products table from Products Main Page
+           /* $("<tr >" + " <th scope=\"row\">" + SearchProductsList[i].ProductName + "</th>" +
+                "<td class=\"text-center\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                "<td class=\"text-center\">" + SearchProductsList[i].ProductStock + "</td>" +
+                "<td style=\"color:red\">Detalles</td>" +
+                "<td style=\"color:red\">Modificar</td>" +
+                "<td style=\"color:red\">Eliminar</td>" +
+                "</tr>").appendTo(SearchProducts);*/
+
+            //Old inventory products list
+                /*"<li id=\"SearchProduct" + i + "\" class=\"p-2 list-group-item\">" +
                 "<div class=\"d-flex justify-content-between\">" +
                 "<p class=\"col-4 my-auto\">" + SearchProductsList[i].ProductName + "</p>" +
                 "<p class=\"col-2 my-auto\">" + SearchProductsList[i].ProductStock + "</p>" +
                 "<button type=\"button\" onclick=\"AddProductToEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button>" +
                 "</div > " +
                 "</li>").appendTo(SearchProducts);
+                */
+
+
+           
+
         }
     }
 
@@ -197,12 +220,28 @@ function UpdateLists() {
     // Update Edit Products List
     if (EditProductsList.length == 0) {
         // No product added to edit list
-        $("<li class=\"list-group-item\"> No se ha añadido ningún producto </li>").appendTo(EditProducts);
+        $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> No se ha añadido ningún producto</td> </th>").appendTo(EditProducts);
     } else {
         // Add products to edit list
         for (var i = 0; i < EditProductsList.length; i++) {
-            $(
-                "<li id=\"EditProduct" + i + "\"class=\"p-2 list-group-item\">" +
+            $("<tr >" + " <th scope=\"row\">" + EditProductsList[i].ProductName + "</th>" +
+                "<td class=\"text-center\">" + EditProductsList[i].ProductStock + "</td>" +
+                "<td><input " +
+                "id =\"ProductStock" + i + "\"" +
+                "class=\"col-3 form-control formStyle\"" +
+                "style= \"left:80px\""+
+                "type=\"number\"" +
+                "min=\"0\"" +
+                "value=\"0\"" +
+                "placeholder=\"Inventario\"></td>" +
+                "<td><button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button> </td>" +
+                "</tr>").appendTo(EditProducts);
+
+
+      
+
+            //Old inventory edit list
+               /* "<li id=\"EditProduct" + i + "\"class=\"p-2 list-group-item\">" +
                 "<div class=\"d-flex justify-content-between\">" +
                 "<p class=\"col-4 my-auto\">" + EditProductsList[i].ProductName + "</p>" +
                 "<p class=\"col-2 my-auto\">" + EditProductsList[i].ProductStock + "</p>" +
@@ -216,7 +255,11 @@ function UpdateLists() {
                 "<button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button>" +
                 "</div > " +
                 "</li>"
-            ).appendTo(EditProducts);
+            ).appendTo(EditProducts); */
+
+
+
+            
         }
     }
 }
