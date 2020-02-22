@@ -181,9 +181,9 @@ function UpdateLists() {
     for (var i = 0; i < SearchProductsList.length; i++) {
         // If the Product is not being edit yet
         if (!EditProductsContains(SearchProductsList[i])) {
-            $("<tr >" + " <th scope=\"row\">" + SearchProductsList[i].ProductName + "</th>" +
-                "<td class=\"text-center\">" + SearchProductsList[i].ProductPrice + "</td>" +
-                "<td class=\"text-center\">" + SearchProductsList[i].ProductStock + "</td>" +
+            $("<tr >" + " <th scope=\"row\" style=\"width:235px\">" + SearchProductsList[i].ProductName + "</th>" +
+                "<td style=\"width:160px\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                "<td style=\"width:80px\">" + SearchProductsList[i].ProductStock + "</td>" +
                 "<td><button type=\"button\" onclick=\"AddProductToEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button> </td>" +
                 "</tr>").appendTo(SearchProducts);
 
@@ -224,8 +224,8 @@ function UpdateLists() {
     } else {
         // Add products to edit list
         for (var i = 0; i < EditProductsList.length; i++) {
-            $("<tr >" + " <th scope=\"row\">" + EditProductsList[i].ProductName + "</th>" +
-                "<td class=\"text-center\">" + EditProductsList[i].ProductStock + "</td>" +
+            $("<tr >" + " <th scope=\"row\" style=\"width:215px\">" + EditProductsList[i].ProductName + "</th>" +
+                "<td style=\"width:85px\">" + EditProductsList[i].ProductStock + "</td>" +
                 "<td><input " +
                 "id =\"ProductStock" + i + "\"" +
                 "class=\"col-3 form-control formStyle\"" +

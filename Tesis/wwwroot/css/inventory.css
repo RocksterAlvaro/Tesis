@@ -1,0 +1,232 @@
+﻿
+.tableHeader {
+    margin-bottom: 0px;
+}
+
+.responsiveScroll {
+    max-height: 50vh;
+    overflow: auto;
+    display: block;
+}
+
+    .responsiveScroll thead th {
+        position: sticky;
+        top: 0;
+        background: #fff;
+    }
+
+.formStyle {
+    height: 29px;
+}
+
+.btn-outline-primary {
+}
+
+
+.SaveAndDestroy {
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0;
+}
+
+.list-scroll {
+    max-height: 507px;
+    overflow-y: auto;
+}
+
+/*footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+}*/
+
+.order-scroller {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgb(224,224,224);
+    border-left: solid 1px rgb(200,200,200);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(168,168,168);
+    background: #393939;
+    min-height: 30px;
+}
+
+
+
+.neptune {
+    font-family: sans-serif;
+    font-weight: 700;
+}
+
+.switch {
+    position: relative;
+    top: 60%;
+    left: 400px;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    margin: -30px 0 0 -75px;
+    background: #00bc8c;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    border-radius: 25px;
+}
+
+    .switch span {
+        position: absolute;
+        width: 20px;
+        height: 4px;
+        top: 50%;
+        left: 50%;
+        margin: -2px 0px 0px -4px;
+        background: #fff;
+        display: block;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
+        -ms-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        border-radius: 2px;
+    }
+
+        .switch span:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 4px;
+            height: 12px;
+            margin-top: -8px;
+            background: #fff;
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: all 0.2s ease;
+            -o-transition: all 0.2s ease;
+            -ms-transition: all 0.2s ease;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+        }
+
+input[type=radio] {
+    display: none;
+}
+
+.switch label {
+    cursor: pointer;
+    color: rgba(0,0,0,0.2);
+    width: 60px;
+    line-height: 50px;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+label[for=InStockRadioBtn] {
+    position: absolute;
+    left: 0px;
+    height: 20px;
+}
+
+label[for=OutStockRadioBtn] {
+    position: absolute;
+    right: 0px;
+}
+
+#OutStockRadioBtn:checked ~ .switch {
+    background: #E74C3C;
+}
+
+    #OutStockRadioBtn:checked ~ .switch span {
+        background: #fff;
+        margin-left: -8px;
+    }
+
+        #OutStockRadioBtn:checked ~ .switch span:after {
+            background: #fff;
+            height: 20px;
+            margin-top: -8px;
+            margin-left: 8px;
+        }
+
+#InStockRadioBtn:checked ~ .switch label[for=InStockRadioBtn] {
+    color: #fff;
+}
+
+#OutStockRadioBtn:checked ~ .switch label[for=OutStockRadioBtn] {
+    color: #fff;
+}
+
+footer {
+    bottom: 0;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+

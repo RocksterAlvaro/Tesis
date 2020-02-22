@@ -3,160 +3,167 @@
     ViewData["Title"] = "Inventory";
 }
 
-    <div class="container">
-        <h1>Movimiento de inventario</h1>
+<div class="container">
+    <h1>Movimiento de inventario</h1>
 
-        <br />
+    <br />
 
-        <div class="form-row">
+    <div class="form-row">
 
 
 
-            <div class="input-group col-md-8">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <img src="~/images/icons/search.svg" width="20" height="20">
-                    </div>
+        <div class="input-group col-md-8">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <img src="~/images/icons/search.svg" width="20" height="20">
                 </div>
-                <input id="SearchBar"
-                       oninput="SearchProduct(this.value)"
-                       class="form-control mr-sm-2 "
-                       type="search"
-                       placeholder="Buscar productos"
-                       aria-label="Search">
-
-                <!--Add/Decrease Inventory-->
-                <form action="" class="neptune">
-                    <input type="radio" name="InOrOutStockRadioBtn" id="InStockRadioBtn" checked />
-                    <input type="radio" name="InOrOutStockRadioBtn" id="OutStockRadioBtn" />
-                    <div class="switch">
-                        <label for="InStockRadioBtn">Añadir</label>
-                        <label for="OutStockRadioBtn">Quitar</label>
-                        <span></span>
-                    </div>
-                </form>
-
-
-
             </div>
+            <input id="SearchBar"
+                   oninput="SearchProduct(this.value)"
+                   class="form-control mr-sm-2 "
+                   type="search"
+                   placeholder="Buscar productos"
+                   aria-label="Search">
+
+            <!--Add/Decrease Inventory-->
+            <form action="" class="neptune">
+                <input type="radio" name="InOrOutStockRadioBtn" id="InStockRadioBtn" checked />
+                <input type="radio" name="InOrOutStockRadioBtn" id="OutStockRadioBtn" />
+                <div class="switch">
+                    <label for="InStockRadioBtn">Añadir</label>
+                    <label for="OutStockRadioBtn">Quitar</label>
+                    <span></span>
+                </div>
+            </form>
+
+
+
         </div>
+    </div>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <div class="form-row">
+    <div class="form-row">
 
-            <!--Left table-->
-            <div class="form-group col-md-6 ">
-                <h4>Inventario</h4>
+        <!--Left table-->
+        <div class="form-group col-md-6 ">
+            <h4>Inventario</h4>
+            <table class="table tableHeader">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col" class="text-center">Precio</th>
+                        <th scope="col" class="text-center">Unidades</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="responsiveScroll">
+                <table class="table">
+                    <tbody id="SearchProducts">
+                        <tr id="ProductList">
+                            <th scope="row" style="height:43vh; text-align:justify;">
+                            <td colspan="3">Ninguna busqueda realizada</td></th>
+                        </tr>
 
-                <div class="responsiveScroll">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Producto</th>
-                                <th scope="col" class="text-center">Precio</th>
-                                <th scope="col" class="text-center">Unidades</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="SearchProducts">
-                            <tr id="ProductList"><th scope="row"  style="height:43vh"><td colspan="3">Ninguna busqueda realizada</td></th> </tr>
-
-                        </tbody>
-                    </table>
-
-                </div>
-
-
-            </div>
-
-
-            <!--Right table-->
-            <div class="form-group col-md-6">
-                <h4>Productos en movimiento</h4>
-
-
-                <div class="responsiveScroll">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Producto</th>
-                                <th scope="col" class="text-center">U actuales</th>
-                                <th scope="col" class="text-center">Unidades +/-</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="EditProducts">
-                            <tr><th scope="row" style="height:43vh"><td colspan="3">No se ha añadido ningún producto</td></th> </tr>
-
-                        </tbody>
-                    </table>
-
-                </div>
-
+                    </tbody>
+                </table>
 
             </div>
 
-            <!--Save and 0 inventory buttons-->
-
-            <div class="row">
-                <div class="col">
-                    <button onclick="OpenConfirmationModal()" class="btn btn-outline-danger my-2 my-sm-0 SaveAndDestroy"> Inventario en 0 </button>
-                 
-                </div>
-                <div class="col">
-                    <button type="button" onclick="ModifyStock()" class="btn btn-outline-primary pull-right SaveAndDestroy" style="margin-left:91vh"> Guardar </button>
-                </div>
-            </div>
 
         </div>
 
 
-        <!--Old zero invent modal-->
-        <!-- Confirmation modal 
-        <div id="ConfirmationModal" class="modal">
+        <!--Right table-->
+        <div class="form-group col-md-6">
+            <h4>Productos en movimiento</h4>
+            <table class="table tableHeader">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col" class="text-center">U actuales</th>
+                        <th scope="col" class="text-center">Unidades +/-</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="responsiveScroll">
+                <table class="table">
 
-            <!-- Modal content 
+                    <tbody id="EditProducts">
+                        <tr>
+                            <th scope="row" style="height:43vh">
+                            <td colspan="3">No se ha añadido ningún producto</td></th>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+
+        <!--Save and 0 inventory buttons-->
+
+        <div class="row">
+            <div class="col">
+                <button onclick="OpenConfirmationModal()" class="btn btn-outline-danger my-2 my-sm-0 SaveAndDestroy"> Inventario en 0 </button>
+
+            </div>
+            <div class="col">
+                <button type="button" onclick="ModifyStock()" class="btn btn-outline-primary pull-right SaveAndDestroy" style="margin-left:91vh"> Guardar </button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--Old zero invent modal-->
+    <!-- Confirmation modal
+    <div id="ConfirmationModal" class="modal">
+
+        <!-- Modal content
+        <div class="modal-content">
+            <button onclick="CloseModal()"> x </button>
+
+            <span class="close">x</span>
+
+            <p>
+                La cantidad en inventario de TODOS los productos quedara en cero. <br>
+                ¿Desea continuar?
+            </p>
+
+            <button onclick="StockZero()" class="btn btn-outline-success my-2 my-sm-0"> Si </button>
+            <button onclick="CloseModal()" class="btn btn-outline-danger my-2 my-sm-0 "> No </button>
+
+        </div>
+    </div>
+
+        -->
+    <!--New Zero Invent modal-->
+
+    <div class="modal fade bd-example-modal-lg" id="ZeroInventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <button onclick="CloseModal()"> x </button>
-
-                <span class="close">x</span>
-
-                <p>
-                    La cantidad en inventario de TODOS los productos quedara en cero. <br>
-                    ¿Desea continuar?
-                </p>
-
-                <button onclick="StockZero()" class="btn btn-outline-success my-2 my-sm-0"> Si </button>
-                <button onclick="CloseModal()" class="btn btn-outline-danger my-2 my-sm-0 "> No </button>
-
-            </div>
-        </div>
-
-            -->
-
-        <!--New Zero Invent modal-->
-
-        <div class="modal fade bd-example-modal-lg" id="ZeroInventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Deseas continuar?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Si continuas con la operación las unidades de todos los productos quedarán en 0 y esta operación no puede deshacerse.
-                    </div>
-                    <div class="modal-footer">
-                        <button onclick="CloseModal()" class="btn btn-outline-danger my-2 my-sm-0 "> Cancelar </button>
-                        <button onclick="StockZero()" class="btn btn-outline-success my-2 my-sm-0"> Continuar </button>
-                    </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Deseas continuar?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Si continuas con la operación las unidades de todos los productos quedarán en 0 y esta operación no puede deshacerse.
+                </div>
+                <div class="modal-footer">
+                    <button onclick="CloseModal()" class="btn btn-outline-danger my-2 my-sm-0 "> Cancelar </button>
+                    <button onclick="StockZero()" class="btn btn-outline-success my-2 my-sm-0"> Continuar </button>
                 </div>
             </div>
         </div>
+    </div>
 
 
 
@@ -165,254 +172,30 @@
 
 
 
-        <!-- Invalid Values Modal -->
-        <div id="InvalidValuesModal" class="modal">
+    <!-- Invalid Values Modal -->
+    <div id="InvalidValuesModal" class="modal">
 
-            <!-- Modal content -->
-            <div class="modal-content">
-                <button onclick="CloseModal()"> x </button>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <button onclick="CloseModal()"> x </button>
 
-                <span class="close">x</span>
+            <span class="close">x</span>
 
-                <p>
-                    Alguno de los valores ingresados es invalido. <br>
-                    Por favor verifique los valores.
-                </p>
+            <p>
+                Alguno de los valores ingresados es invalido.
+                <br>
+                Por favor verifique los valores.
+            </p>
 
-                <button onclick="CloseModal()" class="btn btn-outline-success my-2 my-sm-0"> Entendido </button>
+            <button onclick="CloseModal()" class="btn btn-outline-success my-2 my-sm-0"> Entendido </button>
 
-            </div>
         </div>
-
-        <script>
-
-
-
-        </script>
-
-        <style>
-            .responsiveScroll {
-                max-height: 50vh;
-                overflow: auto;
-            }
-
-                .responsiveScroll thead th {
-                    position: sticky;
-                    top: 0;
-                    background: white;
-                }
-
-            .formStyle {
-                height: 29px;
-            }
-
-            .btn-outline-primary {
-            }
-
-            .SaveAndDestroy {
-                bottom: 90px;
-            }
-
-            .list-group-item:last-child {
-                border-bottom-right-radius: 0;
-                border-bottom-left-radius: 0.25rem;
-            }
-
-            .list-group-item:first-child {
-                border-top-left-radius: 0.25rem;
-                border-top-right-radius: 0;
-            }
-
-            .list-scroll {
-                max-height: 507px;
-                overflow-y: auto;
-            }
-
-            footer {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                padding: 1rem;
-            }
-
-            .order-scroller {
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                overflow-y: auto;
-            }
-
-
-            ::-webkit-scrollbar {
-                width: 4px;
-            }
-
-            /* Track */
-            ::-webkit-scrollbar-track {
-                background: rgb(224,224,224);
-                border-left: solid 1px rgb(200,200,200);
-            }
-
-            /* Handle */
-            ::-webkit-scrollbar-thumb {
-                background: rgb(168,168,168);
-                background: #393939;
-                min-height: 30px;
-            }
+    </div>
+</div>
+<script>
 
 
 
-            .neptune {
-                font-family: sans-serif;
-                font-weight: 700;
-            }
+</script>
 
-            .switch {
-                position: relative;
-                top: 60%;
-                left: 400px;
-                width: 150px;
-                height: 50px;
-                text-align: center;
-                margin: -30px 0 0 -75px;
-                background: #00bc8c;
-                -webkit-transition: all 0.2s ease;
-                -moz-transition: all 0.2s ease;
-                -o-transition: all 0.2s ease;
-                -ms-transition: all 0.2s ease;
-                transition: all 0.2s ease;
-                border-radius: 25px;
-            }
 
-                .switch span {
-                    position: absolute;
-                    width: 20px;
-                    height: 4px;
-                    top: 50%;
-                    left: 50%;
-                    margin: -2px 0px 0px -4px;
-                    background: #fff;
-                    display: block;
-                    -webkit-transform: rotate(-45deg);
-                    -moz-transform: rotate(-45deg);
-                    -o-transform: rotate(-45deg);
-                    -ms-transform: rotate(-45deg);
-                    transform: rotate(-45deg);
-                    -webkit-transition: all 0.2s ease;
-                    -moz-transition: all 0.2s ease;
-                    -o-transition: all 0.2s ease;
-                    -ms-transition: all 0.2s ease;
-                    transition: all 0.2s ease;
-                    border-radius: 2px;
-                }
-
-                    .switch span:after {
-                        content: "";
-                        display: block;
-                        position: absolute;
-                        width: 4px;
-                        height: 12px;
-                        margin-top: -8px;
-                        background: #fff;
-                        -webkit-transition: all 0.2s ease;
-                        -moz-transition: all 0.2s ease;
-                        -o-transition: all 0.2s ease;
-                        -ms-transition: all 0.2s ease;
-                        transition: all 0.2s ease;
-                        border-radius: 2px;
-                    }
-
-            input[type=radio] {
-                display: none;
-            }
-
-            .switch label {
-                cursor: pointer;
-                color: rgba(0,0,0,0.2);
-                width: 60px;
-                line-height: 50px;
-                -webkit-transition: all 0.2s ease;
-                -moz-transition: all 0.2s ease;
-                -o-transition: all 0.2s ease;
-                -ms-transition: all 0.2s ease;
-                transition: all 0.2s ease;
-            }
-
-            label[for=InStockRadioBtn] {
-                position: absolute;
-                left: 0px;
-                height: 20px;
-            }
-
-            label[for=OutStockRadioBtn] {
-                position: absolute;
-                right: 0px;
-            }
-
-            #OutStockRadioBtn:checked ~ .switch {
-                background: #E74C3C;
-            }
-
-                #OutStockRadioBtn:checked ~ .switch span {
-                    background: #fff;
-                    margin-left: -8px;
-                }
-
-                    #OutStockRadioBtn:checked ~ .switch span:after {
-                        background: #fff;
-                        height: 20px;
-                        margin-top: -8px;
-                        margin-left: 8px;
-                    }
-
-            #InStockRadioBtn:checked ~ .switch label[for=InStockRadioBtn] {
-                color: #fff;
-            }
-
-            #OutStockRadioBtn:checked ~ .switch label[for=OutStockRadioBtn] {
-                color: #fff;
-            }
-
-            footer {
-                bottom: 0;
-            }
-
-            /* The Modal (background) */
-            .modal {
-                display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 1; /* Sit on top */
-                left: 0;
-                top: 0;
-                width: 100%; /* Full width */
-                height: 100%; /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            }
-
-            /* Modal Content/Box */
-            .modal-content {
-                background-color: #fefefe;
-                margin: 15% auto; /* 15% from the top and centered */
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%; /* Could be more or less, depending on screen size */
-            }
-
-            /* The Close Button */
-            .close {
-                color: #aaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
-
-                .close:hover,
-                .close:focus {
-                    color: black;
-                    text-decoration: none;
-                    cursor: pointer;
-                }
-        </style>

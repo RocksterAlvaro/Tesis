@@ -1,0 +1,121 @@
+﻿@page
+@{
+    ViewData["Title"] = "Inventory Admin";
+}
+    <div class="container">
+        <br />
+        <h1> Historial de translados </h1>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <input id="SearchBar"
+                       oninput="SearchProduct(this.value)"
+                       class="form-control mr-sm-2 "
+                       type="search"
+                       placeholder="Buscar productos"
+                       aria-label="Search">
+            </div>
+            <div class="form-group col-md-1">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+            </div>
+
+
+            <div class="form-group col-md-3 offset-4">
+
+                <a class="btn btn-success" href="/Inventory/InventoryMain" style="margin-left:53%">Mov Inventario</a>
+            </div>
+
+
+
+        </div>
+        <br /><br />
+        <div class="responsiveScrollProducts">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Unidades totales?</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="SearchProducts">
+                    <tr id="ProductList"></tr>
+
+
+                    <!--Basurita-->
+                    <tr>
+
+                        <th scope="row">Pudding001</th>
+
+                        <td> 30/02/2020</td>
+
+                        <td> 23</td>
+
+                        <td><button class="btn btn-outline-info"  data-toggle="modal" data-target="#DetailsModal">Detalles</button></td>
+                        <td><button class="btn btn-outline-warning">Editar?</button></td>
+                        <td><button class="btn btn-outline-danger">Eliminar?</button></td>
+
+                    </tr>
+                    <!--fin de la basurita-->
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="DetailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered bd-example-modal-lg" role="document">
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Detalles del traslado</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="responsiveScrollProducts">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Unidades</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="SearchProducts">
+                                    <tr id="ProductList"></tr>
+
+
+                                    <!--Basurita-->
+                                    <tr>
+
+                                        <th scope="row">Pudding001</th>
+
+                                        <td> 12</td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <th scope="row">Blanc's Book</th>
+
+                                        <td> 3</td>
+
+                                    </tr>
+                                    <!--fin de la basurita-->
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>

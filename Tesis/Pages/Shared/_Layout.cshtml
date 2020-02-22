@@ -10,13 +10,19 @@
     <script type="text/javascript" src="/lib/jquery.js"></script>
     <script src="/lib/Bootstrap/js/bootstrap.js"></script>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/login.css" />
-    <link rel="stylesheet" href="~/css/test.css" />
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap-grid.css" />
     <link rel="stylesheet" href="/lib/Bootstrap/css/bootstrap-reboot.css" />
+
+    <!-- CSS -->
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/layout.css" />
+        <link rel="stylesheet" href="~/css/inventory.css" />
+        <link rel="stylesheet" href="~/css/products.css" />
+        <link rel="stylesheet" href="~/css/selling.css" />
+        <link rel="stylesheet" href="~/css/site.css" /> <!--Not used yet-->
+    </environment>
 
 </head>
 <body>
@@ -43,13 +49,17 @@
                             <a class="dropdown-item " href="/Sell/SellingAdmin">Administrador ventas</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Product/ProductMain">Productos</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Productos
+                            Inventario
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="/Product/ProductMain">Productos</a>
-                            <a class="dropdown-item" href="/Inventory/InventoryMain">Inventario</a>
+                            <a class="dropdown-item" href="/Inventory/InventoryAdmin">Historial de movimientos</a>
+                            <a class="dropdown-item" href="/Inventory/InventoryMain">Movimiento de inventario</a>
+                            <a class="dropdown-item" href="/Inventory/InventoryAI">Predictor de inventario</a>
                         </div>
                     </li>
 
@@ -70,22 +80,6 @@
 
     </div>
     <!--Navbar ends-->
-
-    <style>
-        .dropdown-menu {
-            background: #2D3E50;
-            border-width: 0px
-        }
-
-        .body-content {
-            margin-right: 0px !important;
-        }
-
-        .container-fluid {
-            padding-right: 0px;
-            padding-left: 0px;
-        }
-    </style>
 
 
 
