@@ -18,6 +18,15 @@ namespace Tesis.Controllers
             _db = db;
         }
 
+        // Products Main Page
+        [HttpGet]
+        [Route("/Products/ProductsMain")]
+        public ActionResult ProductsMain()
+        {
+            // Return main page
+            return View("ProductsMain");
+        }
+
         // Search bar
         [HttpGet]
         [Route("/Products/SearchProduct")]
@@ -26,6 +35,24 @@ namespace Tesis.Controllers
             var SearchProducts = _db.SearchBar(SearchString);
 
             return Json(SearchProducts);
+        }
+
+        // Search bar
+        [HttpPost]
+        [Route("/Products/CreateProduct")]
+        public ActionResult CreateProduct()
+        {
+            AppProducts NewProduct = new AppProducts();
+            NewProduct.ProductName = Request.Form["ProductName"];
+            NewProduct.ProductCost = Int32.Parse(Request.Form["ProductCost"]);
+            NewProduct.ProductPrice = Int32.Parse(Request.Form["ProductPrice"]);
+            NewProduct.ProductStock = Int32.Parse(Request.Form["ProductStock"]);
+
+            _db.AppProducts.Add(NewProduct);
+
+            _db.SaveChanges();
+
+            return RedirectToAction("ProductsMain", "Products");
         }
     }
 }

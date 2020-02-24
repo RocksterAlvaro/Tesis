@@ -16,5 +16,7 @@ namespace Tesis.ClassModels
         public int ProductStock { get; set; }
 
         public int ProductPrice { get; set; }
+
+        public int ProductCost { get; set; }
     }
 }

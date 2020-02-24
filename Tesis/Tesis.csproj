@@ -5,13 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Test\TestPage - Copy.cshtml" />
-    <Content Remove="Pages\Test\TestPage.cshtml" />
+    <Content Remove="Views\Main\TestPage - Copy.cshtml" />
+    <Content Remove="Views\Main\TestPage.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Sell\SellingMainPage.cshtml" />
-    <None Include="Pages\Test\TestPage.cshtml" />
+    <None Include="Views\Sell\SellingMainPage.cshtml" />
+    <None Include="Views\Main\TestPage.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

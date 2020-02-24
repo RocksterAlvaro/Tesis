@@ -3,26 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Tesis.ClassModels;
 
 namespace Tesis.Controllers
 {
-    // Home Controller
-    public class HomeController : Controller
+    // Main Controller
+    public class MainController : Controller
     {
         // Index
+        [HttpGet]
+        [Route("/")]
+        [Route("/Main/Index")]
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
-
-        /*
-         * // Test Method
-        public IActionResult Index()
-        {
-            return View();
-        }
-        */
     }
 }
