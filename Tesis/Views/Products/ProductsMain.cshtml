@@ -36,6 +36,7 @@
                     <th scope="col">Producto</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Unidades</th>
+                    <th scope="col">Costo de almacenar</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
@@ -56,7 +57,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Crear Producto</h5>
+                <h3 class="modal-title" id="staticBackdropLabel">Crear Producto</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -71,8 +72,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-8 offset-2">
                             <label for="ProductName">Nombre del producto</label>
-                            <input 
-                                   type="text"
+                            <input type="text"
                                    class="form-control"
                                    id="ProductName"
                                    name="ProductName"
@@ -82,8 +82,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4 center-block offset-2">
                             <label for="ProductPrice">Precio</label>
-                            <input 
-                                   type="number"
+                            <input type="number"
                                    class="form-control"
                                    id="ProductPrice"
                                    name="ProductPrice"
@@ -91,8 +90,7 @@
                         </div>
                         <div class="form-group col-md-4 center-block">
                             <label for="ProductCost">Costo de pedido</label>
-                            <input 
-                                   type="number"
+                            <input type="number"
                                    class="form-control"
                                    id="ProductCost"
                                    name="ProductCost"
@@ -104,8 +102,7 @@
 
                         <div class="form-group col-md-8 center-block offset-2">
                             <label for="ProductStock">Stock inicial</label>
-                            <input
-                                   type="number"
+                            <input type="number"
                                    class="form-control"
                                    id="ProductStock"
                                    name="ProductStock"
@@ -113,9 +110,11 @@
                         </div>
 
                     </div>
+                    <hr />
 
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="margin-left:433px">Cerrar</button>
                     <button type="submit" class="btn btn-outline-success">Crear</button>
+
 
                 </form>
 

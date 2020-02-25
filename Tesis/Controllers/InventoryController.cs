@@ -19,6 +19,34 @@ namespace Tesis.Controllers
             _db = db;
         }
 
+
+        //Return Inventory Admin View
+        [HttpGet]
+        [Route("/Inventory/InventoryAdmin")]
+
+        public ActionResult InventoryAdmin()
+        {
+            return View("InventoryAdmin");
+        }
+
+        //Return Inventory AI View
+        [HttpGet]
+        [Route("/Inventory/InventoryAI")]
+
+        public ActionResult InventoryAI()
+        {
+            return View("InventoryAI");
+        }
+
+        //Return Inventory Main View
+        [HttpGet]
+        [Route("/Inventory/InventoryMain")]
+
+        public ActionResult InventoryMain()
+        {
+            return View("InventoryMain");
+        }
+
         // Save stock changes
         [HttpPost]
         [Route("/Inventory/SaveStock")]

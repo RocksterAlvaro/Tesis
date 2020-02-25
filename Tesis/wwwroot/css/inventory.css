@@ -1,10 +1,12 @@
-﻿
+﻿.close{
+ color:#fff;
+}
 .tableHeader {
     margin-bottom: 0px;
 }
 
 .responsiveScroll {
-    max-height: 50vh;
+    max-height: 40vh;
     overflow: auto;
     display: block;
 }

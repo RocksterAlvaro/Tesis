@@ -8,9 +8,19 @@ namespace Tesis.Controllers
 {
     public class LoginController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]
+        [Route("/Login/LoginMain")]
+        public IActionResult loginMain()
         {
-            return View(); 
+            return View("LoginMain"); 
+        }
+
+
+        [HttpGet]
+        [Route("/Login/SigninMain")]
+        public IActionResult SigninMain()
+        {
+            return View("SigninMain");
         }
     }
 }

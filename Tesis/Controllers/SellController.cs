@@ -3,18 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Tesis.ClassModels;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace Tesis.Controllers
 {
     // Home Controller
     public class SellController : Controller
     {
-        // Index
+        // Selling main page
+        [HttpGet]
+        [Route("/Sell/SellingMainPage")]
+
         public ActionResult SellingMainPage()
         {
             return View("SellingMainPage");
+        }
+
+
+
+        // Selling admin
+        [HttpGet]
+        [Route("/Sell/SellingAdmin")]
+
+        public ActionResult SellingAdmin()
+        {
+            return View("SellingAdmin");
         }
     }
 }

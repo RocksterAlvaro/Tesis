@@ -240,12 +240,12 @@ function UpdateInventoryMovementLists() {
                 "<td style=\"width:85px\">" + EditProductsList[i].ProductStock + "</td>" +
                 "<td><input " +
                 "id =\"ProductStock" + i + "\"" +
-                "class=\"col-3 form-control formStyle\"" +
-                "style= \"left:80px\"" +
+                "class=\" form-control formStyle\"" +
+                "style= \"margin-left:60px; width:88px; text-align:center\"" +
                 "type=\"number\"" +
                 "min=\"0\"" +
                 "value=\"0\"" +
-                "placeholder=\"Inventario\"></td>" +
+                "placeholder=\"Unidades\"></td>" +
                 "<td><button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button> </td>" +
                 "</tr>").appendTo(EditProducts);
         }
