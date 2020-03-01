@@ -98,7 +98,7 @@ function SearchProduct(SearchWord) {
     if (SearchApprovedBool) {
 
         // Clear Search Products List
-        $(SearchProducts).empty();
+        $("#SearchProducts").empty();
 
         // If the search bar has content
         if (SearchWord.length > 0) {
@@ -125,7 +125,7 @@ function SearchProduct(SearchWord) {
                     // Check if any product was found
                     if (SearchProductsList.length == 0) {
                         // Clear Search Products List
-                        $(SearchProducts).empty();
+                        $("#SearchProducts").empty();
 
                         // No product returned by the server
                         $("<th scope=\"row\"><td colspan=\"3\"  style=\"height: 43vh\"> Ningún producto coincide con la busqueda </td> </th>").appendTo(SearchProducts);
@@ -134,7 +134,7 @@ function SearchProduct(SearchWord) {
             });
         } else {
             // Clear Search Products List
-            $(SearchProducts).empty();
+            $("#SearchProducts").empty();
 
             // Show the user haven't search anything
             $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> Ninguna busqueda realizada </td> </th>").appendTo(SearchProducts);
@@ -154,7 +154,7 @@ function AddProductToEditInventory(ProductIndex) {
     SearchProductsList.splice(ProductIndex, 1);
 
     // Update Lists
-    SearchProduct($(SearchBar).val());
+    SearchProduct($("#SearchBar").val());
 }
 
 function RemoveProductFromEditInventory(ProductIndex) {
@@ -162,17 +162,13 @@ function RemoveProductFromEditInventory(ProductIndex) {
     EditProductsList.splice(ProductIndex, 1);
 
     // Update Lists
-    SearchProduct($(SearchBar).val());
+    SearchProduct($("#SearchBar").val());
 }
 
 // Update Lists
 function UpdateLists() {
-
-    //console.log("Old title: ", document.title;
-    //console.log("New title: ", string);
-
     // Clear Search Products List
-    $(SearchProducts).empty();
+    $("#SearchProducts").empty();
 
     switch (PageTitle) {
         // Products page
@@ -184,7 +180,7 @@ function UpdateLists() {
         case 'InventoryMovement':
 
             // Clear Edit Products List HTML
-            $(EditProducts).empty();
+            $("#EditProducts").empty();
 
             // Update lists
             UpdateInventoryMovementLists()
@@ -198,19 +194,33 @@ function UpdateLists() {
     }
 }
 
-// Inventory movement update lists
+// Products lists
 function UpdateProductsLists() {
     // Fill the list with the products returned by the server
     for (var i = 0; i < SearchProductsList.length; i++) {
-        // If the Product is not being edit yet
-        if (!EditProductsContains(SearchProductsList[i])) {
-            $("<tr >" + " <th scope=\"row\" style=\"width:235px\">" + SearchProductsList[i].ProductName + "</th>" +
-                "<td style=\"width:160px\">" + SearchProductsList[i].ProductPrice + "</td>" +
-                "<td style=\"width:80px\">" + SearchProductsList[i].ProductStock + "</td>" +
-                "<td><button type=\"button\" onclick=\"EditProduct(" + i + ")\" class=\"btn btn-sm btn-outline-primary\"> Editar </button> </td>" +
-                "<td><button type=\"button\" onclick=\"DeleteProduct(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> Eliminar </button> </td>" +
-                "</tr>").appendTo(SearchProducts);
+        var RowString = "<tr >" + " <th scope=\"row\" style=\"width:235px\">" + SearchProductsList[i].ProductName + "</th>" +
+            "<td>" + SearchProductsList[i].ProductPrice + "</td>" +
+            "<td>" + SearchProductsList[i].ProductStock + "</td>" +
+            "<td> CONSTANTE </td>" +
+            "<td><button " +
+            "type=\"button\"" +
+            "onclick=\"OpenProductModal('EditProductModal', " + i + ")\"" +
+            "class=\"btn btn-sm btn-outline-primary\"" +
+            "data-toggle=\"modal\"" +
+            "data-target=\"#ProductModal\"> Editar </button> </td>";
+
+        if (SearchProductsList[i].ProductActive) {
+            RowString = RowString +
+                "<td><button type=\"button\" onclick=\"DeactivateProduct(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> Desactivar </button> </td > ";
         }
+        else {
+            RowString = RowString +
+                "<td><button type=\"button\" onclick=\"ActivateProduct(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> Activar </button> </td > ";
+        }
+
+        var RowString = RowString + "</tr>"
+
+        $(RowString).appendTo(SearchProducts);
     }
 }
 
@@ -220,7 +230,7 @@ function UpdateInventoryMovementLists() {
     // Fill the list with the products returned by the server
     for (var i = 0; i < SearchProductsList.length; i++) {
         // If the Product is not being edit yet
-        if (!EditProductsContains(SearchProductsList[i])) {
+        if (!EditProductsContains(SearchProductsList[i]) && SearchProductsList[i].ProductActive) {
             $("<tr >" + " <th scope=\"row\" style=\"width:235px\">" + SearchProductsList[i].ProductName + "</th>" +
                 "<td style=\"width:160px\">" + SearchProductsList[i].ProductPrice + "</td>" +
                 "<td style=\"width:80px\">" + SearchProductsList[i].ProductStock + "</td>" +
@@ -274,4 +284,72 @@ function SearchApproved() {
         // Delay next search for 1/10 second
         SearchApprovedBool = true;
     }, 100);
+}
+
+function DeactivateProduct(ProductIndex) {
+
+    // Get the product to delete
+    var ProductToDeactivate = SearchProductsList[ProductIndex];
+
+    // Make the AJAX request to delete a product
+    $.ajax({
+        type: "POST",
+        url: "/Products/DeactivateProduct",
+        data: {
+            ProductToDeactivateJSON: JSON.stringify(ProductToDeactivate)
+        },
+        // If the request is successfull
+        success: function () {
+            UpdateLists();
+        }
+    });
+}
+
+function OpenProductModal(Modal, ProductIndex) {
+
+    switch (Modal) {
+        // Create product
+        case 'CreateProductModal':
+            // Change the title of the modal
+            $("#ModalTitle").text("Crear Producto");
+
+            // Change the action url of the modal
+            $("#ProductForm").attr("action", "/Products/CreateProduct");
+
+            // Assign values to the create product modal
+            $("#ProductStock").attr("placeholder", "Unidades iniciales del producto");
+            $("#ProductStockTitle").text("Inventario inicial");
+            $("#SuccessModalButton").text("Crear");
+
+            break;
+
+        // Edit a product values
+        case 'EditProductModal':
+
+            // Get the selected product to edit
+            var Product = SearchProductsList[ProductIndex];
+
+            // Change the title of the modal
+            $("#ModalTitle").text("Editar Producto");
+
+            // Change the action url of the modal
+            $("#ProductForm").attr("action", "/Products/EditProduct");
+
+            // Assign values to the edit product modal
+            $("#ProductId").val(Product.Id);
+            $("#ProductName").val(Product.ProductName);
+            $("#ProductPrice").val(Product.ProductPrice);
+            $("#ProductCost").val(Product.ProductCost);
+            $("#ProductStock").attr("placeholder", "Productos en inventario");
+            $("#ProductStockTitle").text("Unidades");
+            $("#ProductStock").val(Product.ProductStock);
+            $("#SuccessModalButton").text("Actualizar");
+
+            break;
+
+        // Default - Probably error
+        default:
+            console.log("Error");
+        // Crear modal de error.
+    }
 }

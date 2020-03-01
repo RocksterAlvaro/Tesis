@@ -31,7 +31,8 @@ VALUES
 	'Manzana Verde', -- ProductName
 	20, -- ProductStock
 	200, -- ProductPrice
-	120 -- ProductCost
+	120, -- ProductCost
+	1 -- ProductActive
 ),
 (
 -- Add 'Manzana Roja'
@@ -39,7 +40,8 @@ VALUES
 	'Manzana Roja', -- ProductName
 	10, -- ProductStock
 	150, -- ProductPrice
-	120 -- ProductCost
+	120, -- ProductCost
+	1 -- ProductActive
 ),
 (
 -- Add 'Pera'
@@ -47,7 +49,8 @@ VALUES
 	'Pera', -- ProductName
 	50, -- ProductStock
 	75, -- ProductPrice
-	50 -- ProductCost
+	50, -- ProductCost
+	1 -- ProductActive
 ),
 (
 -- Add 'Naranja'
@@ -55,7 +58,8 @@ VALUES
 	'Naranja', -- ProductName
 	35, -- ProductStock
 	50, -- ProductPrice
-	25 -- ProductCost
+	25, -- ProductCost
+	1 -- ProductActive
 ),
 (
 -- Add 'Papa'
@@ -63,7 +67,8 @@ VALUES
 	'Papa', -- ProductName
 	56, -- ProductStock
 	110, -- ProductPrice
-	80 -- ProductCost
+	80, -- ProductCost
+	1 -- ProductActive
 ),
 (
 -- Add 'Zanahoria'
@@ -71,7 +76,8 @@ VALUES
 	'Zanahoria', -- ProductName
 	72, -- ProductStock
 	120, -- ProductPrice
-	100 -- ProductCost
+	100, -- ProductCost
+	1 -- ProductActive
 ),
 (
 -- Add 'Cebolla'
@@ -79,5 +85,6 @@ VALUES
 	'Cebolla', -- ProductName
 	84, -- ProductStock
 	135, -- ProductPrice
-	95 -- ProductCost
+	95, -- ProductCost
+	1 -- ProductActive
 );

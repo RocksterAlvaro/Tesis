@@ -42,7 +42,7 @@ namespace Tesis.ClassModels
         public string InOrOutStock(List<AppProducts> EditProductsList, string InOrOutString, string StockOrSaleString)
         {
             // Parameters
-            var NewStockProductsTable = DataTableExtensions.CreateDataTable2(EditProductsList);
+            var NewStockProductsTable = DataTableExtensions.CreateDataTable(EditProductsList);
 
             var ParameterNewStockProductsTable = new SqlParameter("@NewStockProductsTable", SqlDbType.Structured);
             ParameterNewStockProductsTable.Value = NewStockProductsTable;
@@ -82,24 +82,7 @@ namespace Tesis.ClassModels
 
     public static class DataTableExtensions
     {
-        public static DataTable CreateDataTable1<T>(this IList<T> data)
-        {
-            PropertyDescriptorCollection properties =
-                TypeDescriptor.GetProperties(typeof(T));
-            DataTable table = new DataTable();
-            foreach (PropertyDescriptor prop in properties)
-                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-            foreach (T item in data)
-            {
-                DataRow row = table.NewRow();
-                foreach (PropertyDescriptor prop in properties)
-                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                table.Rows.Add(row);
-            }
-            return table;
-        }
-
-        public static DataTable CreateDataTable2<T>(IEnumerable<T> list)
+        public static DataTable CreateDataTable<T>(IEnumerable<T> list)
         {
             Type type = typeof(T);
             var properties = type.GetProperties();

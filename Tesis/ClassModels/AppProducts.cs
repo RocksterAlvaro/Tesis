@@ -18,5 +18,7 @@ namespace Tesis.ClassModels
         public int ProductPrice { get; set; }
 
         public int ProductCost { get; set; }
+
+        public bool ProductActive { get; set; }
     }
 }

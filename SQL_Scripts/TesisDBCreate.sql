@@ -57,7 +57,8 @@ AS TABLE(
 	[ProductName] [nvarchar] (256) NULL,
 	[ProductStock] [int] NULL,
 	[ProductPrice] [int] NULL,
-	[ProductCost] [int] NULL
+	[ProductCost] [int] NULL,
+	[ProductActive] [bit] NULL
 );
 GO
 
@@ -68,6 +69,7 @@ CREATE TABLE [dbo].[AspNetProducts](
 	[ProductStock] [int] NULL,
 	[ProductPrice] [int] NULL,
 	[ProductCost] [int] NULL,
+	[ProductActive] [bit] NULL,
  CONSTRAINT [PK_AspNetProducts] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
