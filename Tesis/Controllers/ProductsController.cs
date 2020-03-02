@@ -83,7 +83,7 @@ namespace Tesis.Controllers
             // Save changes
             _db.SaveChanges();
 
-            // Return OK
+            // Reload page
             return RedirectToAction("ProductsMain", "Products");
         }
 
@@ -99,14 +99,17 @@ namespace Tesis.Controllers
 
         // Delete Product
         [HttpPost]
-        [Route("/Products/DeactivateProduct")]
-        public ActionResult DeactivateProduct(string ProductToDeactivateJSON)
+        [Route("/Products/ActivateProduct")]
+        public ActionResult DeactivateProduct(string ProductToActivateJSON, string ActiveBoolJSON)
         {
+            // Deserialize active bool JSON
+            var ActiveBool = JsonConvert.DeserializeObject<string>(ActiveBoolJSON);
+
             // Deserialize product to delete JSON
-            var ProductToDeactivate = JsonConvert.DeserializeObject<AppProducts>(ProductToDeactivateJSON);
+            var ProductToDeactivate = JsonConvert.DeserializeObject<AppProducts>(ProductToActivateJSON);
 
             // Deactivate product in database
-            ProductToDeactivate.ProductActive = false;
+            ProductToDeactivate.ProductActive = bool.Parse(ActiveBool);
             _db.Entry(ProductToDeactivate).Property(x => x.ProductActive).IsModified = true;
 
             // Save changes

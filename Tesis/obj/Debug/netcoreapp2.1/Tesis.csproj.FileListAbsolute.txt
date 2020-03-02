@@ -152,7 +152,6 @@ C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.dll
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.pdb
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.csproj.CopyComplete
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.csprojAssemblyReference.cache
-C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryAdmin.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryAI.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryMain.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Login\LoginMain.g.cshtml.cs
@@ -182,3 +181,4 @@ C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\V
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\StockInOut.g.cshtml.cs

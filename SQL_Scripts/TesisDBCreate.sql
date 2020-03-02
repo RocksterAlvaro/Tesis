@@ -81,7 +81,7 @@ GO
 CREATE TABLE [dbo].[AspNetStockInOut](
 	[Id] [nvarchar](36) NOT NULL,
 	[UserId] [nvarchar](36) NOT NULL,
-	[Date] [nvarchar] (50) NULL,
+	[StockInOutDate] [nvarchar] (50) NULL,
 	[InOrOut] [nvarchar] (50) NULL,
 	[StockOrSale] [nvarchar] (50) NULL,
 	[TotalPrice] [int] NULL,

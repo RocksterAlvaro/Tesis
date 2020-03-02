@@ -38,7 +38,7 @@ BEGIN
 	(
 		@AspNetStockInOutId, -- Id
 		'989D4C70-1A43-4411-9CDC-4DDF5709C74C', -- UserId
-		FORMAT(GETDATE(), 'dd/MM/yyyy'), -- Date
+		FORMAT(GETDATE(), 'dd/MM/yyyy'), -- StockInOutDate
 		@InOrOut, -- InOrOut
 		@StockOrSale, -- StockOrSale
 		0, -- TotalPrice - (0)
@@ -103,5 +103,14 @@ BEGIN
 		@NewStockProductsTable,
 		'Out',
 		'Stock'
+END
+GO
+
+/* Get latest stock in out movements */
+CREATE PROCEDURE SPGetLatestStockInOut
+AS
+BEGIN
+	SELECT TOP 30 * FROM [AspNetStockInOut]
+	ORDER BY CONVERT(datetime, [AspNetStockInOut].[StockInOutDate], 103) ASC
 END
 GO

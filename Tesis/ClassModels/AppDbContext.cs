@@ -22,6 +22,7 @@ namespace Tesis.ClassModels
 
         // My tables
         public DbSet<AppProducts> AppProducts { get; set; }
+        public DbSet<StockInOut> StockInOut { get; set; }
 
         // Search in the DB for a certain product
         public string SearchBar(string SearchString)
@@ -37,6 +38,15 @@ namespace Tesis.ClassModels
             }
 
             return ("");
+        }
+
+        // Search in the DB for a certain product
+        public string GetLatestStockInOut()
+        {
+            // Call the stored procedure
+            var LatestStockInOut = this.StockInOut.FromSql("SPGetLatestStockInOut").ToList();
+
+            return JsonConvert.SerializeObject(LatestStockInOut);
         }
 
         public string InOrOutStock(List<AppProducts> EditProductsList, string InOrOutString, string StockOrSaleString)

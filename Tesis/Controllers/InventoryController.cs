@@ -19,14 +19,25 @@ namespace Tesis.Controllers
             _db = db;
         }
 
+        //Return Inventory Admin View
+        [HttpGet]
+        [Route("/Inventory/StockInOut")]
+
+        public ActionResult StockInOut()
+        {
+            // Return view
+            return View("StockInOut");
+        }
 
         //Return Inventory Admin View
         [HttpGet]
-        [Route("/Inventory/InventoryAdmin")]
-
-        public ActionResult InventoryAdmin()
+        [Route("/Inventory/GetLatestStockInOut")]
+        public ActionResult GetLatestStockInOut()
         {
-            return View("InventoryAdmin");
+            // Call the database to get the latest stock in out entries
+            var LatestStockInOutJSON = _db.GetLatestStockInOut();
+
+            return Json(LatestStockInOutJSON);
         }
 
         //Return Inventory AI View

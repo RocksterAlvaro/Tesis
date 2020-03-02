@@ -1,9 +1,10 @@
 ﻿// Global variables
+var PageTitle = document.title.slice(0, -8);
 var InOrOutRadioBtn = "In";
 var SearchApprovedBool = true;
 var SearchProductsList = [];
 var EditProductsList = [];
-var PageTitle = document.title.slice(0, -8);
+var LatestStockInOut;
 
 function StockZero() {
     // Make the AJAX request to make every product stock zero
@@ -211,11 +212,11 @@ function UpdateProductsLists() {
 
         if (SearchProductsList[i].ProductActive) {
             RowString = RowString +
-                "<td><button type=\"button\" onclick=\"DeactivateProduct(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> Desactivar </button> </td > ";
+                "<td><button type=\"button\" onclick=\"ActivateProduct(" + i + ", false)\" class=\"btn btn-sm btn-outline-danger\"> Desactivar </button> </td > ";
         }
         else {
             RowString = RowString +
-                "<td><button type=\"button\" onclick=\"ActivateProduct(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> Activar </button> </td > ";
+                "<td><button type=\"button\" onclick=\"ActivateProduct(" + i + ", true)\" class=\"btn btn-sm btn-outline-success\"> Activar </button> </td > ";
         }
 
         var RowString = RowString + "</tr>"
@@ -242,7 +243,7 @@ function UpdateInventoryMovementLists() {
     // Update Edit Products List
     if (EditProductsList.length == 0) {
         // No product added to edit list
-        $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> No se ha añadido ningún producto</td> </th>").appendTo(EditProducts);
+        $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> No se ha añadido ningún producto</td> </th>").appendTo("#EditProducts");
     } else {
         // Add products to edit list
         for (var i = 0; i < EditProductsList.length; i++) {
@@ -257,7 +258,7 @@ function UpdateInventoryMovementLists() {
                 "value=\"0\"" +
                 "placeholder=\"Unidades\"></td>" +
                 "<td><button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button> </td>" +
-                "</tr>").appendTo(EditProducts);
+                "</tr>").appendTo("#EditProducts");
         }
     }
 }
@@ -286,30 +287,38 @@ function SearchApproved() {
     }, 100);
 }
 
-function DeactivateProduct(ProductIndex) {
+function ActivateProduct(ProductIndex, ActiveBool) {
 
     // Get the product to delete
-    var ProductToDeactivate = SearchProductsList[ProductIndex];
+    var ProductToActivate = SearchProductsList[ProductIndex];
 
     // Make the AJAX request to delete a product
     $.ajax({
         type: "POST",
-        url: "/Products/DeactivateProduct",
+        url: "/Products/ActivateProduct",
         data: {
-            ProductToDeactivateJSON: JSON.stringify(ProductToDeactivate)
+            ProductToActivateJSON: JSON.stringify(ProductToActivate),
+            ActiveBoolJSON: JSON.stringify(ActiveBool)
         },
         // If the request is successfull
         success: function () {
-            UpdateLists();
+            // Reload search
+            SearchProduct($("#SearchBar").val());
         }
     });
 }
 
 function OpenProductModal(Modal, ProductIndex) {
 
+    // Saved product
+    var Product = null;
+
     switch (Modal) {
         // Create product
         case 'CreateProductModal':
+            // Set product to null
+            Product = null;
+
             // Change the title of the modal
             $("#ModalTitle").text("Crear Producto");
 
@@ -317,8 +326,14 @@ function OpenProductModal(Modal, ProductIndex) {
             $("#ProductForm").attr("action", "/Products/CreateProduct");
 
             // Assign values to the create product modal
+            // Assign values to the edit product modal
+            $("#ProductId").val("");
+            $("#ProductName").val("");
+            $("#ProductPrice").val("");
+            $("#ProductCost").val("");
             $("#ProductStock").attr("placeholder", "Unidades iniciales del producto");
             $("#ProductStockTitle").text("Inventario inicial");
+            $("#ProductStock").val("");
             $("#SuccessModalButton").text("Crear");
 
             break;
@@ -327,7 +342,7 @@ function OpenProductModal(Modal, ProductIndex) {
         case 'EditProductModal':
 
             // Get the selected product to edit
-            var Product = SearchProductsList[ProductIndex];
+            Product = SearchProductsList[ProductIndex];
 
             // Change the title of the modal
             $("#ModalTitle").text("Editar Producto");
@@ -352,4 +367,33 @@ function OpenProductModal(Modal, ProductIndex) {
             console.log("Error");
         // Crear modal de error.
     }
+}
+
+// Get the latest entries of stock in out
+function GetLatestStockInOut() {
+    $("#StockInOutList").empty();
+
+    // Make the AJAX request to get latest entries of stock in out
+    $.ajax({
+        type: "GET",
+        url: "/Inventory/GetLatestStockInOut",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        // If the request is successfull
+        success: function (Response) {
+
+            // Set to an array the latest entries of stock in out
+            LatestStockInOut = Array.from(JSON.parse(Response));
+
+            // Add products to edit list
+            for (var i = 0; i < LatestStockInOut.length; i++) {
+                $("<tr> <th scope=\"row\">" + i + "</th>" +
+                    "<td style=\"width:85px\">" + LatestStockInOut[i].StockInOutDate + "</td>" +
+                    "<td style=\"width:85px\">" + LatestStockInOut[i].TotalPrice + "</td>" +
+                    "<td style=\"width:85px\">" + LatestStockInOut[i].ClientCC + "</td>" +
+                    "<td><button type=\"button\" onclick=\"StockInOutDetails(" + i + ")\" class=\"btn btn-sm btn-outline-primary\"> Expandir </button> </td>" +
+                    "</tr>").appendTo("#StockInOutList");
+            }
+        }
+    });
 }
