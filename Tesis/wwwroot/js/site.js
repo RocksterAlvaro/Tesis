@@ -5,6 +5,7 @@ var SearchApprovedBool = true;
 var SearchProductsList = [];
 var EditProductsList = [];
 var LatestStockInOut;
+var InOut = [];
 
 function StockZero() {
     // Make the AJAX request to make every product stock zero
@@ -199,25 +200,34 @@ function UpdateLists() {
 function UpdateProductsLists() {
     // Fill the list with the products returned by the server
     for (var i = 0; i < SearchProductsList.length; i++) {
-        var RowString = "<tr >" + " <th scope=\"row\" style=\"width:235px\">" + SearchProductsList[i].ProductName + "</th>" +
-            "<td>" + SearchProductsList[i].ProductPrice + "</td>" +
-            "<td>" + SearchProductsList[i].ProductStock + "</td>" +
-            "<td> CONSTANTE </td>" +
-            "<td><button " +
-            "type=\"button\"" +
-            "onclick=\"OpenProductModal('EditProductModal', " + i + ")\"" +
-            "class=\"btn btn-sm btn-outline-primary\"" +
-            "data-toggle=\"modal\"" +
-            "data-target=\"#ProductModal\"> Editar </button> </td>";
-
         if (SearchProductsList[i].ProductActive) {
-            RowString = RowString +
-                "<td><button type=\"button\" onclick=\"ActivateProduct(" + i + ", false)\" class=\"btn btn-sm btn-outline-danger\"> Desactivar </button> </td > ";
+            var RowString = "<tr >" + " <th scope=\"row\" class=\"tableSize2\">" + SearchProductsList[i].ProductName + "</th>" +
+                "<td class=\"tableSize\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                "<td  class=\"tableSize\">" + SearchProductsList[i].ProductStock + "</td>" +
+                "<td  class=\"tableSize\">" + SearchProductsList[i].ProductCost + "</td>" +
+                "<td  class=\"tableSize3\"><button " +
+                "type=\"button\"" +
+                "onclick=\"OpenProductModal('EditProductModal', " + i + ")\"" +
+                "class=\"btn btn-sm btn-outline-primary\"" +
+                "data-toggle=\"modal\"" +
+                "data-target=\"#ProductModal\"> Editar </button> </td>" +
+                "<td class=\"tableSize3\"><button type=\"button\" onclick=\"ActivateProduct(" + i + ", false)\" class=\"btn btn-sm btn-outline-danger\"> Desactivar </button> </td > ";
         }
-        else {
-            RowString = RowString +
-                "<td><button type=\"button\" onclick=\"ActivateProduct(" + i + ", true)\" class=\"btn btn-sm btn-outline-success\"> Activar </button> </td > ";
-        }
+            else {
+            var RowString = "<tr >" + " <th scope=\"row\"  class=\"tableSize2\" style=\"color:gray\">" + SearchProductsList[i].ProductName + "</th>" +
+                    "<td class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                    "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductStock + "</td>" +
+                    "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductCost + "</td>" +
+                    "<td class=\"tableSize3\"><button " +
+                    "type=\"button\"" +
+                    "onclick=\"OpenProductModal('EditProductModal', " + i + ")\"" +
+                    "class=\"btn btn-sm btn-outline-primary\"" +
+                    "data-toggle=\"modal\"" +
+                 "data-target=\"#ProductModal\"> Editar </button> </td>" +
+                 "<td  class=\"tableSize3\"><button type=\"button\" onclick=\"ActivateProduct(" + i + ", true)\" class=\"btn btn-sm btn-outline-success\"> Activar </button> </td > ";
+            }
+
+   
 
         var RowString = RowString + "</tr>"
 
@@ -232,9 +242,9 @@ function UpdateInventoryMovementLists() {
     for (var i = 0; i < SearchProductsList.length; i++) {
         // If the Product is not being edit yet
         if (!EditProductsContains(SearchProductsList[i]) && SearchProductsList[i].ProductActive) {
-            $("<tr >" + " <th scope=\"row\" style=\"width:235px\">" + SearchProductsList[i].ProductName + "</th>" +
-                "<td style=\"width:160px\">" + SearchProductsList[i].ProductPrice + "</td>" +
-                "<td style=\"width:80px\">" + SearchProductsList[i].ProductStock + "</td>" +
+            $("<tr >" + " <th scope=\"row\" style=\"width:220px\">" + SearchProductsList[i].ProductName + "</th>" +
+                "<td style=\"width:170px\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                "<td style=\"width:90px\">" + SearchProductsList[i].ProductStock + "</td>" +
                 "<td><button type=\"button\" onclick=\"AddProductToEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button> </td>" +
                 "</tr>").appendTo(SearchProducts);
         }
@@ -387,13 +397,23 @@ function GetLatestStockInOut() {
 
             // Add products to edit list
             for (var i = 0; i < LatestStockInOut.length; i++) {
-                $("<tr> <th scope=\"row\">" + i + "</th>" +
-                    "<td style=\"width:85px\">" + LatestStockInOut[i].StockInOutDate + "</td>" +
-                    "<td style=\"width:85px\">" + LatestStockInOut[i].TotalPrice + "</td>" +
-                    "<td style=\"width:85px\">" + LatestStockInOut[i].ClientCC + "</td>" +
-                    "<td><button type=\"button\" onclick=\"StockInOutDetails(" + i + ")\" class=\"btn btn-sm btn-outline-primary\"> Expandir </button> </td>" +
+               
+                if (LatestStockInOut[i].InOrOut == "In") {
+                    InOut[i] = "Entrada";
+                } else {
+                    InOut[i] = "Salida";
+                }
+                $("<tr> <th scope=\"row\"class=\"tableSizeExtra\">" + i + "</th>" +
+                    "<td class=\"tableSize\">" + LatestStockInOut[i].StockInOutDate + "</td>" +
+                    "<td class=\"tableSize\">" + LatestStockInOut[i].TotalPrice + "</td>" +
+                    "<td class=\"tableSize\">" + LatestStockInOut[i].ClientCC + "</td>" +
+                    "<td class=\"tableSize\">" + InOut[i] + "</td>" +
+                    "<td><button type=\"button\" onclick=\"StockInOutDetails(" + i + ")\" class=\"btn btn-sm btn-outline-primary\"> Detalles </button> </td>" +
                     "</tr>").appendTo("#StockInOutList");
             }
         }
     });
 }
+
+
+

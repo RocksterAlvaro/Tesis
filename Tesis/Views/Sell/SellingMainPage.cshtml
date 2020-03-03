@@ -5,7 +5,7 @@
 }
 
 
-<div class="container">
+<div style="margin-left:56vh">
     <br />
     <div class="form-row">
 
@@ -15,7 +15,12 @@
                     <img src="~/images/icons/search.svg" width="20" height="20">
                 </div>
             </div>
-            <input id="SearchBar" oninput="SearchProduct(this.value)" class="form-control mr-sm-2 " type="search" placeholder="Buscar productos" aria-label="Search">
+            <input id="SearchBar"
+                   oninput="SearchProduct(this.value)"
+                   class="form-control mr-sm-2 "
+                   type="search"
+                   placeholder="Buscar productos"
+                   aria-label="Search">
         </div>
 
 
@@ -25,14 +30,16 @@
     <h4>Lista de productos</h4>
     <br />
 
-    <div class="form-row">
+    <div class="form-row" id="SearchProducts2">
 
-        <div class="row" id="SearchProducts">
+        <div class="row" id="ProductList">
+
         </div>
 
 
     </div>
 </div>
+
 <script>
 
     // Global variables
@@ -268,10 +275,11 @@
     }
 
 </script>
+
 <style>
     .footer {
-    display: none;
-}
+        display: none;
+    }
 </style>
 
 
@@ -280,7 +288,7 @@
     <div class="order-scroller">
         <div class="order">
             <div class="ordeline" id="EditProducts">
-                <li id="EditProduct" class="orderline">
+                <li id="OnSaleProducts" class="orderline">
                     <!--
                                     <span class="product-name">caca</span>
                                     <span class="price"> cacota7</span>
@@ -330,14 +338,3 @@
 </div>
 
 
-
-
-<!-- Basura original
- $("<li id=\"EditProduct" + i + "\"class=\"orderline\">" +
-                "<span class=\"product-name\">" + EditProductsList[i].productName + "</span>" +
-                "<span class=\"price\">" + "$" + EditProductsList[i].productPrice + "</span>" +
-                "<ul class=\"info-list\">" + "<em> 5.000</em> Unidades por " +  "$" + EditProductsList[i].productPrice +"/Unidad </em>" + //Arreglar para que sea dinamico
-                "<button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\" style=\"width:25px; height:20px;  padding-top: 0px; padding-bottom: 20px; float: right;\"> x </button>" +
-                "</ul > " +
-                "</li>").appendTo(EditProducts);
--->

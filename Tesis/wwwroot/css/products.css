@@ -4,3 +4,24 @@
     overflow: auto;
 }
 
+.tableSize2 {
+    width: 10px;
+  
+}
+
+.tableSize3 {
+    width: 10px;
+}
+.tableSize {
+    width: 200px;
+    text-align:center;
+}
+
+.tableSizeExtra {
+    width: 150px;
+    text-align: center;
+}
+.td {
+    width: 0px;
+    word-wrap: break-word;
+}
