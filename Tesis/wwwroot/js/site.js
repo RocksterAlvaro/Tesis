@@ -201,7 +201,7 @@ function UpdateProductsLists() {
     // Fill the list with the products returned by the server
     for (var i = 0; i < SearchProductsList.length; i++) {
         if (SearchProductsList[i].ProductActive) {
-            var RowString = "<tr >" + " <th scope=\"row\" class=\"tableSize2\">" + SearchProductsList[i].ProductName + "</th>" +
+            var RowString = "<tr >" + " <th scope=\"row\" style=\"width:149.35px\">" + SearchProductsList[i].ProductName + "</th>" +
                 "<td class=\"tableSize\">" + SearchProductsList[i].ProductPrice + "</td>" +
                 "<td  class=\"tableSize\">" + SearchProductsList[i].ProductStock + "</td>" +
                 "<td  class=\"tableSize\">" + SearchProductsList[i].ProductCost + "</td>" +
@@ -214,7 +214,7 @@ function UpdateProductsLists() {
                 "<td class=\"tableSize3\"><button type=\"button\" onclick=\"ActivateProduct(" + i + ", false)\" class=\"btn btn-sm btn-outline-danger\"> Desactivar </button> </td > ";
         }
             else {
-            var RowString = "<tr >" + " <th scope=\"row\"  class=\"tableSize2\" style=\"color:gray\">" + SearchProductsList[i].ProductName + "</th>" +
+            var RowString = "<tr >" + " <th scope=\"row\"  style=\"color:gray; width:149.35px\">" + SearchProductsList[i].ProductName + "</th>" +
                     "<td class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductPrice + "</td>" +
                     "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductStock + "</td>" +
                     "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductCost + "</td>" +

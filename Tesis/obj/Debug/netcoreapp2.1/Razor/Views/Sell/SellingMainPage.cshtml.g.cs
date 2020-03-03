@@ -61,7 +61,7 @@ using Tesis;
             WriteLiteral("\r\n\r\n<div style=\"margin-left:56vh\">\r\n    <br />\r\n    <div class=\"form-row\">\r\n\r\n        <div class=\"input-group col-md-12\">\r\n            <div class=\"input-group-prepend\">\r\n                <div class=\"input-group-text\">\r\n                    ");
             EndContext();
             BeginContext(329, 60, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b42258468e4488fbb9354d44a09deec", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "68d0b8c08058445cb3390f5eee9b520f", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
