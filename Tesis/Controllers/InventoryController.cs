@@ -8,6 +8,7 @@ using Tesis.ClassModels;
 
 namespace Tesis.Controllers
 {
+    // Inventory Controller
     public class InventoryController : Controller
     {
         // Imports
@@ -19,25 +20,37 @@ namespace Tesis.Controllers
             _db = db;
         }
 
-        //Return Inventory Admin View
+        // Return inventory historic movements View
         [HttpGet]
-        [Route("/Inventory/StockInOut")]
+        [Route("/Inventory/InventoryHistory")]
 
-        public ActionResult StockInOut()
+        public ActionResult InventoryHistory()
         {
             // Return view
-            return View("StockInOut");
+            return View("InventoryHistory");
         }
 
-        //Return Inventory Admin View
+        // Return last stock movements
         [HttpGet]
-        [Route("/Inventory/GetLatestStockInOut")]
-        public ActionResult GetLatestStockInOut()
+        [Route("/Inventory/LatestStockInOut")]
+        public ActionResult LatestStockInOut()
         {
             // Call the database to get the latest stock in out entries
             var LatestStockInOutJSON = _db.GetLatestStockInOut();
 
+            // Return information as JSON
             return Json(LatestStockInOutJSON);
+        }
+
+        // Return specific movement
+        [HttpGet]
+        [Route("/Inventory/SpecificMovementProducts")]
+        public ActionResult SpecificMovementProducts(string SpecificMovementId)
+        {
+            // Call the database to get the latest stock in out entries
+            var SpecificMovementProductsJSON = _db.GetSpecificMovementProducts(SpecificMovementId);
+
+            return Json(SpecificMovementProductsJSON);
         }
 
         //Return Inventory AI View
@@ -61,13 +74,13 @@ namespace Tesis.Controllers
         // Save stock changes
         [HttpPost]
         [Route("/Inventory/SaveStock")]
-        public ActionResult SaveStock(string InOrOutString, string StockOrSaleString, string EditProductsListJSON)
+        public ActionResult SaveStock(string InOrOutString, string StockOrSaleString, string MovementProductsListJSON)
         {
             // Deserialize edit product list JSON
-            var EditProductsList = JsonConvert.DeserializeObject<List<AppProducts>>(EditProductsListJSON);
+            var MovementProductList = JsonConvert.DeserializeObject<List<AppProducts>>(MovementProductsListJSON);
 
             // Update stock in database
-            var NewStock = _db.InOrOutStock(EditProductsList, InOrOutString, StockOrSaleString);
+            var NewStock = _db.InOrOutStock(MovementProductList, InOrOutString, StockOrSaleString, 0);
 
             return Json(NewStock);
         }

@@ -22,6 +22,7 @@ namespace Tesis.ClassModels
 
         // My tables
         public DbSet<AppProducts> AppProducts { get; set; }
+        public DbSet<AppProductsStock> AppProductsStock { get; set; }
         public DbSet<StockInOut> StockInOut { get; set; }
 
         // Search in the DB for a certain product
@@ -49,7 +50,24 @@ namespace Tesis.ClassModels
             return JsonConvert.SerializeObject(LatestStockInOut);
         }
 
-        public string InOrOutStock(List<AppProducts> EditProductsList, string InOrOutString, string StockOrSaleString)
+        // Search in the DB for a certain product
+        public string GetSpecificMovementProducts(string SpecificMovementId)
+        {
+            // Parameters
+            var ParameterSpecificMovementId = new SqlParameter("@SpecificMovementId", SpecificMovementId);
+
+            /*
+            var test = this.Query<AppProductsStock>().FromSql("SPGetSpecificMovementProducts @SpecificMovementId",
+                ParameterSpecificMovementId).ToList();
+            */
+
+            var SpecificMovementProducts = this.AppProductsStock.FromSql("SPGetSpecificMovementProducts @SpecificMovementId",
+                ParameterSpecificMovementId).ToList();
+            
+            return JsonConvert.SerializeObject(SpecificMovementProducts);
+        }
+
+        public string InOrOutStock(List<AppProducts> EditProductsList, string InOrOutString, string StockOrSaleString, int TotalPrice)
         {
             // Parameters
             var NewStockProductsTable = DataTableExtensions.CreateDataTable(EditProductsList);
@@ -60,13 +78,15 @@ namespace Tesis.ClassModels
 
             var ParameterInOrOutString = new SqlParameter("@InOrOut", InOrOutString);
             var ParameterStockOrSaleString = new SqlParameter("@StockOrSale", StockOrSaleString);
+            var ParameterTotalPrice = new SqlParameter("@TotalPrice", TotalPrice);
 
             // Update stock in database
             var AddOrDeleteStockResponse = this.Database
-                .ExecuteSqlCommand("EXEC [dbo].[SPInOrOutStock] @NewStockProductsTable, @InOrOut, @StockOrSale",
+                .ExecuteSqlCommand("EXEC [dbo].[SPInOrOutStock] @NewStockProductsTable, @InOrOut, @StockOrSale, @TotalPrice",
                 ParameterNewStockProductsTable,
                 ParameterInOrOutString,
-                ParameterStockOrSaleString);
+                ParameterStockOrSaleString,
+                ParameterTotalPrice);
 
             // If any product stock was updated
             if(AddOrDeleteStockResponse > 0)

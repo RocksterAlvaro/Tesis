@@ -1,5 +1,5 @@
 -- Testing
---EXEC dbo.SPGetSearchProduct @SearchString = 'Per';
+-- EXEC dbo.SPGetSpecificMovementProducts @SpecificMovementId = 'EDE15B9B-DD7D-42FE-AF13-6306DCEBA397';
 
 /* Stored Procedures */
 
@@ -28,22 +28,37 @@ GO
 CREATE PROCEDURE SPReceiptGenerator
 	@NewStockProductsTable AS AspNetProductsType READONLY,
 	@InOrOut nvarchar(50),
-	@StockOrSale nvarchar(50)
+	@StockOrSale nvarchar(50),
+	@TotalPrice int
 AS
 BEGIN
 	DECLARE @AspNetStockInOutId VARCHAR(36) = NEWID();
 
-	INSERT INTO [AspNetStockInOut]
-	VALUES
-	(
-		@AspNetStockInOutId, -- Id
-		'989D4C70-1A43-4411-9CDC-4DDF5709C74C', -- UserId
-		FORMAT(GETDATE(), 'dd/MM/yyyy'), -- StockInOutDate
-		@InOrOut, -- InOrOut
-		@StockOrSale, -- StockOrSale
-		0, -- TotalPrice - (0)
-		80421514 -- ClientCC - Cedula
-	);
+	-- If the table products sum
+	IF @StockOrSale = 'Stock'
+		INSERT INTO [AspNetStockInOut]
+		VALUES
+		(
+			@AspNetStockInOutId, -- Id
+			'989D4C70-1A43-4411-9CDC-4DDF5709C74C', -- UserId
+			FORMAT(GETDATE(), 'dd/MM/yyyy'), -- StockInOutDate
+			@InOrOut, -- InOrOut
+			@StockOrSale, -- StockOrSale
+			0, -- TotalPrice - (0)
+			80421514 -- ClientCC - Cedula
+		);
+	ELSE
+		INSERT INTO [AspNetStockInOut]
+		VALUES
+		(
+			@AspNetStockInOutId, -- Id
+			'989D4C70-1A43-4411-9CDC-4DDF5709C74C', -- UserId
+			FORMAT(GETDATE(), 'dd/MM/yyyy'), -- StockInOutDate
+			@InOrOut, -- InOrOut
+			@StockOrSale, -- StockOrSale
+			@TotalPrice, -- TotalPrice - (0)
+			80421514 -- ClientCC - Cedula
+		);
 
 	INSERT INTO [AspNetProductsList]
 		SELECT [@NewStockProductsTable].Id, [ProductStock], @AspNetStockInOutId
@@ -57,7 +72,8 @@ GO
 CREATE PROCEDURE SPInOrOutStock
 	@NewStockProductsTable AS AspNetProductsType READONLY, -- Table of edited products
 	@InOrOut nvarchar(50),
-	@StockOrSale nvarchar(50)
+	@StockOrSale nvarchar(50),
+	@TotalPrice int
 AS
 BEGIN
 	
@@ -80,7 +96,8 @@ BEGIN
 	EXEC SPReceiptGenerator
 		@NewStockProductsTable,
 		@InOrOut,
-		@StockOrSale
+		@StockOrSale,
+		@TotalPrice
 END
 GO
 
@@ -112,5 +129,22 @@ AS
 BEGIN
 	SELECT TOP 30 * FROM [AspNetStockInOut]
 	ORDER BY CONVERT(datetime, [AspNetStockInOut].[StockInOutDate], 103) ASC
+END
+GO
+
+/* Get specific movement products */
+CREATE PROCEDURE SPGetSpecificMovementProducts
+	@SpecificMovementId nvarchar(36)
+AS
+BEGIN
+	--SELECT TOP 1 * FROM [AspNetProductsList]
+	SELECT
+		[AspNetProducts].*,
+		[AspNetProductsList].StockChange
+	FROM [AspNetProductsList]
+	-- WHERE [AspNetProductsList].StockInOutId = @SpecificMovementId
+	INNER JOIN [AspNetProducts]
+	ON [AspNetProductsList].StockInOutId = @SpecificMovementId AND
+		[AspNetProductsList].ProductId = [AspNetProducts].Id
 END
 GO

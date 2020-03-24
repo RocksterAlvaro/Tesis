@@ -1,11 +1,47 @@
 ﻿// Global variables
-var PageTitle = document.title.slice(0, -8);
-var InOrOutRadioBtn = "In";
-var SearchApprovedBool = true;
-var SearchProductsList = [];
-var EditProductsList = [];
-var LatestStockInOut;
-var InOut = [];
+var PageTitle = document.title.slice(0, -8); // Page title
+var InOrOutRadioBtn = "In"; // Select if products ar going in or out
+var SearchApprovedBool = true; // If another search is avaible or you must wait
+var SearchProductsList = []; // List of products returned by databese after search
+var MovementProductsList = []; // Secondary list of products. For now "Edit Products" or "Selling products"
+var SellingProductsUnits = []; // The units of each product to sell
+var TotalPrice = 0; // The total price of all selling products
+var TotalUnits = 0; // The total units of products to sell
+var StockInOutList = []; // List of movements returned by databese
+
+function Sell() {
+
+    // Replace stock with selling units in MovementProductsList
+    for (var i = 0; i < MovementProductsList.length; i++) {
+        // Update selling products stock with selling units
+        MovementProductsList[i].ProductStock = SellingProductsUnits[i];
+    }
+
+    // Make the AJAX request to create a receipt and finish a sell
+    $.ajax({
+        type: "POST",
+        url: "/Sell/BasicSell",
+        data: {
+            // Confirm is a stock movement
+            TotalPrice: TotalPrice,
+
+            // Send products to sell in JSON
+            MovementProductsListJSON: JSON.stringify(MovementProductsList)
+        },
+        // If the request is successfull
+        success: function (response) {
+
+            // Update stock from changes
+            // MovementProductsList = Array.from(JSON.parse(response));
+
+            // Remove all products from selling
+            MovementProductsList.length = 0;
+
+            // Update Lists
+            SearchProduct($("#SearchBar").val());
+        }
+    });
+}
 
 function StockZero() {
     // Make the AJAX request to make every product stock zero
@@ -38,13 +74,13 @@ function ModifyStock() {
     }
 
     // Update local stock values
-    for (var i = 0; i < EditProductsList.length; i++) {
+    for (var i = 0; i < MovementProductsList.length; i++) {
         // Create a variable to save the product id of the edit products
         var NewProductStockId = "#ProductStock" + i;
         var NewProductStock = parseInt($(NewProductStockId).val());
 
         if ((InOrOutRadioBtn == "Out" &&
-            EditProductsList[i].ProductStock < NewProductStock) ||
+            MovementProductsList[i].ProductStock < NewProductStock) ||
             (!Number.isInteger(NewProductStock) ||
                 NewProductStock <= -1 ||
                 NewProductStock > 1000000000)
@@ -54,10 +90,9 @@ function ModifyStock() {
         }
 
         // Update the stock value of teh edit products by the user input
-        EditProductsList[i].ProductStock = parseInt($(NewProductStockId).val());
+        MovementProductsList[i].ProductStock = parseInt($(NewProductStockId).val());
     }
-
-
+    
     if (ValidNewStock) {
         SaveStock(InOrOutRadioBtn);
     } else {
@@ -79,13 +114,13 @@ function SaveStock(InOrOutRadioBtn) {
             StockOrSaleString: "Stock",
 
             // Send products to modify in JSON
-            EditProductsListJSON: JSON.stringify(EditProductsList)
+            MovementProductsListJSON: JSON.stringify(MovementProductsList)
         },
         // If the request is successfull
         success: function (response) {
 
             // Update stock from changes
-            EditProductsList = Array.from(JSON.parse(response));
+            MovementProductsList = Array.from(JSON.parse(response));
 
             // Update the Lists
             UpdateLists();
@@ -147,10 +182,10 @@ function SearchProduct(SearchWord) {
     }
 }
 
-function AddProductToEditInventory(ProductIndex) {
+function AddProductToMovementInventory(ProductIndex) {
 
     // Add the product to the list of editing products
-    EditProductsList.push(SearchProductsList[ProductIndex]);
+    MovementProductsList.push(SearchProductsList[ProductIndex]);
 
     // Remove the product from the list of searched products
     SearchProductsList.splice(ProductIndex, 1);
@@ -159,9 +194,18 @@ function AddProductToEditInventory(ProductIndex) {
     SearchProduct($("#SearchBar").val());
 }
 
-function RemoveProductFromEditInventory(ProductIndex) {
+function RemoveProductFromMovementInventory(ProductIndex) {
     // Remove the product from the list of editing products
-    EditProductsList.splice(ProductIndex, 1);
+    MovementProductsList.splice(ProductIndex, 1);
+    
+    if (PageTitle == 'SellMain')
+    {
+        //Delete product units from total
+        TotalUnits -= TotalUnits[ProductIndex];
+
+        //Delete product units from array of product units
+        SellingProductsUnits.splice(ProductIndex, 1);
+    }
 
     // Update Lists
     SearchProduct($("#SearchBar").val());
@@ -172,6 +216,9 @@ function UpdateLists() {
     // Clear Search Products List
     $("#SearchProducts").empty();
 
+    // Clear Edit Products List HTML
+    if ($('#MovementProducts').length) { $("#MovementProducts").empty(); }
+
     switch (PageTitle) {
         // Products page
         case 'Products':
@@ -180,12 +227,16 @@ function UpdateLists() {
             break;
         // Inventory movements page
         case 'InventoryMovement':
-
-            // Clear Edit Products List HTML
-            $("#EditProducts").empty();
-
+            
             // Update lists
             UpdateInventoryMovementLists()
+
+            break;
+
+        // Selling Page page
+        case 'SellMain':
+            // Update lists
+            UpdateSellMainLists()
 
             break;
 
@@ -241,24 +292,24 @@ function UpdateInventoryMovementLists() {
     // Fill the list with the products returned by the server
     for (var i = 0; i < SearchProductsList.length; i++) {
         // If the Product is not being edit yet
-        if (!EditProductsContains(SearchProductsList[i]) && SearchProductsList[i].ProductActive) {
+        if (!MovementProductsContains(SearchProductsList[i]) && SearchProductsList[i].ProductActive) {
             $("<tr >" + " <th scope=\"row\" style=\"width:220px\">" + SearchProductsList[i].ProductName + "</th>" +
                 "<td style=\"width:170px\">" + SearchProductsList[i].ProductPrice + "</td>" +
                 "<td style=\"width:90px\">" + SearchProductsList[i].ProductStock + "</td>" +
-                "<td><button type=\"button\" onclick=\"AddProductToEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button> </td>" +
+                "<td><button type=\"button\" onclick=\"AddProductToMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button> </td>" +
                 "</tr>").appendTo(SearchProducts);
         }
     }
     
     // Update Edit Products List
-    if (EditProductsList.length == 0) {
+    if (MovementProductsList.length == 0) {
         // No product added to edit list
-        $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> No se ha añadido ningún producto</td> </th>").appendTo("#EditProducts");
+        $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> No se ha añadido ningún producto</td> </th>").appendTo("#MovementProducts");
     } else {
         // Add products to edit list
-        for (var i = 0; i < EditProductsList.length; i++) {
-            $("<tr >" + " <th scope=\"row\" style=\"width:215px\">" + EditProductsList[i].ProductName + "</th>" +
-                "<td style=\"width:85px\">" + EditProductsList[i].ProductStock + "</td>" +
+        for (var i = 0; i < MovementProductsList.length; i++) {
+            $("<tr >" + " <th scope=\"row\" style=\"width:215px\">" + MovementProductsList[i].ProductName + "</th>" +
+                "<td style=\"width:85px\">" + MovementProductsList[i].ProductStock + "</td>" +
                 "<td><input " +
                 "id =\"ProductStock" + i + "\"" +
                 "class=\" form-control formStyle\"" +
@@ -267,17 +318,108 @@ function UpdateInventoryMovementLists() {
                 "min=\"0\"" +
                 "value=\"0\"" +
                 "placeholder=\"Unidades\"></td>" +
-                "<td><button type=\"button\" onclick=\"RemoveProductFromEditInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button> </td>" +
-                "</tr>").appendTo("#EditProducts");
+                "<td><button type=\"button\" onclick=\"RemoveProductFromMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button> </td>" +
+                "</tr>").appendTo("#MovementProducts");
         }
     }
 }
 
+// Update Lists
+function UpdateSellMainLists() {
+
+    // Fill the list with the products returned by the database
+    for (var i = 0; i < SearchProductsList.length; i++) {
+        // If the Product is active
+        if (!MovementProductsContains(SearchProductsList[i]) && SearchProductsList[i].ProductActive) {
+            $("<div id=\"SearchProduct" + i + "\" class=\"card justify-content-center\"  style=\"width: 12rem;\">" +
+                " <div class=\"card-body\">" +
+                "<h5 class=\"card-title\">" + SearchProductsList[i].ProductName + "</h5>" +
+                "<h6 class=\"card-subtitle mb-2 text-muted\">" + SearchProductsList[i].ProductStock + " Unidades" + "</h6>" +
+                "<p class=\"card-text\">" + SearchProductsList[i].ProductPrice + " $" + "</p>" +
+                "<button type=\"button\" onclick=\"AddProductToMovementInventory(" + i + ")\" class=\"btn btn-outline-info\"> Agregar </button>" +
+                "</div > " +
+                "</div>").appendTo(SearchProducts);
+        }
+    }
+
+    // Clear selling price and units
+    TotalPrice = 0;
+    TotalUnits = 0;
+
+    // Update Edit Products List
+    for (var i = 0; i < MovementProductsList.length; i++) {
+
+        if (SellingProductsUnits[i] == null) { SellingProductsUnits[i] = 1; }
+
+        $("<li id=\"EditProduct" + i + "\"class=\"orderline\">" +
+            "<span class=\"product-name\">" + MovementProductsList[i].ProductName + "</span>" +
+            "<span class=\"price\"> $" + (MovementProductsList[i].ProductPrice * SellingProductsUnits[i]) + "</span>" +
+            "<ul class=\"info-list\">" + "<div class=\"btn-toolbar mb-4\"> <div class=\"input-group\">" +
+            "<input type=\"text\" onChange=\"ChangeUnitsManually(" + i + ")\" id=\"ProductUnits" + i + "\" value=" + SellingProductsUnits[i] + " class=\"form-control\" style=\"width: 60px; height: 22px; \"> <div class=\"input-group-prepend\"> <div class=\"input-group-prepend\">  <div class=\"btn-group mb-3\">" +
+            "<button type=\"button\" onclick=\"IncreaseSellUnits(" + i + ")\" class=\"btn btn-outline-success\" style=\"border-radius: 0px; width: 25px; height: 20px; padding-top: 0px; padding-bottom: 20px; \">+</button>" +
+            "<button type=\"button\" onclick=\"DecreaseSellUnits(" + i + ")\" class=\"btn btn-outline-danger\" style=\"width:25px; height:20px; padding-top: 0px; padding-bottom: 20px; float: right;\">-</button>" +
+            "</div></div></div>" +
+            "<span style=\"margin-left:10px\"> Unidades </span>" +
+            "<button type=\"button\" onclick=\"RemoveProductFromMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\" style=\"width:25px; height:20px;  padding-top: 0px; padding-bottom: 20px; margin-left:100px;\"> x </button>" +
+            "</div></ul > " +
+            "</li>").appendTo(MovementProducts);
+        
+        // Calculate total selling price
+        TotalPrice += (MovementProductsList[i].ProductPrice * SellingProductsUnits[i]);
+
+        // Calculate total selling units
+        TotalUnits += SellingProductsUnits[i];
+    }
+
+    // If there are products on sale
+    if (TotalUnits != 0) {
+        // Update sale total price
+        $("#TotalPrice").text('$' + TotalPrice);
+
+        // Update sale total articles
+        $("#TotalUnits").text(TotalUnits);
+    } else {
+        // There are no products on sale
+        $("#TotalPrice").text('$0');
+        $("#TotalUnits").text('0');
+    }
+}
+
+// Increase # units using + button
+function IncreaseSellUnits(ProductIndex) {
+    // Increase product units
+    SellingProductsUnits[ProductIndex]++;
+
+    // Increase total products units
+    TotalUnits++;
+
+    // Update lists
+    UpdateLists();
+}
+
+// Decrease # units using - button
+function DecreaseSellUnits(ProductIndex) {
+    if (SellingProductsUnits[ProductIndex] <= 1) {
+        // Remove the product from the selling list
+        RemoveProductFromMovementInventory(ProductIndex);
+
+    } else {
+        // Decrease product units
+        SellingProductsUnits[ProductIndex]--;
+
+        // Decrease total products units
+        TotalUnits--;
+
+        // Update lists
+        UpdateLists();
+    }
+}
+
 // Check if Edit Products List contains a certain product
-function EditProductsContains(SearchProduct) {
+function MovementProductsContains(SearchProduct) {
     // Loop throught the List
-    for (var i = 0; i < EditProductsList.length; i++) {
-        if (EditProductsList[i].Id == SearchProduct.Id) {
+    for (var i = 0; i < MovementProductsList.length; i++) {
+        if (MovementProductsList[i].Id == SearchProduct.Id) {
             return true;
         }
     }
@@ -285,6 +427,7 @@ function EditProductsContains(SearchProduct) {
     return false;
 }
 
+// Stop next search for a short period of time
 function SearchApproved() {
 
     // Deny search
@@ -297,6 +440,7 @@ function SearchApproved() {
     }, 100);
 }
 
+// Activate/Deactive product
 function ActivateProduct(ProductIndex, ActiveBool) {
 
     // Get the product to delete
@@ -318,6 +462,7 @@ function ActivateProduct(ProductIndex, ActiveBool) {
     });
 }
 
+// Edit/Create product modal
 function OpenProductModal(Modal, ProductIndex) {
 
     // Saved product
@@ -336,7 +481,6 @@ function OpenProductModal(Modal, ProductIndex) {
             $("#ProductForm").attr("action", "/Products/CreateProduct");
 
             // Assign values to the create product modal
-            // Assign values to the edit product modal
             $("#ProductId").val("");
             $("#ProductName").val("");
             $("#ProductPrice").val("");
@@ -386,34 +530,65 @@ function GetLatestStockInOut() {
     // Make the AJAX request to get latest entries of stock in out
     $.ajax({
         type: "GET",
-        url: "/Inventory/GetLatestStockInOut",
+        url: "/Inventory/LatestStockInOut",
         dataType: "json",
         contentType: 'application/json; charset=utf-8',
         // If the request is successfull
         success: function (Response) {
 
+            // Temporal variable to store translation
+            var InOut = '';
+
             // Set to an array the latest entries of stock in out
-            LatestStockInOut = Array.from(JSON.parse(Response));
+            StockInOutList = Array.from(JSON.parse(Response));
 
             // Add products to edit list
-            for (var i = 0; i < LatestStockInOut.length; i++) {
+            for (var i = 0; i < StockInOutList.length; i++) {
                
-                if (LatestStockInOut[i].InOrOut == "In") {
-                    InOut[i] = "Entrada";
+                if (StockInOutList[i].InOrOut == "In") {
+                    InOut = "Entrada";
                 } else {
-                    InOut[i] = "Salida";
+                    InOut = "Salida";
                 }
                 $("<tr> <th scope=\"row\"class=\"tableSizeExtra\">" + i + "</th>" +
-                    "<td class=\"tableSize\">" + LatestStockInOut[i].StockInOutDate + "</td>" +
-                    "<td class=\"tableSize\">" + LatestStockInOut[i].TotalPrice + "</td>" +
-                    "<td class=\"tableSize\">" + LatestStockInOut[i].ClientCC + "</td>" +
-                    "<td class=\"tableSize\">" + InOut[i] + "</td>" +
-                    "<td><button type=\"button\" onclick=\"StockInOutDetails(" + i + ")\" class=\"btn btn-sm btn-outline-primary\"> Detalles </button> </td>" +
+                    "<td class=\"tableSize\">" + StockInOutList[i].StockInOutDate + "</td>" +
+                    "<td class=\"tableSize\">" + StockInOutList[i].TotalPrice + "</td>" +
+                    "<td class=\"tableSize\">" + StockInOutList[i].ClientCC + "</td>" +
+                    "<td class=\"tableSize\">" + InOut + "</td>" +
+                    "<td><button " +
+                    "type=\"button\"" +
+                    "onclick =\"StockInOutDetails('" + StockInOutList[i].Id + "', " + i + ")\"" +
+                    "class=\"btn btn-sm btn-outline-primary\"" +
+                    "data-toggle=\"modal\"" +
+                    "data-target=\"#DetailsStockInOutModal\"> Detalles </button> </td>" +
                     "</tr>").appendTo("#StockInOutList");
             }
         }
     });
 }
 
+function StockInOutDetails(SpecificMovementId, MovementIndex) {
 
+    // Make the AJAX request to get a specific movement
+    $.ajax({
+        type: "GET",
+        url: "/Inventory/SpecificMovementProducts",
+        dataType: "json",
+        data: {
+            SpecificMovementId: SpecificMovementId
+        },
+        contentType: 'application/json; charset=utf-8',
+        // If the request is successfull
+        success: function (Response) {
 
+            // Set to an array the latest entries of stock in out
+            var SpecificMovementProducts = Array.from(JSON.parse(Response));
+
+            console.log('Productos: ', SpecificMovementProducts);
+
+            // Write stuff in modal
+        }
+
+    });
+
+}
