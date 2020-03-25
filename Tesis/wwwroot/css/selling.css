@@ -1,4 +1,11 @@
-﻿
+﻿.sellingResponsiveScroll {
+    max-height: 63vh;
+    min-height: 63vh;
+    width:87%;
+    overflow-y: auto;
+    overflow-x:hidden;
+    display: block;
+}
 
 .card {
     margin-left: 40px;
@@ -21,7 +28,7 @@
     left: 0;
     width: 400px;
     top: 70px;
-    bottom: 25vh;
+    bottom: 30vh;
     border-right: solid 1px #CECBCB;
     border-right: solid 3px #787878;
     background: #ffffff;
@@ -46,7 +53,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 .order {

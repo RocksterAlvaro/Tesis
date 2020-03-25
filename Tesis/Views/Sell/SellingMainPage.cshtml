@@ -5,7 +5,7 @@
 }
 
 
-<div style="margin-left:56vh">
+<div style="margin-left:500px">
     <br />
     <div class="form-row">
 
@@ -17,7 +17,7 @@
             </div>
             <input id="SearchBar"
                    oninput="SearchProduct(this.value)"
-                   class="form-control mr-sm-2 "
+                   class="form-control col-md-10"
                    type="search"
                    placeholder="Buscar productos"
                    aria-label="Search">
@@ -27,14 +27,15 @@
 
     <br />
 
-    <h4>Lista de productos</h4>
+    <h4> &nbsp Lista de productos</h4>
 
     <br />
+    <div class="sellingResponsiveScroll">
+        <div class="form-row" id="SearchProducts">
 
-    <div class="form-row" id="SearchProducts">
+            <!-- Search Products -->
 
-        <!-- Search Products -->
-
+        </div>
     </div>
 
 </div>
@@ -83,22 +84,26 @@
                 <div class="justify-content-md-center">
                     <br />
 
-                    <button
-                            type="button"
-                            class="btn btn-outline-danger
-                            totalButtons offset-2"> Cancelar </button>
+                    <button type="button"
+                            class="btn btn-outline-danger totalButtons offset-2"
+                            data-toggle="modal"
+                            data-target="#CancelSellModal">
+                        Cancelar
+                    </button>
 
-                    <button
-                            type="button"
+                    <button type="button"
                             class="btn btn-outline-success totalButtons"
                             data-toggle="modal"
-                            data-target="#ConfirmModal"> Vender </button>
+                            data-target="#ConfirmModal">
+                        Vender
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!--Selling confirmation modal-->
 <div class="modal fade bd-example-modal-lg" id="ConfirmModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -113,24 +118,92 @@
             </div>
             <div class="modal-footer">
 
-                <button
-                        class="btn btn-outline-danger my-2 my-sm-0"
+                <button class="btn btn-outline-danger my-2 my-sm-0"
                         data-dismiss="modal"
-                        aria-label="Close"> No </button>
+                        aria-label="Close">
+                    No
+                </button>
 
-                <button
-                        onclick="Sell()"
+                <button onclick="Sell()"
                         class="btn btn-outline-success my-2 my-sm-0"
                         data-dismiss="modal"
-                        aria-label="Close"> Sí </button>
+                        aria-label="Close">
+                    Sí
+                </button>
 
             </div>
         </div>
     </div>
 </div>
 
+<!--Cancel sell modal-->
+<div class="modal fade bd-example-modal-lg" id="CancelSellModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle"> Cancelar venta </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro que deseas cancelar la venta?, todos los productos en la lista de ventas serán retirados y esta acción no se puede deshacer.
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-outline-danger my-2 my-sm-0"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    No
+                </button>
+
+                <button onclick="CancelSell()"
+                        class="btn btn-outline-success my-2 my-sm-0"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    Sí
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Invalid Values Modal -->
+<div class="modal fade bd-example-modal-lg" id="InvalidValueModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!-- Modal content -->
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">Error, datos digitados no validos</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                El valor de unidades digitado en alguno de los productos no es valido, asegurate de que estos valores: <br /><br />
+                -Sean numerericos <b>POSITIVOS</b> (1, 2, 30, 60, 1000, etc).<br />
+                -No contengan caracteres especiales (-, *, +, !, etc).<br />
+                -En el caso de hacer retiro de mercancia, el numero de unidades a sacar debe ser menor o igual al numero de unidades registradas. Por ejemplo, si hay registradas 2 unidades de naranjas solo puede sacar 1 o 2 unidades.<br /><br />
+                Además asegurese de que haya por lo menos 1 producto al hacer el traslado de mercancia. En el caso de que no cumpla con alguna de estas restricciones, no podrá hacer el movimiento de inventario.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-info my-2 my-sm-0" data-dismiss="modal" aria-label="Close"> Cerrar </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <style>
     .footer {
         display: none;
+    }
+
+    .body-content {
+        overflow-x: hidden;
     }
 </style>

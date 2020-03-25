@@ -11,36 +11,88 @@ var StockInOutList = []; // List of movements returned by databese
 
 function Sell() {
 
+   
+    // Assume new stock values are valid
+    var ValidNewSell = true;
+
+
+    //Validates that there is 1 or more products on the movement products list
+    if (MovementProductsList.length < 1) {
+     
+        ValidNewSell = false;
+    } else {
+        ValidNewSell = true;
+    }
+
+
+
+
     // Replace stock with selling units in MovementProductsList
     for (var i = 0; i < MovementProductsList.length; i++) {
         // Update selling products stock with selling units
         MovementProductsList[i].ProductStock = SellingProductsUnits[i];
     }
 
-    // Make the AJAX request to create a receipt and finish a sell
-    $.ajax({
-        type: "POST",
-        url: "/Sell/BasicSell",
-        data: {
-            // Confirm is a stock movement
-            TotalPrice: TotalPrice,
 
-            // Send products to sell in JSON
-            MovementProductsListJSON: JSON.stringify(MovementProductsList)
-        },
-        // If the request is successfull
-        success: function (response) {
-
-            // Update stock from changes
-            // MovementProductsList = Array.from(JSON.parse(response));
-
-            // Remove all products from selling
-            MovementProductsList.length = 0;
-
-            // Update Lists
-            SearchProduct($("#SearchBar").val());
+    // Esto es lo que no funciona, no sé por que no me trae el valor de NewProductStock
+    for (var i = 0; i < MovementProductsList.length; i++) {
+        // Create a variable to save the product id of the edit products
+        var NewProductStockId = "#ProductStock" + i;
+        var NewProductStock = parseInt($(NewProductStockId).val());
+        console.log(NewProductStock);
+        console.log(MovementProductsList[i].ProductStock);
+        if ((InOrOutRadioBtn == "Out" &&
+            MovementProductsList[i].ProductStock < NewProductStock) ||
+            (!Number.isInteger(NewProductStock) ||
+                NewProductStock <= 0 ||
+                NewProductStock > 1000000000)
+        ) {
+            ValidNewStock = false;
+            break;
         }
-    });
+    }
+
+
+
+    if (ValidNewSell) {
+        // Make the AJAX request to create a receipt and finish a sell
+        $.ajax({
+            type: "POST",
+            url: "/Sell/BasicSell",
+            data: {
+                // Confirm is a stock movement
+                TotalPrice: TotalPrice,
+
+                // Send products to sell in JSON
+                MovementProductsListJSON: JSON.stringify(MovementProductsList)
+            },
+            // If the request is successfull
+            success: function (response) {
+
+                // Update stock from changes
+                // MovementProductsList = Array.from(JSON.parse(response));
+
+                // Remove all products from selling
+                MovementProductsList.length = 0;
+
+                // Update Lists
+                SearchProduct($("#SearchBar").val());
+            }
+        });
+    } else {
+        $("#InvalidValueModal").modal();
+    }
+
+    
+}
+
+
+function CancelSell() {
+    // Remove all products from selling
+    MovementProductsList.length = 0;
+
+    // Update Lists
+    SearchProduct($("#SearchBar").val());
 }
 
 function StockZero() {
@@ -73,17 +125,26 @@ function ModifyStock() {
         InOrOutRadioBtn = "Out";
     }
 
+    //Validates that there is 1 or more products on the movement products list
+    if (MovementProductsList.length < 1) {
+
+        ValidNewStock = false;
+    } else {
+        ValidNewStock = true;
+    }
+
     // Update local stock values
     for (var i = 0; i < MovementProductsList.length; i++) {
         // Create a variable to save the product id of the edit products
         var NewProductStockId = "#ProductStock" + i;
         var NewProductStock = parseInt($(NewProductStockId).val());
-
+        console.log(NewProductStock);
+        console.log(MovementProductsList[i].ProductStock);
         if ((InOrOutRadioBtn == "Out" &&
             MovementProductsList[i].ProductStock < NewProductStock) ||
             (!Number.isInteger(NewProductStock) ||
-                NewProductStock <= -1 ||
-                NewProductStock > 1000000000)
+                NewProductStock <= 0 ||
+            NewProductStock > 1000000000)
         ) {
             ValidNewStock = false;
             break;
@@ -333,10 +394,10 @@ function UpdateSellMainLists() {
         if (!MovementProductsContains(SearchProductsList[i]) && SearchProductsList[i].ProductActive) {
             $("<div id=\"SearchProduct" + i + "\" class=\"card justify-content-center\"  style=\"width: 12rem;\">" +
                 " <div class=\"card-body\">" +
-                "<h5 class=\"card-title\">" + SearchProductsList[i].ProductName + "</h5>" +
-                "<h6 class=\"card-subtitle mb-2 text-muted\">" + SearchProductsList[i].ProductStock + " Unidades" + "</h6>" +
-                "<p class=\"card-text\">" + SearchProductsList[i].ProductPrice + " $" + "</p>" +
-                "<button type=\"button\" onclick=\"AddProductToMovementInventory(" + i + ")\" class=\"btn btn-outline-info\"> Agregar </button>" +
+                "<h5 class=\"card-title\" style=\"text-align:center; font-weight: bold\">" + SearchProductsList[i].ProductName + "</h5>" +
+                "<h6 class=\"card-subtitle mb-2 text-muted\"  style=\"text-align:center\">" + SearchProductsList[i].ProductStock + " Unidades" + "</h6>" +
+                "<p class=\"card-text\" style=\"text-align:center\">" + SearchProductsList[i].ProductPrice + " $" + "</p>" +
+                "<button type=\"button\" style=\"margin-left:3.6vh\" onclick=\"AddProductToMovementInventory(" + i + ")\" class=\"btn btn-outline-info\"> Agregar </button>" +
                 "</div > " +
                 "</div>").appendTo(SearchProducts);
         }
@@ -355,12 +416,12 @@ function UpdateSellMainLists() {
             "<span class=\"product-name\">" + MovementProductsList[i].ProductName + "</span>" +
             "<span class=\"price\"> $" + (MovementProductsList[i].ProductPrice * SellingProductsUnits[i]) + "</span>" +
             "<ul class=\"info-list\">" + "<div class=\"btn-toolbar mb-4\"> <div class=\"input-group\">" +
-            "<input type=\"text\" onChange=\"ChangeUnitsManually(" + i + ")\" id=\"ProductUnits" + i + "\" value=" + SellingProductsUnits[i] + " class=\"form-control\" style=\"width: 60px; height: 22px; \"> <div class=\"input-group-prepend\"> <div class=\"input-group-prepend\">  <div class=\"btn-group mb-3\">" +
+            "<input type=\"text\" onChange=\"ChangeUnitsManually(" + i + ")\" id=\"ProductUnits" + i + "\" value=" + SellingProductsUnits[i] + " class=\"form-control\" style=\"width: 50px; height: 22px; \"> <div class=\"input-group-prepend\"> <div class=\"input-group-prepend\">  <div class=\"btn-group mb-3\">" +
             "<button type=\"button\" onclick=\"IncreaseSellUnits(" + i + ")\" class=\"btn btn-outline-success\" style=\"border-radius: 0px; width: 25px; height: 20px; padding-top: 0px; padding-bottom: 20px; \">+</button>" +
             "<button type=\"button\" onclick=\"DecreaseSellUnits(" + i + ")\" class=\"btn btn-outline-danger\" style=\"width:25px; height:20px; padding-top: 0px; padding-bottom: 20px; float: right;\">-</button>" +
             "</div></div></div>" +
-            "<span style=\"margin-left:10px\"> Unidades </span>" +
-            "<button type=\"button\" onclick=\"RemoveProductFromMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\" style=\"width:25px; height:20px;  padding-top: 0px; padding-bottom: 20px; margin-left:100px;\"> x </button>" +
+            "<span style=\"margin-left:10px;margin-right:60px\"> Unidades </span>" +
+            "<button type=\"button\" onclick=\"RemoveProductFromMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\" style=\"width:25px; height:20px;  padding-top: 0px; padding-bottom: 20px\"> x </button>" +
             "</div></ul > " +
             "</li>").appendTo(MovementProducts);
         
@@ -591,4 +652,232 @@ function StockInOutDetails(SpecificMovementId, MovementIndex) {
 
     });
 
+}
+
+
+// Neural network stuff
+//Vrains JS
+ /*  
+    // Initialize and design the NN
+    const neuralNetwork = new brain.NeuralNetwork({ hiddenLayers: [3] });
+
+//Input and output data
+const inputs = [
+    { input: [1, 0], output: [5] },
+    { input: [2, 0], output: [10] },
+    { input: [3, 0], output: [3] },
+    { input: [4, 0], output: [4] },
+    { input: [1, 1], output: [7] },
+    { input: [2, 1], output: [15] },
+    { input: [3, 1], output: [5] },
+    { input: [1, 0], output: [4] },
+    { input: [2, 0], output: [9] },
+    { input: [3, 0], output: [2] },
+    { input: [4, 0], output: [3] }
+];
+
+const outputs = [
+
+];
+
+// Train the NN
+neuralNetwork.train(trainingData, {
+    //Show the error, it must be close to 0 
+    log: (error) => console.log(error),
+    logPeroid: 500
+});
+
+//Do a prediction
+console.log(neuralNetwork.run([1, 0]));
+
+
+
+//VII
+        //Price prediction
+        const data = [
+        {"date":"2012-11-02","name":"pudding","price":2000,"soldStock":40},
+        {"date":"2012-11-03","name":"pudding","price":2000,"soldStock":50},
+        {"date":"2012-11-04","name":"pudding","price":2000,"soldStock":60},
+        {"date":"2012-11-05","name":"pudding","price":2000,"soldStock":30},
+        {"date":"2012-11-06","name":"pudding","price":2000,"soldStock":20},
+        {"date":"2012-11-07","name":"pudding","price":2000,"soldStock":20},
+        {"date":"2012-11-02","name":"cosplay","price":90000,"soldStock":5},
+        {"date":"2012-11-03","name":"cosplay","price":90000,"soldStock":6},
+        {"date":"2012-11-04","name":"cosplay","price":90000,"soldStock":7},
+        {"date":"2012-11-05","name":"cosplay","price":90000,"soldStock":8},
+        {"date":"2012-11-06","name":"cosplay","price":90000,"soldStock":9},
+        {"date":"2012-11-07","name":"cosplay","price":90000,"soldStock":10},
+        {"date":"2012-11-02","name":"book","price":40000,"soldStock":40},
+        {"date":"2012-11-03","name":"book","price":40000,"soldStock":35},
+        {"date":"2012-11-04","name":"book","price":40000,"soldStock":30},
+        {"date":"2012-11-05","name":"book","price":40000,"soldStock":25},
+        {"date":"2012-11-06","name":"book","price":40000,"soldStock":20},
+        {"date":"2012-11-07","name":"book","price":40000,"soldStock":15},
+        {"date":"2012-11-02","name":"xbox","price":50000,"soldStock":40},
+        {"date":"2012-11-03","name":"xbox","price":50000,"soldStock":40},
+        {"date":"2012-11-04","name":"xbox","price":50000,"soldStock":40},
+        {"date":"2012-11-05","name":"xbox","price":50000,"soldStock":40},
+        {"date":"2012-11-06","name":"xbox","price":50000,"soldStock":40},
+        {"date":"2012-11-07","name":"xbox","price":50000,"soldStock":40},
+        {"date":"2012-11-02","name":"ngear","price":20000,"soldStock":12},
+        {"date":"2012-11-03","name":"ngear","price":20000,"soldStock":21},
+        {"date":"2012-11-04","name":"ngear","price":20000,"soldStock":23},
+        {"date":"2012-11-05","name":"ngear","price":20000,"soldStock":17},
+        {"date":"2012-11-06","name":"ngear","price":20000,"soldStock":12},
+        {"date":"2012-11-07","name":"ngear","price":20000,"soldStock":23}
+    ]
+
+    //Just in case we need to normalize data (basically make it easy to the neuron to read)
+    function normalizeData(object) {
+        return {
+            //it has to be the same number to all parameters
+            price: object.price/100000,
+        soldStock: object.soldStock/100
+    };
+}
+
+
+
+//console.log(normalizeData(data[0]));
+
+
+    function deNormalizeData(object) {
+        return {
+            //it has to be the same number to all parameters
+            price: object.price*100000,
+        soldStock: object.soldStock*100
+    };
+}
+//console.log(deNormalizeData(normalizeData(data[0])));
+
+
+const scaledData = data.map(normalizeData);
+
+//Matriz of data
+const trainingData = [
+    scaledData.slice(0, 6),
+    scaledData.slice(6, 12),
+    scaledData.slice(12, 18),
+    scaledData.slice(18, 24),
+    scaledData.slice(24,30)
+];
+
+console.log(trainingData);
+
+    const neuralNetwork = new brain.recurrent.LSTMTimeStep({
+            inputSize: 2,
+        hiddenLayers: [8, 8, 9, 9, 9], //Each value on the array represent a hidden layle and the number is the # of nodes in that layer
+        outputSize: 2
+    });
+
+    neuralNetwork.train(trainingData, {
+            learningRate: 0.005,
+        errorThresh: 0.001,
+        log: (stats) => console.log(stats)
+    });
+
+    //console.log(deNormalizeData(neuralNetwork.run(trainingData[0])));
+
+    console.log(neuralNetwork.forecast([
+        trainingData[0][0],
+        trainingData[0][1]
+    ], 3).map(deNormalizeData));
+
+*/
+
+    //VIIR
+        //Price prediction, predicting multiple days
+        const data = [
+        {"date": "2012-11-02", "name": 1, "price": 2000, "soldStock": 40 },
+        {"date": "2012-11-03", "name": 1, "price": 2000, "soldStock": 50 },
+        {"date": "2012-11-04", "name": 1, "price": 2000, "soldStock": 60 },
+        {"date": "2012-11-05", "name": 1, "price": 2000, "soldStock": 30 },
+        {"date": "2012-11-06", "name": 1, "price": 2000, "soldStock": 20 },
+        {"date": "2012-11-07", "name": 1, "price": 2000, "soldStock": 20 },
+        {"date": "2012-11-02", "name": 2, "price": 90000, "soldStock": 5 },
+        {"date": "2012-11-03", "name": 2, "price": 90000, "soldStock": 6 },
+        {"date": "2012-11-04", "name": 2, "price": 90000, "soldStock": 7 },
+        {"date": "2012-11-05", "name": 2, "price": 90000, "soldStock": 8 },
+        {"date": "2012-11-06", "name": 2, "price": 90000, "soldStock": 9 },
+        {"date": "2012-11-07", "name": 2, "price": 90000, "soldStock": 10 },
+        {"date": "2012-11-02", "name": 3, "price": 40000, "soldStock": 40 },
+        {"date": "2012-11-03", "name": 3, "price": 40000, "soldStock": 35 },
+        {"date": "2012-11-04", "name": 3, "price": 40000, "soldStock": 30 },
+        {"date": "2012-11-05", "name": 3, "price": 40000, "soldStock": 25 },
+        {"date": "2012-11-06", "name": 3, "price": 40000, "soldStock": 20 },
+        {"date": "2012-11-07", "name": 3, "price": 40000, "soldStock": 15 },
+        {"date": "2012-11-02", "name": 5, "price": 50000, "soldStock": 40 },
+        {"date": "2012-11-03", "name": 5, "price": 50000, "soldStock": 40 },
+        {"date": "2012-11-04", "name": 5, "price": 50000, "soldStock": 40 },
+        {"date": "2012-11-05", "name": 5, "price": 50000, "soldStock": 40 },
+        {"date": "2012-11-06", "name": 5, "price": 50000, "soldStock": 40 },
+        {"date": "2012-11-07", "name": 5, "price": 50000, "soldStock": 40 },
+        {"date": "2012-11-02", "name": 6, "price": 20000, "soldStock": 12 },
+        {"date": "2012-11-03", "name": 6, "price": 20000, "soldStock": 21 },
+        {"date": "2012-11-04", "name": 6, "price": 20000, "soldStock": 23 },
+        {"date": "2012-11-05", "name": 6, "price": 20000, "soldStock": 17 },
+        {"date": "2012-11-06", "name": 6, "price": 20000, "soldStock": 12 },
+        {"date": "2012-11-07", "name": 6, "price": 20000, "soldStock": 23 }
+    ]
+
+    //Just in case we need to normalize data (basically make it easy to the neuron to read)
+    function normalizeData(object) {
+        return {
+            //it has to be the same number to all parameters
+            name: object.name,
+        price: object.price / 100000,
+        soldStock: object.soldStock / 100
+    };
+}
+
+
+
+//console.log(normalizeData(data[0]));
+
+
+    function deNormalizeData(object) {
+        return {
+            //it has to be the same number to all parameters
+            name: object.name,
+        price: object.price * 100000,
+        soldStock: object.soldStock * 100
+    };
+}
+//console.log(deNormalizeData(normalizeData(data[0])));
+
+
+const scaledData = data.map(normalizeData);
+
+//Matriz of data
+const trainingData = [
+    scaledData.slice(0, 6),
+    scaledData.slice(6, 12),
+    scaledData.slice(12, 18),
+    scaledData.slice(18, 24),
+    scaledData.slice(24, 47)
+];
+
+console.log(trainingData);
+
+    const neuralNetwork = new brain.recurrent.LSTMTimeStep({
+            inputSize: 3,
+        hiddenLayers: [9, 9, 9, 9, 9, 9], //Each value on the array represent a hidden layle and the number is the # of nodes in that layer
+        outputSize: 3
+    });
+function runNeuralNetwork() {
+    neuralNetwork.train(trainingData, {
+        learningRate: 0.005,
+        errorThresh: 0.001,
+        log: (stats) => console.log(stats)
+    });
+
+    //console.log(deNormalizeData(neuralNetwork.run(trainingData[0])));
+
+    console.log(neuralNetwork.forecast([
+        trainingData[3][0],
+        trainingData[3][1],
+        trainingData[3][2],
+        trainingData[3][3],
+        trainingData[3][4]
+    ], 7).map(deNormalizeData));
 }
