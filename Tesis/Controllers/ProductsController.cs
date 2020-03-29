@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Tesis.ClassModels;
 
 namespace Tesis.Controllers
 {
+    // Products Controller
+    [Authorize]
     public class ProductsController : Controller
     {
         // Imports
@@ -105,7 +108,7 @@ namespace Tesis.Controllers
             // Deserialize active bool JSON
             var ActiveBool = JsonConvert.DeserializeObject<string>(ActiveBoolJSON);
 
-            // Deserialize product to delete JSON
+            // Deserialize product to deactivate JSON
             var ProductToDeactivate = JsonConvert.DeserializeObject<AppProducts>(ProductToActivateJSON);
 
             // Deactivate product in database

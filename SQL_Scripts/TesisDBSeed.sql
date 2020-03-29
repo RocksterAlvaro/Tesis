@@ -22,6 +22,31 @@ VALUES
 	0 -- AccessFailedCount
 );
 
+-- Add Roles
+INSERT INTO AspNetRoles
+VALUES
+(
+	-- Alvaro Super User
+	'd8453449-26f4-4db5-accc-ad2e8d7d641a', --[Id]
+	'Admin', -- [Name]
+	'ADMIN', -- [NormalizedName]
+	'382d0c6b-d40a-4e91-b082-122af5a77071' -- [ConcurrencyStamp]
+),
+(
+	-- Alvaro Super User
+	'e3e9f9a5-bd98-4ba9-b1f2-3d190a2b7751', --[Id]
+	'ShopAdmin', -- [Name]
+	'SHOPADMIN', -- [NormalizedName]
+	'f7a60c20-5041-476b-b1ca-30a0d94944e9' -- [ConcurrencyStamp]
+),
+(
+	-- Alvaro Super User
+	'a2696a90-53f0-414f-8e11-5d8958a16558', --[Id]
+	'Seller', -- [Name]
+	'SELLER', -- [NormalizedName]
+	'b6bf1d8f-1753-431d-8cab-6b6e95153e90' -- [ConcurrencyStamp]
+);
+
 -- Adds Products
 INSERT INTO AspNetProducts
 VALUES

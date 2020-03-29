@@ -645,15 +645,40 @@ function StockInOutDetails(SpecificMovementId, MovementIndex) {
             // Set to an array the latest entries of stock in out
             var SpecificMovementProducts = Array.from(JSON.parse(Response));
 
-            console.log('Productos: ', SpecificMovementProducts);
+            console.log(SpecificMovementProducts);
 
-            // Write stuff in modal
+            // Empty th table body
+            $("#MovementDetails").empty();
+
+            for (var i = 0; i < SpecificMovementProducts.length; i++) {
+                
+                // Add each product
+                $("<tr id=\"Product" + i + "\">" +
+                    "<th scope=\"row\" style=\"min-width:75px;max-width:75px\">" + SpecificMovementProducts[i].ProductName + "</th >" +
+                    "<td>" + SpecificMovementProducts[i].StockChange + "</td>" +
+                    "</tr>").appendTo("#MovementDetails");
+            }
         }
 
     });
 
 }
 
+function CheckPassword() {
+    // Get password values from form
+    var Password = form.Password.value;
+    var ConfirmPassword = form.ConfirmPassword.value;
+
+    // Check if password are the same  
+    if (Password != ConfirmPassword) {
+        // Toggle a modal to alert user passwords don't match
+        $('#CheckPasswordModal').modal('toggle');
+
+        return false;
+    } else {
+        return true;
+    }
+}
 
 // Neural network stuff
 //Vrains JS
@@ -785,6 +810,7 @@ console.log(trainingData);
 
 */
 
+/*
     //VIIR
         //Price prediction, predicting multiple days
         const data = [
@@ -881,3 +907,5 @@ function runNeuralNetwork() {
         trainingData[3][4]
     ], 7).map(deNormalizeData));
 }
+
+*/

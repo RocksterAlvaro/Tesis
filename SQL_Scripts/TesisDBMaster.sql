@@ -6,7 +6,7 @@
 -- :setvar BasePath "C:\Users\Rockster_Laptop\Downloads\Tesis\SQL_Scripts\"
 
 :setvar Create "TesisDBCreate.sql"
-:setvar SeedProducts "TesisDBSeedProducts.sql"
+:setvar Seed "TesisDBSeed.sql"
 :setvar StoredProcedures "TesisDBStoredProcedures.sql"
 
 :r $(BasePath)$(Create)

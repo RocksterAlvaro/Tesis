@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Tesis.ClassModels;
@@ -9,6 +10,7 @@ using Tesis.ClassModels;
 namespace Tesis.Controllers
 {
     // Inventory Controller
+    [Authorize]
     public class InventoryController : Controller
     {
         // Imports
