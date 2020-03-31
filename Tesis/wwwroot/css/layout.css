@@ -9,7 +9,8 @@
 
 .body-content {
     margin-right: 0px !important;
-    height:90vh;
+
+    min-height:100%
     
 }
 
@@ -20,7 +21,25 @@
 
 
 .footer {
-    position: absolute;
-    bottom: 0;
+    clear: both;
+    position: relative;
+    height: 5px;
+    margin-top:6%;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
     width: 100%;
+}
+
+.loginContent{
+    margin-top:37px;
+}
+.extraMargin{
+    margin-top:10vh;
+}
+
+.anythingElseContent{
+    margin-top:70px;
 }

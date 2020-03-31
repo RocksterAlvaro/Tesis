@@ -9,6 +9,8 @@ var TotalPrice = 0; // The total price of all selling products
 var TotalUnits = 0; // The total units of products to sell
 var StockInOutList = []; // List of movements returned by databese
 
+
+
 function Sell() {
 
    

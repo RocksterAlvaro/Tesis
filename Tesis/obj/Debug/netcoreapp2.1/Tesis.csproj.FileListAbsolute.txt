@@ -121,8 +121,6 @@ C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\V
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryAdmin.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryAI.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryMain.cshtml.g.cs
-C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Login\LoginMain.cshtml.g.cs
-C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Login\SigninMain.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Main\Index.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Products\ProductsMain.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Sell\SellingAdmin.cshtml.g.cs
@@ -187,3 +185,5 @@ C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.Views
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.dll
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.pdb
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.csproj.CopyComplete
+C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\Login.cshtml.g.cs
+C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\SignIn.cshtml.g.cs
