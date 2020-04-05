@@ -9,54 +9,42 @@ var TotalPrice = 0; // The total price of all selling products
 var TotalUnits = 0; // The total units of products to sell
 var StockInOutList = []; // List of movements returned by databese
 
-
-
 function Sell() {
-
-   
+    
     // Assume new stock values are valid
-    var ValidNewSell = true;
-
-
+    var ValidSell = true;
+    
     //Validates that there is 1 or more products on the movement products list
     if (MovementProductsList.length < 1) {
-     
-        ValidNewSell = false;
+        ValidSell = false;
     } else {
-        ValidNewSell = true;
+        ValidSell = true;
     }
 
-
-
-
-    // Replace stock with selling units in MovementProductsList
-    for (var i = 0; i < MovementProductsList.length; i++) {
-        // Update selling products stock with selling units
-        MovementProductsList[i].ProductStock = SellingProductsUnits[i];
-    }
-
-
-    // Esto es lo que no funciona, no sé por que no me trae el valor de NewProductStock
+    // Loop trhought selling products
     for (var i = 0; i < MovementProductsList.length; i++) {
         // Create a variable to save the product id of the edit products
         var NewProductStockId = "#ProductStock" + i;
         var NewProductStock = parseInt($(NewProductStockId).val());
+
         console.log(NewProductStock);
-        console.log(MovementProductsList[i].ProductStock);
-        if ((InOrOutRadioBtn == "Out" &&
-            MovementProductsList[i].ProductStock < NewProductStock) ||
-            (!Number.isInteger(NewProductStock) ||
-                NewProductStock <= 0 ||
-                NewProductStock > 1000000000)
-        ) {
-            ValidNewStock = false;
+        
+        // Check if new stock is non negative, is an integer
+        if (
+            MovementProductsList[i].ProductStock < NewProductStock ||
+            !Number.isInteger(NewProductStock) ||
+            NewProductStock <= 0 ||
+            NewProductStock > 200)
+        {
+            ValidSell = false;
             break;
         }
+
+        // Update selling products stock with selling units
+        MovementProductsList[i].ProductStock = SellingProductsUnits[i];
     }
 
-
-
-    if (ValidNewSell) {
+    if (ValidSell) {
         // Make the AJAX request to create a receipt and finish a sell
         $.ajax({
             type: "POST",
@@ -71,8 +59,39 @@ function Sell() {
             // If the request is successfull
             success: function (response) {
 
-                // Update stock from changes
-                // MovementProductsList = Array.from(JSON.parse(response));
+                // Create Receipt
+                var Receipt = new jsPDF();
+                var row = 40;
+                
+                // Add title to receipt
+                Receipt.text(20, 20, 'Recibo de venta');
+                Receipt.text(20, 30, '-----------------------------');
+                
+                // Loop throught sold products
+                for (var i = 0; i < MovementProductsList.length; i++) {
+                    Receipt.text(20, row, 'Producto: ' + MovementProductsList[i].ProductName);
+                    row += 10;
+
+                    Receipt.text(20, row, 'Precio: ' + MovementProductsList[i].ProductPrice);
+                    row += 10;
+
+                    Receipt.text(20, row, 'Cantidad: ' + MovementProductsList[i].ProductStock);
+                    row += 10;
+
+                    Receipt.text(20, row, '-----------------------------');
+                    row += 10;
+
+                    Receipt.text(20, row, 'Total a pagar: ' + TotalPrice);
+                    row += 10;
+                }
+
+                // Save the PDF
+                Receipt.autoPrint();
+                Receipt.output('dataurlnewwindow');
+                //Receipt.save('document.pdf');
+
+                // Get the new stock from the server
+                //MovementProductsList = Array.from(JSON.parse(response));
 
                 // Remove all products from selling
                 MovementProductsList.length = 0;
@@ -82,12 +101,13 @@ function Sell() {
             }
         });
     } else {
+        // Show modal of invalid value
         $("#InvalidValueModal").modal();
+
+        // Update Lists
+        SearchProduct($("#SearchBar").val());
     }
-
-    
 }
-
 
 function CancelSell() {
     // Remove all products from selling
@@ -418,7 +438,7 @@ function UpdateSellMainLists() {
             "<span class=\"product-name\">" + MovementProductsList[i].ProductName + "</span>" +
             "<span class=\"price\"> $" + (MovementProductsList[i].ProductPrice * SellingProductsUnits[i]) + "</span>" +
             "<ul class=\"info-list\">" + "<div class=\"btn-toolbar mb-4\"> <div class=\"input-group\">" +
-            "<input type=\"text\" onChange=\"ChangeUnitsManually(" + i + ")\" id=\"ProductUnits" + i + "\" value=" + SellingProductsUnits[i] + " class=\"form-control\" style=\"width: 50px; height: 22px; \"> <div class=\"input-group-prepend\"> <div class=\"input-group-prepend\">  <div class=\"btn-group mb-3\">" +
+            "<input type=\"text\" onChange=\"ChangeUnitsManually(" + i + ")\" id=\"ProductStock" + i + "\" value=" + SellingProductsUnits[i] + " class=\"form-control\" style=\"width: 50px; height: 22px; \"> <div class=\"input-group-prepend\"> <div class=\"input-group-prepend\">  <div class=\"btn-group mb-3\">" +
             "<button type=\"button\" onclick=\"IncreaseSellUnits(" + i + ")\" class=\"btn btn-outline-success\" style=\"border-radius: 0px; width: 25px; height: 20px; padding-top: 0px; padding-bottom: 20px; \">+</button>" +
             "<button type=\"button\" onclick=\"DecreaseSellUnits(" + i + ")\" class=\"btn btn-outline-danger\" style=\"width:25px; height:20px; padding-top: 0px; padding-bottom: 20px; float: right;\">-</button>" +
             "</div></div></div>" +
@@ -649,7 +669,7 @@ function StockInOutDetails(SpecificMovementId, MovementIndex) {
 
             console.log(SpecificMovementProducts);
 
-            // Empty th table body
+            // Empty the table body
             $("#MovementDetails").empty();
 
             for (var i = 0; i < SpecificMovementProducts.length; i++) {

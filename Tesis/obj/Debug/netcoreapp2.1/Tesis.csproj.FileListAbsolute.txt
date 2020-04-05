@@ -187,3 +187,5 @@ C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.pdb
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.csproj.CopyComplete
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\Login.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\SignIn.cshtml.g.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\ChangePassword.g.cshtml.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\RequestChangePassword.g.cshtml.cs

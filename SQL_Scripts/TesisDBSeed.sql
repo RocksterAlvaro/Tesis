@@ -47,6 +47,14 @@ VALUES
 	'b6bf1d8f-1753-431d-8cab-6b6e95153e90' -- [ConcurrencyStamp]
 );
 
+-- Add Super User
+INSERT INTO AspNetUserRoles
+VALUES
+(
+	'989D4C70-1A43-4411-9CDC-4DDF5709C74C', -- [UserId]
+	'd8453449-26f4-4db5-accc-ad2e8d7d641a' -- [RoleId]
+);
+
 -- Adds Products
 INSERT INTO AspNetProducts
 VALUES
@@ -113,3 +121,29 @@ VALUES
 	95, -- ProductCost
 	1 -- ProductActive
 );
+
+/*
+-- Adds StockInOut Movemements
+INSERT INTO AspNetStockInOut
+VALUES
+(
+-- Add # Movement
+	NEWID(), -- ID
+	'989D4C70-1A43-4411-9CDC-4DDF5709C74C', -- UserID
+	'04/04/2020', -- Date
+	'Out', -- InOrOut
+	'Sale', -- StockOrSale
+	400, -- TotalPrice
+	80421514-- ClienCC
+);
+
+-- Adds Products List
+INSERT INTO AspNetProductsList
+VALUES
+(
+-- Add Product to the List
+	AnyProduct, -- ProductID
+	15, -- StockChange
+	SameAsAbove -- StockInOutId
+);
+*/

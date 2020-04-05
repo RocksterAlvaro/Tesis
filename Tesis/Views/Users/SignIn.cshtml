@@ -22,6 +22,17 @@
                 </div>
 
             </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4 center-block">
+                </div>
+                <div class="form-group col-md-4 center-block">
+                    <label for="Email">Correo Electronico</label>
+                    <input type="text" class="form-control" id="Email" name="Email" placeholder="Cedula">
+                </div>
+
+            </div>
+
             <div class="form-row">
                 <div class="form-group col-md-4 center-block">
                 </div>
@@ -31,6 +42,7 @@
                 </div>
 
             </div>
+
             <div class="form-row">
                 <div class="form-group col-md-4">
                 </div>
@@ -54,8 +66,13 @@
                     <label for="userType">Tipo de usuario</label>
                     <select id="UserRole" name="UserRole" class="form-control">
                         <option selected></option>
-                        <option value="Admin"> Administrador </option>
-                        <option value="ShopAdmin"> Jefe de Negocio </option>
+                        @if(User.IsInRole("ShopAdmin")){
+                            <option value="ShopAdmin"> Jefe de Negocio </option>
+                        }else if(User.IsInRole("Admin"))
+                        {
+                            <option value="Admin"> Administrador </option>
+                            <option value="ShopAdmin"> Jefe de Negocio </option>
+                        }
                         <option value="Seller"> Vendedor </option>
                     </select>
                 </div>
