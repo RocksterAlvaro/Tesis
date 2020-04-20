@@ -316,16 +316,23 @@ function UpdateLists() {
 
             break;
 
-        // Selling Page page
+        // Selling main page
         case 'SellMain':
             // Update lists
             UpdateSellMainLists()
 
             break;
 
+        // Inventory AI page
+        case 'InventoryAI':
+            // Update lists
+            UpdateInventoryAILists()
+
+            break;
+
         // Default - Probably error
         default:
-            console.log("Error");
+            console.log("Error. View not found.");
             // Crear modal de error.
     }
 }
@@ -347,21 +354,19 @@ function UpdateProductsLists() {
                 "data-target=\"#ProductModal\"> Editar </button> </td>" +
                 "<td class=\"tableSize3\"><button type=\"button\" onclick=\"ActivateProduct(" + i + ", false)\" class=\"btn btn-sm btn-outline-danger\"> Desactivar </button> </td > ";
         }
-            else {
-            var RowString = "<tr >" + " <th scope=\"row\"  style=\"color:gray; width:149.35px\">" + SearchProductsList[i].ProductName + "</th>" +
-                    "<td class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductPrice + "</td>" +
-                    "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductStock + "</td>" +
-                    "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductCost + "</td>" +
-                    "<td class=\"tableSize3\"><button " +
-                    "type=\"button\"" +
-                    "onclick=\"OpenProductModal('EditProductModal', " + i + ")\"" +
-                    "class=\"btn btn-sm btn-outline-primary\"" +
-                    "data-toggle=\"modal\"" +
-                 "data-target=\"#ProductModal\"> Editar </button> </td>" +
-                 "<td  class=\"tableSize3\"><button type=\"button\" onclick=\"ActivateProduct(" + i + ", true)\" class=\"btn btn-sm btn-outline-success\"> Activar </button> </td > ";
-            }
-
-   
+        else {
+        var RowString = "<tr >" + " <th scope=\"row\"  style=\"color:gray; width:149.35px\">" + SearchProductsList[i].ProductName + "</th>" +
+                "<td class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductStock + "</td>" +
+                "<td  class=\"tableSize\" style=\"color:gray\">" + SearchProductsList[i].ProductCost + "</td>" +
+                "<td class=\"tableSize3\"><button " +
+                "type=\"button\"" +
+                "onclick=\"OpenProductModal('EditProductModal', " + i + ")\"" +
+                "class=\"btn btn-sm btn-outline-primary\"" +
+                "data-toggle=\"modal\"" +
+                "data-target=\"#ProductModal\"> Editar </button> </td>" +
+                "<td  class=\"tableSize3\"><button type=\"button\" onclick=\"ActivateProduct(" + i + ", true)\" class=\"btn btn-sm btn-outline-success\"> Activar </button> </td > ";
+        }
 
         var RowString = RowString + "</tr>"
 
@@ -401,6 +406,36 @@ function UpdateInventoryMovementLists() {
                 "min=\"0\"" +
                 "value=\"0\"" +
                 "placeholder=\"Unidades\"></td>" +
+                "<td><button type=\"button\" onclick=\"RemoveProductFromMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button> </td>" +
+                "</tr>").appendTo("#MovementProducts");
+        }
+    }
+}
+
+function UpdateInventoryAILists() {
+
+    // Fill the list with the products returned by the server
+    for (var i = 0; i < SearchProductsList.length; i++) {
+        // If the Product is not being edit yet
+        if (!MovementProductsContains(SearchProductsList[i]) && SearchProductsList[i].ProductActive) {
+            $("<tr >" + " <th scope=\"row\" style=\"width:220px\">" + SearchProductsList[i].ProductName + "</th>" +
+                "<td style=\"width:170px\">" + SearchProductsList[i].ProductPrice + "</td>" +
+                "<td style=\"width:90px\">" + SearchProductsList[i].ProductStock + "</td>" +
+                "<td><button type=\"button\" onclick=\"AddProductToMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-success\"> > </button> </td>" +
+                "</tr>").appendTo(SearchProducts);
+        }
+    }
+
+    // Update predict products List
+    if (MovementProductsList.length == 0) {
+        // No product added to edit list
+        $("<th scope=\"row\"><td colspan=\"3\" style=\"height: 43vh\"> No se ha añadido ningún producto</td> </th>").appendTo("#MovementProducts");
+    } else {
+        // Add products to edit list
+        for (var i = 0; i < MovementProductsList.length; i++) {
+            $("<tr >" + " <th scope=\"row\" style=\"width:215px\">" + MovementProductsList[i].ProductName + "</th>" +
+                "<td style=\"width:85px\">" + MovementProductsList[i].ProductStock + "</td>" + // Unidades predecidas
+                "<td style=\"width:85px\">" + MovementProductsList[i].ProductPrice + "</td>" + // Precio predecido
                 "<td><button type=\"button\" onclick=\"RemoveProductFromMovementInventory(" + i + ")\" class=\"btn btn-sm btn-outline-danger\"> x </button> </td>" +
                 "</tr>").appendTo("#MovementProducts");
         }
@@ -700,6 +735,66 @@ function CheckPassword() {
     } else {
         return true;
     }
+}
+
+function PredictProducts(DateToPredict) {
+    // Make the AJAX request to get last 12 months sells of products
+    $.ajax({
+        type: "GET",
+        url: "/Inventory/PreviousSoldProducts",
+        dataType: "json",
+        data: {
+            // Products on movement list
+            MovementProductsListJSON: JSON.stringify(MovementProductsList),
+
+            // Confirm is a stock movement
+            DateToPredict: DateToPredict
+        },
+        contentType: 'application/json; charset=utf-8',
+        // If the request is successfull
+        success: function (Response) {
+
+            var CleanProductsToPredictList = [];
+            
+            // Set the products to the global variable
+            var ProductsToPredictList = Array.from(JSON.parse(Response));
+
+            //console.log("ReturnedList: ", ProductsToPredictList);
+
+            DateToPredict;
+
+            for (var i = 0; i < MovementProductsList.length; i++) {
+                CleanProductsToPredictList[i] = [];
+                CleanProductsToPredictList[i].Id = MovementProductsList[i].Id;
+                CleanProductsToPredictList[i].ProductName = MovementProductsList[i].ProductName;
+
+                for (var j = 0; j < ProductsToPredictList.length; j++) {
+
+                    if (MovementProductsList[i].Id == ProductsToPredictList[j].Id) {
+                        var MonthIndex = ProductsToPredictList[j].StockInOutDate.substr(3, 2);
+
+                        if (CleanProductsToPredictList[i][MonthIndex] == null) {
+                            CleanProductsToPredictList[i][MonthIndex] = [];
+                        }
+
+                        if (CleanProductsToPredictList[i][MonthIndex].StockChange != null) {
+                            CleanProductsToPredictList[i][MonthIndex].StockChange += ProductsToPredictList[j].StockChange;
+                        } else {
+                            CleanProductsToPredictList[i][MonthIndex].StockChange = 0;
+                            CleanProductsToPredictList[i][MonthIndex].StockChange += ProductsToPredictList[j].StockChange;
+                        }
+                        
+                        CleanProductsToPredictList[i][MonthIndex].StockInOutDate = ProductsToPredictList[j].StockInOutDate;
+                    }
+                }
+            }
+
+            console.log("Clean list: ", CleanProductsToPredictList);
+
+            //for (var j = 0; j < MovementProductsList.length; j++) {
+            
+        }
+    });
 }
 
 // Neural network stuff

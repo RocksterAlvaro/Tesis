@@ -55,13 +55,27 @@ namespace Tesis.Controllers
             return Json(SpecificMovementProductsJSON);
         }
 
-        //Return Inventory AI View
+        // Return Inventory AI View
         [HttpGet]
         [Route("/Inventory/InventoryAI")]
 
         public ActionResult InventoryAI()
         {
             return View("InventoryAI");
+        }
+
+        // Return last sold products by specific day in month
+        [HttpGet]
+        [Route("/Inventory/PreviousSoldProducts")]
+        public ActionResult PreviousSoldProducts(string MovementProductsListJSON, string DateToPredict)
+        {
+            // Deserialize edit product list JSON
+            var MovementProductList = JsonConvert.DeserializeObject<List<AppProducts>>(MovementProductsListJSON);
+
+            // Call stored procedure from database
+            var PreviousSoldProducts = _db.PreviousSoldProducts(MovementProductList, "04/04/2020");
+
+            return Json(PreviousSoldProducts);
         }
 
         //Return Inventory Main View

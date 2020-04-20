@@ -1,5 +1,19 @@
 -- Testing
--- EXEC dbo.SPGetSpecificMovementProducts @SpecificMovementId = 'EDE15B9B-DD7D-42FE-AF13-6306DCEBA397';
+/*
+Declare @ProductsToPredictTable AS AspNetProductsType;
+Declare @DateToPredict AS nvarchar(256) = '04/04/2020';
+
+INSERT INTO @ProductsToPredictTable
+	SELECT TOP 1 *
+	FROM AspNetProducts
+	WHERE AspNetProducts.Id = '18b7c42b-5929-4cb8-9c26-be49472a2934';
+
+--SELECT * FROM @ProductsToPredictTable;
+
+EXEC dbo.SPPreviousSoldProducts
+	@ProductsToPredictTable,
+	@DateToPredict;
+*/
 
 /* Stored Procedures */
 
@@ -11,6 +25,33 @@ BEGIN
 	SELECT [AspNetProducts].* FROM AspNetProducts
 	INNER JOIN @NewStockProductsTable
 	ON AspNetProducts.Id = [@NewStockProductsTable].Id
+END
+GO
+
+
+-- Get previous sold products
+CREATE PROCEDURE SPPreviousSoldProducts
+	@ProductsToPredictTable AS AspNetProductsType READONLY,
+	@DateToPredict AS nvarchar(250)
+AS
+BEGIN
+	SELECT
+		[AspNetProducts].Id,
+		[AspNetProducts].ProductName,
+		[AspNetStockInOut].StockInOutDate,
+		[AspNetProductsList].[StockChange]
+	FROM [AspNetProducts]
+	INNER JOIN @ProductsToPredictTable
+		ON [AspNetProducts].Id = [@ProductsToPredictTable].Id
+	INNER JOIN [AspNetProductsList]
+			ON [@ProductsToPredictTable].Id =  [AspNetProductsList].ProductId
+	INNER JOIN [AspNetStockInOut]
+		ON [AspNetProductsList].StockInOutId = [AspNetStockInOut].Id AND
+			[AspNetStockInOut].StockOrSale = 'Sale' AND
+			[AspNetStockInOut].InOrOut = 'Out' AND
+			SUBSTRING([AspNetStockInOut].[StockInOutDate], 1, 2) = SUBSTRING(@DateToPredict, 1, 2) AND
+			CONVERT(DATETIME,[AspNetStockInOut].[StockInOutDate], 103) <= CONVERT(DATETIME, @DateToPredict, 103) AND
+			CONVERT(DATETIME,[AspNetStockInOut].[StockInOutDate], 103) > DateAdd(Month, -12, CONVERT(DATETIME, @DateToPredict, 103))
 END
 GO
 
@@ -119,7 +160,8 @@ BEGIN
 	EXEC SPReceiptGenerator
 		@NewStockProductsTable,
 		'Out',
-		'Stock'
+		'Stock',
+		0
 END
 GO
 
@@ -137,7 +179,6 @@ CREATE PROCEDURE SPGetSpecificMovementProducts
 	@SpecificMovementId nvarchar(36)
 AS
 BEGIN
-	--SELECT TOP 1 * FROM [AspNetProductsList]
 	SELECT
 		[AspNetProducts].*,
 		[AspNetProductsList].StockChange

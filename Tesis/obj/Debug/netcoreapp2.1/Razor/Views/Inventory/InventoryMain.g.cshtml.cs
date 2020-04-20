@@ -73,7 +73,7 @@ using Tesis;
                     ");
             EndContext();
             BeginContext(397, 60, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "0f48c0fb23ba4de892babeb88775a69e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "470868d23006473f98e35f6ab2b6b24f", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -104,7 +104,7 @@ using Tesis;
             ");
             EndContext();
             BeginContext(827, 468, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "78f3c3a29b87460eaac14159550034d2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "285f354ff2b34a2eb5c08f10a3a2cece", async() => {
                 BeginContext(859, 429, true);
                 WriteLiteral(@"
                 <input type=""radio"" name=""InOrOutStockRadioBtn"" id=""InStockRadioBtn"" checked />

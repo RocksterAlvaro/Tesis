@@ -81,9 +81,9 @@ GO
 CREATE TABLE [dbo].[AspNetStockInOut](
 	[Id] [nvarchar](36) NOT NULL,
 	[UserId] [nvarchar](36) NOT NULL,
-	[StockInOutDate] [nvarchar] (50) NULL,
-	[InOrOut] [nvarchar] (50) NULL,
-	[StockOrSale] [nvarchar] (50) NULL,
+	[StockInOutDate] [nvarchar] (256) NULL,
+	[InOrOut] [nvarchar] (256) NULL,
+	[StockOrSale] [nvarchar] (256) NULL,
 	[TotalPrice] [int] NULL,
 	[ClientCC] [int] NULL,
  CONSTRAINT [PK_AspNetStockInOut] PRIMARY KEY CLUSTERED 

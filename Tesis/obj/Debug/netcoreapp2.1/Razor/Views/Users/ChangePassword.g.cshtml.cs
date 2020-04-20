@@ -62,7 +62,7 @@ using Tesis;
             WriteLiteral("\r\n<div class=\"container\" style=\"margin-top:70px; margin-bottom:30vh\">\r\n    <div style=\"margin-top:30vh\">\r\n        <div class=\"text-center\">\r\n            ");
             EndContext();
             BeginContext(252, 1370, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2967d154366947a68ddbb16504451973", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "db3a7de8513a47cfacbac417a8945ef9", async() => {
                 BeginContext(323, 1292, true);
                 WriteLiteral(@"
                 <h1 class=""h3 mb-3 font-weight-normal"">Cambiar contraseña</h1>

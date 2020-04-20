@@ -23,6 +23,7 @@ namespace Tesis.ClassModels
         // My tables
         public DbSet<AppProducts> AppProducts { get; set; }
         public DbSet<AppProductsStock> AppProductsStock { get; set; }
+        public DbSet<AppProductsToPredict> AppProductsToPredict { get; set; }
         public DbSet<StockInOut> StockInOut { get; set; }
 
         // Search in the DB for a certain product
@@ -41,7 +42,7 @@ namespace Tesis.ClassModels
             return ("");
         }
 
-        // Search in the DB for a certain product
+        // Search in the DB for latest movements
         public string GetLatestStockInOut()
         {
             // Call the stored procedure
@@ -67,6 +68,28 @@ namespace Tesis.ClassModels
             return JsonConvert.SerializeObject(SpecificMovementProducts);
         }
 
+        // Get last sold products by specific day in month
+        public string PreviousSoldProducts(List<AppProducts> MovementProductList, string DateToPredict)
+        {
+            // Parameters
+            var ProductsToPredictTable = DataTableExtensions.CreateDataTable(MovementProductList);
+
+            var ParameterProductsToPredictTable = new SqlParameter("@ProductsToPredictTable", SqlDbType.Structured);
+            ParameterProductsToPredictTable.Value = ProductsToPredictTable;
+            ParameterProductsToPredictTable.TypeName = "[dbo].[AspNetProductsType]"; // Products Table Type
+
+            var ParameterDateToPredict = new SqlParameter("@DateToPredict", DateToPredict);
+
+            // Update stock in database
+            var PreviousSoldProductsResponse = this.AppProductsToPredict
+                .FromSql("SPPreviousSoldProducts @ProductsToPredictTable, @DateToPredict",
+                ParameterProductsToPredictTable,
+                ParameterDateToPredict).AsNoTracking().ToList();
+
+            return JsonConvert.SerializeObject(PreviousSoldProductsResponse);
+        }
+
+        // Make a stock movement
         public string InOrOutStock(List<AppProducts> EditProductsList, string InOrOutString, string StockOrSaleString, int TotalPrice)
         {
             // Parameters

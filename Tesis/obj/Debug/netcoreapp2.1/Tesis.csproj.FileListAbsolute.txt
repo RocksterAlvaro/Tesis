@@ -147,6 +147,8 @@ C:\Users\Saito\Desktop\TesisGit\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\
 C:\Users\Saito\Desktop\TesisGit\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryAdmin.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisGit\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryHistory.cshtml.g.cs
 C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Inventory\InventoryHistory.cshtml.g.cs
+C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\Login.cshtml.g.cs
+C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\SignIn.cshtml.g.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\bin\Debug\netcoreapp2.1\Tesis.deps.json
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\bin\Debug\netcoreapp2.1\Tesis.runtimeconfig.json
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\bin\Debug\netcoreapp2.1\Tesis.runtimeconfig.dev.json
@@ -175,7 +177,9 @@ C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\ChangePassword.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\Login.g.cshtml.cs
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\RequestChangePassword.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\SignIn.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.g.cshtml.cs
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
@@ -185,7 +189,3 @@ C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.Views
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.dll
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.pdb
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Tesis.csproj.CopyComplete
-C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\Login.cshtml.g.cs
-C:\Users\Saito\Desktop\TesisNoire\TesisGit\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\SignIn.cshtml.g.cs
-C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\ChangePassword.g.cshtml.cs
-C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Debug\netcoreapp2.1\Razor\Views\Users\RequestChangePassword.g.cshtml.cs
