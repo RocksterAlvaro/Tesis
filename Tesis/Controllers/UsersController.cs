@@ -188,6 +188,21 @@ namespace Tesis.Controllers
         // Send Email
         public void SendEmail(string EmailTemplate, string link, AppUser CurrentUser, string Subject)
         {
+
+            string htmlBody = "";
+
+            //Html template path
+            htmlBody = System.IO.File.ReadAllText("../Tesis/wwwroot/templates/emailTemplate.html");
+
+            //Pass data to the template (user name and password recovery link)
+
+            //Pass user name
+            htmlBody = htmlBody.Replace("#CurrentUser#", CurrentUser.UserName);
+
+            //Pass password recovery link
+            htmlBody = htmlBody.Replace("#NepLink#", link);
+
+            /* Junk Synchron
             // Create email text
             string EmailText = "El siguiente usuario: " + CurrentUser.UserName + " ha solicitado un cambio de contraseña." +
                 "Por favor presione el siguiente link para realizarlo: ";
@@ -198,9 +213,8 @@ namespace Tesis.Controllers
 
             // Append link
             builder.Append("<a href=\"" + link + "\"> Reiniciar contraseña </a>");
-
-            // Builds the HTML to send
-            string FinalHtml = builder.ToString();
+            */
+            string FinalHtml = htmlBody;
 
             SmtpClient smtpClient = new SmtpClient();
             smtpClient.Port = 587;
@@ -217,6 +231,8 @@ namespace Tesis.Controllers
                 body: FinalHtml
                 );
 
+            //Show "Tesis Pos" as reminent instead of rocksteralvaro 
+            Message.From = new MailAddress("rocksteralvaro@gmail.com", "Tesis POS");
             Message.IsBodyHtml = true;
 
             smtpClient.Send(Message);

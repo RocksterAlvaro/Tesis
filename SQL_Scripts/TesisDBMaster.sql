@@ -1,8 +1,8 @@
 -- Nicolas
---:setvar BasePath "C:\Users\Saito\Desktop\TesisNoire\TesisGit\SQL_Scripts\"
+:setvar BasePath "C:\Users\Saito\Desktop\TesisNoire\TesisGit\SQL_Scripts\"
 
 -- Alvaro
-:setvar BasePath "C:\Users\Rockster_Laptop\Desktop\Tesis\SQL_Scripts\"
+--:setvar BasePath "C:\Users\Rockster_Laptop\Desktop\Tesis\SQL_Scripts\"
 -- :setvar BasePath "C:\Users\Rockster_Laptop\Downloads\Tesis\SQL_Scripts\"
 
 :setvar Create "TesisDBCreate.sql"

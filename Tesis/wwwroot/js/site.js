@@ -792,11 +792,98 @@ function PredictProducts(DateToPredict) {
             console.log("Clean list: ", CleanProductsToPredictList);
 
             //for (var j = 0; j < MovementProductsList.length; j++) {
+
+            nerualNetwork(CleanProductsToPredictList);
             
         }
     });
 }
 
+
+function nerualNetwork(CleanProductsToPredictList) {
+    console.log(CleanProductsToPredictList[0]["05"].StockChange);
+    console.log(CleanProductsToPredictList[0]["06"].StockChange);
+    console.log(CleanProductsToPredictList[0]["07"].StockChange);
+    console.log(CleanProductsToPredictList[0]["08"].StockChange);
+    console.log(CleanProductsToPredictList[0]["09"].StockChange);
+    console.log(CleanProductsToPredictList[0]["10"].StockChange);
+    console.log(CleanProductsToPredictList[0]["11"].StockChange);
+    console.log(CleanProductsToPredictList[0]["12"].StockChange);
+    console.log(CleanProductsToPredictList[0]["01"].StockChange);
+    console.log(CleanProductsToPredictList[0]["02"].StockChange);
+    console.log(CleanProductsToPredictList[0]["03"].StockChange);
+    console.log(CleanProductsToPredictList[0]["04"].StockChange);
+
+
+
+    //Training and normalize Data
+    const trainingData = [
+        { "soldStock":800 , "price":1000 },
+        { "soldStock":1731 , "price": 1000 },
+        { "soldStock":1362 , "price": 1000 },
+        { "soldStock":800 , "price": 1000 },
+        { "soldStock":2294 , "price": 1000 },
+        { "soldStock":2390 , "price": 1000 },
+        { "soldStock":1484 , "price": 1000 },
+        { "soldStock":1161 , "price": 1000 },
+        { "soldStock":2107 , "price": 1000 },
+        { "soldStock":1194 , "price": 1000 },
+        { "soldStock":1027 , "price": 1000 },
+        { "soldStock":1427 , "price": 1000 }
+
+        //{ "soldStock": CleanProductsToPredictList[0]["04"].StockChange, "price": 1000 }
+    ];
+
+    console.log(trainingData);
+
+    const scaledData = trainingData.map(normalizeData);
+   // console.log(trainingDataVII[0]);
+
+    const trainingDataVII = [
+        scaledData.slice(0, 12)
+    ];
+    console.log(trainingDataVII[0]);
+
+    const somethingMayWork = [
+        scaledData.slice(0, 1)
+    ]
+
+    // Initialize and design the NN
+    const neuralNetwork = new brain.recurrent.LSTMTimeStep({
+        inputSize: 2,
+        hiddenLayers: [12, 6, 3, 2], //Each value on the array represent a hidden layle and the number is the # of nodes in that layer
+        outputSize: 2
+    });
+
+    //Train the NepUral Network
+    neuralNetwork.train(trainingDataVII, {
+        learningRate: 0.005,
+        errorThresh: 0.0002,
+        log: (stats) => console.log(stats)
+    });
+
+    //Run the NN
+    console.log(neuralNetwork.forecast(
+        [somethingMayWork], 1).map(desnormalizeData));
+
+
+    
+}
+
+
+function normalizeData(object) {
+    return {
+        soldStock: object.soldStock / 1200,
+        price: object.price/100000
+    };
+}
+
+function desnormalizeData(object) {
+    return {
+        soldStock: object.soldStock * 1200,
+        price: object.price * 100000
+    };
+}
 // Neural network stuff
 //Vrains JS
  /*  

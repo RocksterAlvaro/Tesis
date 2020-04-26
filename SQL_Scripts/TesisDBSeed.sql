@@ -20,6 +20,26 @@ VALUES
 	NULL, -- LockoutEnd
 	1, -- LockoutEnabled
 	0 -- AccessFailedCount
+),
+(
+	-- Alvaro Super User
+	'989D4C70-1A43-4411-9DDC-4DDF5709C74C', -- [Id]
+	'Nicolas Andres', -- [FirstNames]
+	'Bernal Davila', -- [LastNames]
+	'DarkDust', --[UserName]
+	'DARKDUST', -- [NormalizedUserName] [nvarchar](256) NULL,
+	'nbernal783@unab.edu.co', -- [Email] [nvarchar](256) NULL,
+	'NBERNAL783@UNAB.EDU.CO', -- [NormalizedEmail] [nvarchar](256) NULL,
+	1, -- EmailConfirmed
+	'x', -- PasswordHash
+	NEWID(), -- SecurityStamp 
+	NEWID(), -- ConcurrencyStamp
+	'3023478988', -- PhoneNumber
+	1, -- PhoneNumberConfirmed
+	0, -- TwoFactorEnabled
+	NULL, -- LockoutEnd
+	1, -- LockoutEnabled
+	0 -- AccessFailedCount
 );
 
 -- Add Roles
