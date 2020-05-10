@@ -12,6 +12,8 @@ namespace Tesis.ClassModels
 
         public string ProductName { get; set; }
 
+        public int ProductCost { get; set; }
+
         public string StockInOutDate { get; set; }
 
         public int StockChange { get; set; }

@@ -38,6 +38,7 @@ BEGIN
 	SELECT
 		[AspNetProducts].Id,
 		[AspNetProducts].ProductName,
+		[AspNetProducts].ProductCost,
 		[AspNetStockInOut].StockInOutDate,
 		[AspNetProductsList].[StockChange]
 	FROM [AspNetProducts]
