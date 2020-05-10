@@ -30,7 +30,7 @@ namespace Tesis
         {
             // Use db context
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AppDbContext")));
+            options.UseSqlServer(Configuration.GetConnectionString("AppDBContextAzure")));
 
             // Use identity
             services.AddIdentity<AppUser, IdentityRole>()

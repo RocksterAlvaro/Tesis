@@ -75,3 +75,4 @@ C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Release\netcoreapp2.1\Tesis.Vie
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Release\netcoreapp2.1\Tesis.dll
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Release\netcoreapp2.1\Tesis.pdb
 C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Release\netcoreapp2.1\Tesis.csproj.CopyComplete
+C:\Users\Rockster_Laptop\Desktop\Tesis\Tesis\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
