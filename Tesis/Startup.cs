@@ -95,7 +95,8 @@ namespace Tesis
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Error");
             }
 
             app.UseMvc(routes =>
