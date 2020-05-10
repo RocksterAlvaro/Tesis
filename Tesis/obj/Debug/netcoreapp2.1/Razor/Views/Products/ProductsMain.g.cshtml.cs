@@ -96,7 +96,7 @@ using Tesis;
                     ");
             EndContext();
             BeginContext(1475, 47, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f252c135f69b4a1ba8bc6d0dd303b0ff", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "362bb72d13304f5d80212a40d9c721ed", async() => {
                 BeginContext(1492, 21, true);
                 WriteLiteral("Ver productos Activos");
                 EndContext();
@@ -119,7 +119,7 @@ using Tesis;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1544, 40, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "71ede497db064ed5930c59184a4f7e44", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d4b33fef2db14574af8e8e1f5720ba59", async() => {
                 BeginContext(1552, 23, true);
                 WriteLiteral("Ver productos Inactivos");
                 EndContext();
@@ -139,7 +139,7 @@ using Tesis;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1606, 40, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "153ef2c5161945e4b20395cab12345aa", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b1cba0b7f4f4afb807a21677962e82a", async() => {
                 BeginContext(1614, 23, true);
                 WriteLiteral("Ver todos los productos");
                 EndContext();
@@ -204,7 +204,7 @@ using Tesis;
                 ");
             EndContext();
             BeginContext(3389, 2751, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3ea6bbb2b2b04053936c10f33ee55691", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3bd256cc250f484fb2014cc8ff94c4f0", async() => {
                 BeginContext(3426, 2707, true);
                 WriteLiteral(@"
 
