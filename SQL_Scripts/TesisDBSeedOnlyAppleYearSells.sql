@@ -2159,6 +2159,114 @@ INSERT INTO AspNetStockInOut
 'Sale', --StockOrSale 
 1800, --TotalPrice 
 80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145841', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/04/2020', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+30000, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145842', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/03/2020', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+22800, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145843', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/02/2020', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+20100, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145844', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/01/2020', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+30750, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145845', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/12/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+28950, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145846', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/11/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+15300, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145847', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/10/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+15150, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145848', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/09/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+19500, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145849', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/08/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+21000, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145850', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/07/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+18300, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145851', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/06/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+16800, --TotalPrice 
+80421514 --ClientCC 
+),
+(
+'9eab5f47-8aea-4a25-9c83-635dec145852', --ID 
+'989D4C70-1A43-4411-9CDC-4DDF5709C74C', --UserID 
+'04/05/2019', --Date 
+'Out', --InOrOut 
+'Sale', --StockOrSale 
+28800, --TotalPrice 
+80421514 --ClientCC 
 );
 
 INSERT INTO AspNetProductsList
@@ -3362,4 +3470,64 @@ INSERT INTO AspNetProductsList
 '18b7c42b-5929-4cb8-9c26-be49472a2934', --ProductID 
 9, --StockChange 
 '9eab5f47-8aea-4a25-9c83-635dec145840' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+200, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145841' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+152, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145842' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+134, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145843' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+205, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145844' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+193, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145845' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+102, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145846' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+101, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145847' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+130, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145848' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+140, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145849' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+122, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145850' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+112, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145851' --StockInOutId 
+),
+(
+'d0cad872-1373-4709-8874-4a0526a93fcd', --ProductID 
+192, --StockChange 
+'9eab5f47-8aea-4a25-9c83-635dec145852' --StockInOutId 
 );

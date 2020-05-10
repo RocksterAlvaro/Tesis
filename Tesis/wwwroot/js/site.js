@@ -656,6 +656,7 @@ function GetLatestStockInOut() {
 
             // Temporal variable to store translation
             var InOut = '';
+            var StockOrSale = '';
 
             // Set to an array the latest entries of stock in out
             StockInOutList = Array.from(JSON.parse(Response));
@@ -668,10 +669,15 @@ function GetLatestStockInOut() {
                 } else {
                     InOut = "Salida";
                 }
+                if (StockInOutList[i].StockOrSale == "Sale") {
+                    StockOrSale = "Venta";
+                } else {
+                    StockOrSale = "Traslado";
+                }
                 $("<tr> <th scope=\"row\"class=\"tableSizeExtra\">" + i + "</th>" +
                     "<td class=\"tableSize\">" + StockInOutList[i].StockInOutDate + "</td>" +
                     "<td class=\"tableSize\">" + StockInOutList[i].TotalPrice + "</td>" +
-                    "<td class=\"tableSize\">" + StockInOutList[i].ClientCC + "</td>" +
+                    "<td class=\"tableSize\">" + StockOrSale + "</td>" +
                     "<td class=\"tableSize\">" + InOut + "</td>" +
                     "<td><button " +
                     "type=\"button\"" +
@@ -711,7 +717,7 @@ function StockInOutDetails(SpecificMovementId, MovementIndex) {
                 
                 // Add each product
                 $("<tr id=\"Product" + i + "\">" +
-                    "<th scope=\"row\" style=\"min-width:75px;max-width:75px\">" + SpecificMovementProducts[i].ProductName + "</th >" +
+                    "<th scope=\"row\" style=\"min-width:50px;max-width:50px\">" + SpecificMovementProducts[i].ProductName + "</th >" +
                     "<td>" + SpecificMovementProducts[i].StockChange + "</td>" +
                     "</tr>").appendTo("#MovementDetails");
             }
@@ -772,7 +778,9 @@ function PredictProducts(DateToPredict) {
 
                     if (MovementProductsList[i].Id == ProductsToPredictList[j].Id) {
                         var MonthIndex = ProductsToPredictList[j].StockInOutDate.substr(3, 2);
-
+                        if (MonthIndex < 10) {
+                            MonthIndex = ProductsToPredictList[j].StockInOutDate.substr(4, 1);
+                        } 
                         if (CleanProductsToPredictList[i][MonthIndex] == null) {
                             CleanProductsToPredictList[i][MonthIndex] = [];
                         }
@@ -799,317 +807,100 @@ function PredictProducts(DateToPredict) {
     });
 }
 
-
 function nerualNetwork(CleanProductsToPredictList) {
-    console.log(CleanProductsToPredictList[0]["05"].StockChange);
-    console.log(CleanProductsToPredictList[0]["06"].StockChange);
-    console.log(CleanProductsToPredictList[0]["07"].StockChange);
-    console.log(CleanProductsToPredictList[0]["08"].StockChange);
-    console.log(CleanProductsToPredictList[0]["09"].StockChange);
-    console.log(CleanProductsToPredictList[0]["10"].StockChange);
-    console.log(CleanProductsToPredictList[0]["11"].StockChange);
-    console.log(CleanProductsToPredictList[0]["12"].StockChange);
-    console.log(CleanProductsToPredictList[0]["01"].StockChange);
-    console.log(CleanProductsToPredictList[0]["02"].StockChange);
-    console.log(CleanProductsToPredictList[0]["03"].StockChange);
-    console.log(CleanProductsToPredictList[0]["04"].StockChange);
+    console.log(CleanProductsToPredictList[0][5].StockChange);
+    console.log(CleanProductsToPredictList[0][6].StockChange);
+    console.log(CleanProductsToPredictList[0][7].StockChange);
+    console.log(CleanProductsToPredictList[0][8].StockChange);
+    console.log(CleanProductsToPredictList[0][9].StockChange);
+    console.log(CleanProductsToPredictList[0][10].StockChange);
+    console.log(CleanProductsToPredictList[0][11].StockChange);
+    console.log(CleanProductsToPredictList[0][12].StockChange);
+    console.log(CleanProductsToPredictList[0][1].StockChange);
+    console.log(CleanProductsToPredictList[0][2].StockChange);
+    console.log(CleanProductsToPredictList[0][3].StockChange);
+    console.log(CleanProductsToPredictList[0][4].StockChange);
 
+    var nnResults = [];
 
+    for (var i = 0; i < MovementProductsList.length; i++) {
+        console.log(MovementProductsList.length + "nep");
 
-    //Training and normalize Data
-    const trainingData = [
-        { "soldStock":800 , "price":1000 },
-        { "soldStock":1731 , "price": 1000 },
-        { "soldStock":1362 , "price": 1000 },
-        { "soldStock":800 , "price": 1000 },
-        { "soldStock":2294 , "price": 1000 },
-        { "soldStock":2390 , "price": 1000 },
-        { "soldStock":1484 , "price": 1000 },
-        { "soldStock":1161 , "price": 1000 },
-        { "soldStock":2107 , "price": 1000 },
-        { "soldStock":1194 , "price": 1000 },
-        { "soldStock":1027 , "price": 1000 },
-        { "soldStock":1427 , "price": 1000 }
+        var highestSell = 0;
 
-        //{ "soldStock": CleanProductsToPredictList[0]["04"].StockChange, "price": 1000 }
-    ];
+        for (var nep = 1; nep < 13; nep++) {
+            if (CleanProductsToPredictList[i][nep].StockChange > highestSell) {
+                highestSell = CleanProductsToPredictList[i][nep].StockChange;
+            }
+        }
+        console.log("Nep sold " + highestSell + " wow nep is amazing ^^");
+        //Training and normalize Data
+        const trainingData = [];
+        //May i'll have to change the order
+        for (var j = 4; j > 4 - 12; j--) {
+            if (j > 0) {
+                trainingData.push({ "soldStock": CleanProductsToPredictList[i][j].StockChange, "price": 1 });
+                console.log(j + " nepuuuuu");
+            } else {
+                trainingData.push({ "soldStock": CleanProductsToPredictList[i][j + 12].StockChange, "price": 1 });
+                console.log(j + " nepuuuuu");
+            }
+        }
 
-    console.log(trainingData);
+        console.log(trainingData);
 
-    const scaledData = trainingData.map(normalizeData);
-   // console.log(trainingDataVII[0]);
+        const scaledData = trainingData.map(n => normalizeData(n, highestSell));
+        // console.log(trainingDataVII[0]);
 
-    const trainingDataVII = [
-        scaledData.slice(0, 12)
-    ];
-    console.log(trainingDataVII[0]);
+        const trainingDataVII = [
+            scaledData.slice(0, 12)
+        ];
+        console.log(trainingDataVII[0]);
 
-    const somethingMayWork = [
-        scaledData.slice(0, 1)
-    ]
+       
 
-    // Initialize and design the NN
-    const neuralNetwork = new brain.recurrent.LSTMTimeStep({
-        inputSize: 2,
-        hiddenLayers: [12, 6, 3, 2], //Each value on the array represent a hidden layle and the number is the # of nodes in that layer
-        outputSize: 2
-    });
-
-    //Train the NepUral Network
-    neuralNetwork.train(trainingDataVII, {
-        learningRate: 0.005,
-        errorThresh: 0.0002,
-        log: (stats) => console.log(stats)
-    });
-
-    //Run the NN
-    console.log(neuralNetwork.forecast(
-        [somethingMayWork], 1).map(desnormalizeData));
-
-
-    
-}
-
-
-function normalizeData(object) {
-    return {
-        soldStock: object.soldStock / 1200,
-        price: object.price/100000
-    };
-}
-
-function desnormalizeData(object) {
-    return {
-        soldStock: object.soldStock * 1200,
-        price: object.price * 100000
-    };
-}
-// Neural network stuff
-//Vrains JS
- /*  
-    // Initialize and design the NN
-    const neuralNetwork = new brain.NeuralNetwork({ hiddenLayers: [3] });
-
-//Input and output data
-const inputs = [
-    { input: [1, 0], output: [5] },
-    { input: [2, 0], output: [10] },
-    { input: [3, 0], output: [3] },
-    { input: [4, 0], output: [4] },
-    { input: [1, 1], output: [7] },
-    { input: [2, 1], output: [15] },
-    { input: [3, 1], output: [5] },
-    { input: [1, 0], output: [4] },
-    { input: [2, 0], output: [9] },
-    { input: [3, 0], output: [2] },
-    { input: [4, 0], output: [3] }
-];
-
-const outputs = [
-
-];
-
-// Train the NN
-neuralNetwork.train(trainingData, {
-    //Show the error, it must be close to 0 
-    log: (error) => console.log(error),
-    logPeroid: 500
-});
-
-//Do a prediction
-console.log(neuralNetwork.run([1, 0]));
-
-
-
-//VII
-        //Price prediction
-        const data = [
-        {"date":"2012-11-02","name":"pudding","price":2000,"soldStock":40},
-        {"date":"2012-11-03","name":"pudding","price":2000,"soldStock":50},
-        {"date":"2012-11-04","name":"pudding","price":2000,"soldStock":60},
-        {"date":"2012-11-05","name":"pudding","price":2000,"soldStock":30},
-        {"date":"2012-11-06","name":"pudding","price":2000,"soldStock":20},
-        {"date":"2012-11-07","name":"pudding","price":2000,"soldStock":20},
-        {"date":"2012-11-02","name":"cosplay","price":90000,"soldStock":5},
-        {"date":"2012-11-03","name":"cosplay","price":90000,"soldStock":6},
-        {"date":"2012-11-04","name":"cosplay","price":90000,"soldStock":7},
-        {"date":"2012-11-05","name":"cosplay","price":90000,"soldStock":8},
-        {"date":"2012-11-06","name":"cosplay","price":90000,"soldStock":9},
-        {"date":"2012-11-07","name":"cosplay","price":90000,"soldStock":10},
-        {"date":"2012-11-02","name":"book","price":40000,"soldStock":40},
-        {"date":"2012-11-03","name":"book","price":40000,"soldStock":35},
-        {"date":"2012-11-04","name":"book","price":40000,"soldStock":30},
-        {"date":"2012-11-05","name":"book","price":40000,"soldStock":25},
-        {"date":"2012-11-06","name":"book","price":40000,"soldStock":20},
-        {"date":"2012-11-07","name":"book","price":40000,"soldStock":15},
-        {"date":"2012-11-02","name":"xbox","price":50000,"soldStock":40},
-        {"date":"2012-11-03","name":"xbox","price":50000,"soldStock":40},
-        {"date":"2012-11-04","name":"xbox","price":50000,"soldStock":40},
-        {"date":"2012-11-05","name":"xbox","price":50000,"soldStock":40},
-        {"date":"2012-11-06","name":"xbox","price":50000,"soldStock":40},
-        {"date":"2012-11-07","name":"xbox","price":50000,"soldStock":40},
-        {"date":"2012-11-02","name":"ngear","price":20000,"soldStock":12},
-        {"date":"2012-11-03","name":"ngear","price":20000,"soldStock":21},
-        {"date":"2012-11-04","name":"ngear","price":20000,"soldStock":23},
-        {"date":"2012-11-05","name":"ngear","price":20000,"soldStock":17},
-        {"date":"2012-11-06","name":"ngear","price":20000,"soldStock":12},
-        {"date":"2012-11-07","name":"ngear","price":20000,"soldStock":23}
-    ]
-
-    //Just in case we need to normalize data (basically make it easy to the neuron to read)
-    function normalizeData(object) {
-        return {
-            //it has to be the same number to all parameters
-            price: object.price/100000,
-        soldStock: object.soldStock/100
-    };
-}
-
-
-
-//console.log(normalizeData(data[0]));
-
-
-    function deNormalizeData(object) {
-        return {
-            //it has to be the same number to all parameters
-            price: object.price*100000,
-        soldStock: object.soldStock*100
-    };
-}
-//console.log(deNormalizeData(normalizeData(data[0])));
-
-
-const scaledData = data.map(normalizeData);
-
-//Matriz of data
-const trainingData = [
-    scaledData.slice(0, 6),
-    scaledData.slice(6, 12),
-    scaledData.slice(12, 18),
-    scaledData.slice(18, 24),
-    scaledData.slice(24,30)
-];
-
-console.log(trainingData);
-
-    const neuralNetwork = new brain.recurrent.LSTMTimeStep({
+        // Initialize and design the NN
+        const neuralNetwork = new brain.recurrent.LSTMTimeStep({
             inputSize: 2,
-        hiddenLayers: [8, 8, 9, 9, 9], //Each value on the array represent a hidden layle and the number is the # of nodes in that layer
-        outputSize: 2
-    });
+            hiddenLayers: [4, 3, 2], //Each value on the array represent a hidden layle and the number is the # of nodes(neurones) in that layer
+            outputSize: 2
+        });
 
-    neuralNetwork.train(trainingData, {
+        //Train the NepUral Network
+        neuralNetwork.train(trainingDataVII, {
             learningRate: 0.005,
-        errorThresh: 0.001,
-        log: (stats) => console.log(stats)
-    });
+            errorThresh: 0.002,
+            log: (stats) => console.log(stats)
+        });
 
-    //console.log(deNormalizeData(neuralNetwork.run(trainingData[0])));
+        //Run the NN
+        nnResults[i]= neuralNetwork.forecast(
+            [trainingDataVII], 1).map(n => desnormalizeData(n, highestSell));
 
-    console.log(neuralNetwork.forecast([
-        trainingData[0][0],
-        trainingData[0][1]
-    ], 3).map(deNormalizeData));
+        console.log(nnResults[i], MovementProductsList.length);
 
-*/
+    }
+    eoq(nnResults);
+}
 
-/*
-    //VIIR
-        //Price prediction, predicting multiple days
-        const data = [
-        {"date": "2012-11-02", "name": 1, "price": 2000, "soldStock": 40 },
-        {"date": "2012-11-03", "name": 1, "price": 2000, "soldStock": 50 },
-        {"date": "2012-11-04", "name": 1, "price": 2000, "soldStock": 60 },
-        {"date": "2012-11-05", "name": 1, "price": 2000, "soldStock": 30 },
-        {"date": "2012-11-06", "name": 1, "price": 2000, "soldStock": 20 },
-        {"date": "2012-11-07", "name": 1, "price": 2000, "soldStock": 20 },
-        {"date": "2012-11-02", "name": 2, "price": 90000, "soldStock": 5 },
-        {"date": "2012-11-03", "name": 2, "price": 90000, "soldStock": 6 },
-        {"date": "2012-11-04", "name": 2, "price": 90000, "soldStock": 7 },
-        {"date": "2012-11-05", "name": 2, "price": 90000, "soldStock": 8 },
-        {"date": "2012-11-06", "name": 2, "price": 90000, "soldStock": 9 },
-        {"date": "2012-11-07", "name": 2, "price": 90000, "soldStock": 10 },
-        {"date": "2012-11-02", "name": 3, "price": 40000, "soldStock": 40 },
-        {"date": "2012-11-03", "name": 3, "price": 40000, "soldStock": 35 },
-        {"date": "2012-11-04", "name": 3, "price": 40000, "soldStock": 30 },
-        {"date": "2012-11-05", "name": 3, "price": 40000, "soldStock": 25 },
-        {"date": "2012-11-06", "name": 3, "price": 40000, "soldStock": 20 },
-        {"date": "2012-11-07", "name": 3, "price": 40000, "soldStock": 15 },
-        {"date": "2012-11-02", "name": 5, "price": 50000, "soldStock": 40 },
-        {"date": "2012-11-03", "name": 5, "price": 50000, "soldStock": 40 },
-        {"date": "2012-11-04", "name": 5, "price": 50000, "soldStock": 40 },
-        {"date": "2012-11-05", "name": 5, "price": 50000, "soldStock": 40 },
-        {"date": "2012-11-06", "name": 5, "price": 50000, "soldStock": 40 },
-        {"date": "2012-11-07", "name": 5, "price": 50000, "soldStock": 40 },
-        {"date": "2012-11-02", "name": 6, "price": 20000, "soldStock": 12 },
-        {"date": "2012-11-03", "name": 6, "price": 20000, "soldStock": 21 },
-        {"date": "2012-11-04", "name": 6, "price": 20000, "soldStock": 23 },
-        {"date": "2012-11-05", "name": 6, "price": 20000, "soldStock": 17 },
-        {"date": "2012-11-06", "name": 6, "price": 20000, "soldStock": 12 },
-        {"date": "2012-11-07", "name": 6, "price": 20000, "soldStock": 23 }
-    ]
 
-    //Just in case we need to normalize data (basically make it easy to the neuron to read)
-    function normalizeData(object) {
-        return {
-            //it has to be the same number to all parameters
-            name: object.name,
-        price: object.price / 100000,
-        soldStock: object.soldStock / 100
+function normalizeData(object, highestSell) {
+    return {
+        soldStock: object.soldStock / highestSell,
+        price: object.price
     };
 }
 
-
-
-//console.log(normalizeData(data[0]));
-
-
-    function deNormalizeData(object) {
-        return {
-            //it has to be the same number to all parameters
-            name: object.name,
-        price: object.price * 100000,
-        soldStock: object.soldStock * 100
+function desnormalizeData(object, highestSell) {
+    return {
+        soldStock: object.soldStock * highestSell,
+        price: object.price
     };
 }
-//console.log(deNormalizeData(normalizeData(data[0])));
 
-
-const scaledData = data.map(normalizeData);
-
-//Matriz of data
-const trainingData = [
-    scaledData.slice(0, 6),
-    scaledData.slice(6, 12),
-    scaledData.slice(12, 18),
-    scaledData.slice(18, 24),
-    scaledData.slice(24, 47)
-];
-
-console.log(trainingData);
-
-    const neuralNetwork = new brain.recurrent.LSTMTimeStep({
-            inputSize: 3,
-        hiddenLayers: [9, 9, 9, 9, 9, 9], //Each value on the array represent a hidden layle and the number is the # of nodes in that layer
-        outputSize: 3
-    });
-function runNeuralNetwork() {
-    neuralNetwork.train(trainingData, {
-        learningRate: 0.005,
-        errorThresh: 0.001,
-        log: (stats) => console.log(stats)
-    });
-
-    //console.log(deNormalizeData(neuralNetwork.run(trainingData[0])));
-
-    console.log(neuralNetwork.forecast([
-        trainingData[3][0],
-        trainingData[3][1],
-        trainingData[3][2],
-        trainingData[3][3],
-        trainingData[3][4]
-    ], 7).map(deNormalizeData));
+function eoq(nnResults,porductList){
+    var optimalQuanty = [];
+    for (var i = 0; i < porductList; i++) {
+       // optimalQuanty[i] = Math.sqrt((2 * DEMANDA *COSTO DE ORDENAR)/COSTO DE ALAMCENAR);
+    }
 }
-
-*/
