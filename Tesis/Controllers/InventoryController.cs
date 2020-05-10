@@ -73,7 +73,7 @@ namespace Tesis.Controllers
             var MovementProductList = JsonConvert.DeserializeObject<List<AppProducts>>(MovementProductsListJSON);
 
             // Call stored procedure from database
-            var PreviousSoldProducts = _db.PreviousSoldProducts(MovementProductList, "04/04/2020");
+            var PreviousSoldProducts = _db.PreviousSoldProducts(MovementProductList, DateToPredict);
 
             return Json(PreviousSoldProducts);
         }

@@ -19,11 +19,11 @@
                 </div>
             </div>
             <input id="SearchBar"
-                    oninput="SearchProduct(this.value)"
-                    class="form-control mr-sm-2 "
-                    type="search"
-                    placeholder="Buscar productos"
-                    aria-label="Search">
+                   oninput="SearchProduct(this.value)"
+                   class="form-control mr-sm-2 "
+                   type="search"
+                   placeholder="Buscar productos"
+                   aria-label="Search">
         </div>
     </div>
 
@@ -93,7 +93,7 @@
         </div>
 
         <!--Save and 0 inventory buttons-->
-            
+
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-outline-info">Agregar todos </button>
             <button type="button" class="btn btn-outline-danger">Quitar todos</button>
@@ -101,23 +101,38 @@
         <button type="button" class="btn btn-outline-success" onclick="PredictProducts()" style="margin-left:82vh;">Predecir</button>
     </div>
 
-    <!--New Zero Invent modal-->
-
-    <div class="modal fade bd-example-modal-lg" id="ZeroInventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Predict Products Modal -->
+    <div class="modal fade bd-example-modal-lg" id="PredictProductsModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Deseas continuar?</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"> Productos Predecidos </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Si continuas con la operación las unidades de todos los productos quedarán en 0 y esta operación no puede deshacerse.
+                    <table class="table tableHeader">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="min-width:110px;max-width:110px"> Producto </th>
+                                <th scope="col" style="min-width:110px;max-width:110px"> Unidades Predecidas </th>
+                                <th scope="col" style="min-width:110px;max-width:110px"> Mes Predecido </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="responsiveScrollProducts">
+                        <table class="table">
+                            <tbody id="PredictProductsTableBody">
+                                <!-- Product Predicted Name -->
+                                <!-- Product Predicted Value -->
+                                <!-- Product Predicted Date -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="CloseModal()" class="btn btn-outline-danger my-2 my-sm-0 "> Cancelar </button>
-                    <button onclick="StockZero()" class="btn btn-outline-success my-2 my-sm-0"> Continuar </button>
+                    <button data-dismiss="modal" class="btn btn-outline-success my-2 my-sm-0"> Ok </button>
                 </div>
             </div>
         </div>

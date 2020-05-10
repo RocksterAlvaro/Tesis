@@ -83,8 +83,8 @@ VALUES
 	'18b7c42b-5929-4cb8-9c26-be49472a2934', -- ID
 	'Manzana Verde', -- ProductName
 	20, -- ProductStock
-	200, -- ProductPrice
-	120, -- ProductCost
+	1500, -- ProductPrice
+	700, -- ProductCost
 	1 -- ProductActive
 ),
 (
@@ -92,8 +92,8 @@ VALUES
 	'd0cad872-1373-4709-8874-4a0526a93fcd', -- ID
 	'Manzana Roja', -- ProductName
 	10, -- ProductStock
-	150, -- ProductPrice
-	120, -- ProductCost
+	1300, -- ProductPrice
+	500, -- ProductCost
 	1 -- ProductActive
 ),
 (

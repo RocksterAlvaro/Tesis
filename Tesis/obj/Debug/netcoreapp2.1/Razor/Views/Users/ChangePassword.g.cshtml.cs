@@ -62,7 +62,7 @@ using Tesis;
             WriteLiteral("\r\n<div class=\"container\" style=\"margin-top:70px; margin-bottom:30vh\">\r\n    <div style=\"margin-top:30vh\">\r\n        <div class=\"text-center\">\r\n            ");
             EndContext();
             BeginContext(252, 2066, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2ad4161bb161406a97487824b62c035f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e93d180f0dd34a56912c8483d2a5dfc4", async() => {
                 BeginContext(323, 1988, true);
                 WriteLiteral(@"
 

@@ -26,8 +26,6 @@ function Sell() {
         // Create a variable to save the product id of the edit products
         var NewProductStockId = "#ProductStock" + i;
         var NewProductStock = parseInt($(NewProductStockId).val());
-
-        console.log(NewProductStock);
         
         // Check if new stock is non negative, is an integer
         if (
@@ -160,8 +158,7 @@ function ModifyStock() {
         // Create a variable to save the product id of the edit products
         var NewProductStockId = "#ProductStock" + i;
         var NewProductStock = parseInt($(NewProductStockId).val());
-        console.log(NewProductStock);
-        console.log(MovementProductsList[i].ProductStock);
+
         if ((InOrOutRadioBtn == "Out" &&
             MovementProductsList[i].ProductStock < NewProductStock) ||
             (!Number.isInteger(NewProductStock) ||
@@ -708,7 +705,7 @@ function StockInOutDetails(SpecificMovementId, MovementIndex) {
             // Set to an array the latest entries of stock in out
             var SpecificMovementProducts = Array.from(JSON.parse(Response));
 
-            console.log(SpecificMovementProducts);
+            //console.log(SpecificMovementProducts);
 
             // Empty the table body
             $("#MovementDetails").empty();
@@ -743,7 +740,9 @@ function CheckPassword() {
     }
 }
 
-function PredictProducts(DateToPredict) {
+function PredictProducts(/*DateToPredict*/) {
+    var DateToPredict = "04/04/2020";
+
     // Make the AJAX request to get last 12 months sells of products
     $.ajax({
         type: "GET",
@@ -767,12 +766,12 @@ function PredictProducts(DateToPredict) {
 
             //console.log("ReturnedList: ", ProductsToPredictList);
 
-            DateToPredict;
-
             for (var i = 0; i < MovementProductsList.length; i++) {
                 CleanProductsToPredictList[i] = [];
                 CleanProductsToPredictList[i].Id = MovementProductsList[i].Id;
                 CleanProductsToPredictList[i].ProductName = MovementProductsList[i].ProductName;
+                CleanProductsToPredictList[i].ProductPrice = MovementProductsList[i].ProductPrice;
+                CleanProductsToPredictList[i].ProductCost = MovementProductsList[i].ProductCost;
 
                 for (var j = 0; j < ProductsToPredictList.length; j++) {
 
@@ -797,17 +796,14 @@ function PredictProducts(DateToPredict) {
                 }
             }
 
-            console.log("Clean list: ", CleanProductsToPredictList);
-
-            //for (var j = 0; j < MovementProductsList.length; j++) {
-
-            nerualNetwork(CleanProductsToPredictList);
+            NeuralNetwork(CleanProductsToPredictList, DateToPredict);
             
         }
     });
 }
 
-function nerualNetwork(CleanProductsToPredictList) {
+function NeuralNetwork(CleanProductsToPredictList, DateToPredict) {
+    /*
     console.log(CleanProductsToPredictList[0][5].StockChange);
     console.log(CleanProductsToPredictList[0][6].StockChange);
     console.log(CleanProductsToPredictList[0][7].StockChange);
@@ -820,11 +816,12 @@ function nerualNetwork(CleanProductsToPredictList) {
     console.log(CleanProductsToPredictList[0][2].StockChange);
     console.log(CleanProductsToPredictList[0][3].StockChange);
     console.log(CleanProductsToPredictList[0][4].StockChange);
+    */
 
     var nnResults = [];
 
     for (var i = 0; i < MovementProductsList.length; i++) {
-        console.log(MovementProductsList.length + "nep");
+        //console.log(MovementProductsList.length + "nep");
 
         var highestSell = 0;
 
@@ -833,21 +830,23 @@ function nerualNetwork(CleanProductsToPredictList) {
                 highestSell = CleanProductsToPredictList[i][nep].StockChange;
             }
         }
-        console.log("Nep sold " + highestSell + " wow nep is amazing ^^");
+
+        //console.log("Nep sold " + highestSell + " wow nep is amazing ^^");
+
         //Training and normalize Data
         const trainingData = [];
         //May i'll have to change the order
         for (var j = 4; j > 4 - 12; j--) {
             if (j > 0) {
                 trainingData.push({ "soldStock": CleanProductsToPredictList[i][j].StockChange, "price": 1 });
-                console.log(j + " nepuuuuu");
+                //console.log(j + " nepuuuuu");
             } else {
                 trainingData.push({ "soldStock": CleanProductsToPredictList[i][j + 12].StockChange, "price": 1 });
-                console.log(j + " nepuuuuu");
+                //console.log(j + " nepuuuuu");
             }
         }
 
-        console.log(trainingData);
+        //console.log(trainingData);
 
         const scaledData = trainingData.map(n => normalizeData(n, highestSell));
         // console.log(trainingDataVII[0]);
@@ -855,7 +854,7 @@ function nerualNetwork(CleanProductsToPredictList) {
         const trainingDataVII = [
             scaledData.slice(0, 12)
         ];
-        console.log(trainingDataVII[0]);
+        //console.log(trainingDataVII[0]);
 
        
 
@@ -869,18 +868,18 @@ function nerualNetwork(CleanProductsToPredictList) {
         //Train the NepUral Network
         neuralNetwork.train(trainingDataVII, {
             learningRate: 0.005,
-            errorThresh: 0.002,
-            log: (stats) => console.log(stats)
+            errorThresh: 0.002/*,
+            log: (stats) => console.log(stats)*/
         });
 
         //Run the NN
         nnResults[i]= neuralNetwork.forecast(
             [trainingDataVII], 1).map(n => desnormalizeData(n, highestSell));
 
-        console.log(nnResults[i], MovementProductsList.length);
+        //console.log(nnResults[i], MovementProductsList.length);
 
     }
-    eoq(nnResults);
+    eoq(nnResults, CleanProductsToPredictList, DateToPredict);
 }
 
 
@@ -898,9 +897,50 @@ function desnormalizeData(object, highestSell) {
     };
 }
 
-function eoq(nnResults,porductList){
+function eoq(nnResults, ProductList, DateToPredict){
     var optimalQuanty = [];
-    for (var i = 0; i < porductList; i++) {
-       // optimalQuanty[i] = Math.sqrt((2 * DEMANDA *COSTO DE ORDENAR)/COSTO DE ALAMCENAR);
+
+    // Testing
+    /*
+    console.log("nnResults - Sold Stock", nnResults[0][0].soldStock);
+    console.log("ProductList - Product Cost", ProductList[0].ProductCost);
+    console.log("ProductList - Product Cost * 0.000694", (ProductList[0].ProductCost * 0.000694));
+    
+    */
+
+    console.log("Date To Predict (eoq)", DateToPredict);
+
+    // Empty the table body
+    $("#PredictProductsTableBody").empty();
+
+    for (var i = 0; i < ProductList.length; i++) {
+
+        // Predict Formula
+        optimalQuanty[i] = Math.sqrt( (2 * nnResults[0][i].soldStock * ProductList[i].ProductCost) / (ProductList[i].ProductCost * 0.000694) );
+        // optimalQuanty[i] = Math.sqrt((2 * DEMANDA *COSTO DE ORDENAR)/COSTO DE ALAMCENAR);
+
+        var MonthToPredictString = DateToPredict.slice(3, 5);
+
+        var MonthToPredictInt = parseInt(MonthToPredictString);
+
+        if (MonthToPredictInt >= 12) {
+            MonthToPredictInt = "1";
+        } else {
+            MonthToPredictInt += 1;
+        }
+
+        //console.log("Month", MonthToPredict);
+
+        // Modal values
+        // Add each product
+        $("<tr id=\"Product" + i + "\">" +
+            "<th scope=\"row\" style=\"min-width:50px;max-width:50px\">" + ProductList[i].ProductName + "</th >" +
+            "<td>" + Math.floor(optimalQuanty[i]) + "</td>" +
+            "<td>" + MonthToPredictInt + "</td>" +
+            "</tr>").appendTo("#PredictProductsTableBody");
     }
+
+    $("#PredictProductsModal").modal();
+
+    console.log("optimalQuanty", optimalQuanty);
 }
