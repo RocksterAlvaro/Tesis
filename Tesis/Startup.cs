@@ -30,7 +30,7 @@ namespace Tesis
         {
             // Use db context
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AppDBContextAzure")));
+            options.UseSqlServer(Configuration.GetConnectionString("AppDbContext")));
 
             // Use identity
             services.AddIdentity<AppUser, IdentityRole>()
@@ -95,8 +95,7 @@ namespace Tesis
             }
             else
             {
-                app.UseDeveloperExceptionPage();
-                //app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseMvc(routes =>

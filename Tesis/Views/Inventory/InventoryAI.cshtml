@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewData["Title"] = "InventoryAI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container anythingElseContent">
+    <br />
+    <h1>Predictor de inventario</h1>
+
+    <br />
+
+    <div class="form-row">
+
+        <div class="inner-form">
+            <div class="input-field first-wrap">
+                <div class="svg-wrapper">
+                    <img src="~/images/icons/search.svg" width="20" height="20">
+                </div>
+                <input id="SearchBar"
+                       oninput="SearchProduct(this.value)"
+                       class="col-md-12"
+                       type="search"
+                       placeholder="Buscar productos"
+                       aria-label="Search">
+            </div>
+        </div>
+    </div>
+
+    <br />
+    
+    <div class="form-row">
+
+        <!--Left table-->
+        <div class="form-group col-md-6 ">
+            <h4>Productos</h4>
+            <table class="table tableHeader">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col" class="text-center">Precio</th>
+                        <th scope="col" class="text-center">Unidades</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="responsiveScroll">
+                <table class="table">
+                    <tbody id="SearchProducts">
+                        <tr id="ProductList">
+                            <th scope="row" style="height:38vh; text-align:justify;">
+                            <td colspan="3">Ninguna busqueda realizada</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+
+
+        <!--Right table-->
+        <div class="form-group col-md-6">
+            <h4>Productos a predecir</h4>
+            <table class="table tableHeader">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col" class="text-center"> Unidades actuales </th>
+                        <th scope="col" class="text-center"> Costo de pedido</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="responsiveScroll">
+                <table class="table">
+
+                    <tbody id="MovementProducts">
+                        <tr>
+                            <th scope="row" style="height:38vh">
+                            <td colspan="3">No se ha añadido ningún producto</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+
+        <!--Save and 0 inventory buttons-->
+        <div class="form-group offset-11">
+            <button type="button" class="btn btn-outline-success" onclick="PredictProducts()">Predecir</button>
+            </div>
+    </div>
+
+        <!-- Predict Products Modal -->
+        <div class="modal fade bd-example-modal-lg" id="PredictProductsModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLongTitle"> Productos Predecidos </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table tableHeader">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style=""> Producto </th>
+                                    <th scope="col" style=""> Demanda predicha </th>
+                                    <th scope="col" style=""> Inventario Optimo </th>
+                                    <th scope="col" style=""> Mes Predecido </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="responsiveScrollProducts">
+                            <table class="table">
+                                <tbody id="PredictProductsTableBody">
+                                    <!-- Product Predicted Name -->
+                                    <!-- Product Predicted Value -->
+                                    <!-- Product Predicted Date -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-outline-success my-2 my-sm-0"> Ok </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invalid Values Modal -->
+        <div id="InvalidValuesModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <button onclick="CloseModal()"> x </button>
+
+                <span class="close">x</span>
+
+                <p>
+                    Alguno de los valores ingresados es invalido.
+                    <br>
+                    Por favor verifique los valores.
+                </p>
+
+                <button onclick="CloseModal()" class="btn btn-outline-success my-2 my-sm-0"> Entendido </button>
+
+            </div>
+        </div>
+    </div>
+
+<script>
+
+
+
+</script>

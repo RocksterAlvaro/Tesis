@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewData["Title"] = "SellMain";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="anythingElseContent" style="margin-left:500px" >
+    <br />
+    <div class="form-row">
+
+        <div class="input-group col-md-12">
+            <div class="inner-form">
+                <div class="input-field first-wrap">
+                    <div class="svg-wrapper">
+                        <img src="~/images/icons/search.svg" width="20" height="20">
+                    </div>
+                    <input id="SearchBar"
+                           oninput="SearchProduct(this.value)"
+                           class="col-md-10"
+                           type="search"
+                           placeholder="Buscar productos"
+                           aria-label="Search">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+
+    <h4> &nbsp Lista de productos</h4>
+
+    <br />
+    <div class="sellingResponsiveScroll">
+        <div class="form-row" id="SearchProducts">
+
+            <!-- Search Products -->
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Update # units without using +/- buttons
+    function ChangeUnitsManually(ProductIndex) {
+        //Foolish trick to make this no Nep thing works
+        var ConcatIdWithRespectiveCode = "ProductUnits" + ProductIndex;
+        var ConvertToVariable = eval(ConcatIdWithRespectiveCode);
+        //console.log(b.value);
+
+        totalUnits2 += (ConvertToVariable.value - totalUnits[ProductIndex]);
+        totalUnits[ProductIndex] = ConvertToVariable.value;
+
+        UpdateLists();
+    }
+</script>
+
+<!-- Selling Panel -->
+<div class="leftpane">
+    <div class="order-scroller">
+        <div class="order">
+            <div class="orderline" id="MovementProducts">
+                <ul>
+                    <li id="OnSaleProducts" class="orderline">
+                        <!-- Selling Products -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Panel -->
+<div class="minipane">
+    <div class="subwindow-container">
+        <div class="subwindow-container-fix pads">
+            <div class="container">
+                <br />
+                <center><h4>Resumen de la venta</h4></center>
+                <span class="product-name">Total de la venta</span>
+                <span class="price" id="TotalPrice"> 0$ </span>
+                <span class="product-name">Total de articulos</span>
+                <span class="price" id="TotalUnits"> 0 </span>
+                <div class="justify-content-md-center">
+                    <br />
+
+                    <button type="button"
+                            class="btn btn-outline-danger totalButtons offset-2"
+                            data-toggle="modal"
+                            data-target="#CancelSellModal">
+                        Cancelar
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-outline-success totalButtons"
+                            data-toggle="modal"
+                            data-target="#ConfirmModal">
+                        Vender
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Selling confirmation modal-->
+<div class="modal fade bd-example-modal-lg" id="ConfirmModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle"> Confirmacion de venta </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro de realizar la venta?
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-outline-danger my-2 my-sm-0"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    No
+                </button>
+
+                <button onclick="Sell()"
+                        class="btn btn-outline-success my-2 my-sm-0"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    Sí
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Cancel sell modal-->
+<div class="modal fade bd-example-modal-lg" id="CancelSellModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle"> Cancelar venta </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro que deseas cancelar la venta?, todos los productos en la lista de ventas serán retirados y esta acción no se puede deshacer.
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-outline-danger my-2 my-sm-0"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    No
+                </button>
+
+                <button onclick="CancelSell()"
+                        class="btn btn-outline-success my-2 my-sm-0"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    Sí
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Invalid Values Modal -->
+<div class="modal fade bd-example-modal-lg" id="InvalidValueModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!-- Modal content -->
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">Error, datos digitados no validos</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                El valor de unidades digitado en alguno de los productos no es valido, asegurate de que estos valores: <br /><br />
+                -Sean numerericos <b>POSITIVOS</b> (1, 2, 30, 60, 1000, etc).<br />
+                -No contengan caracteres especiales (-, *, +, !, etc).<br />
+                -Asegurese que la cantidad de productos en inventario sea menor o igual a la cantidad que hay registrada en el sistema
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-info my-2 my-sm-0" data-dismiss="modal" aria-label="Close"> Cerrar </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    .footer {
+        display: none;
+    }
+
+    .body-content {
+        overflow-x: hidden;
+    }
+</style>

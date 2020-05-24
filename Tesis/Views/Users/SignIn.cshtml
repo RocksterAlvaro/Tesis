@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container loginContent">
+    <div class="extraMargin">
+        <div class="text-center">
+            <h1>Registrar Usuario</h1>
+            <br /><br />
+        </div>
+
+        <form onsubmit="return CheckPassword()" method="POST" action="/Users/CreateUser">
+            <div class="form-row">
+                <div class="form-group col-md-4 center-block">
+                </div>
+                <div class="form-group col-md-4 center-block">
+                    <label for="UserName">Usuario</label>
+                    <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Usuario">
+                </div>
+
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4 center-block">
+                </div>
+                <div class="form-group col-md-4 center-block">
+                    <label for="Email">E-Mail</label>
+                    <input type="text" class="form-control" id="Email" name="Email" placeholder="Correo Electronico">
+                </div>
+
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4 center-block">
+                </div>
+                <div class="form-group col-md-4 center-block">
+                    <label for="PhoneNumber"> Telefono Celular </label>
+                    <input type="number" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Telefono Celular">
+                </div>
+
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="Password">Contraseña</label>
+                    <input type="password" class="form-control" id="Password" name="Password" placeholder="Contraseña">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="ConfirmPassword">Confirmar contraseña</label>
+                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirmar constraseña">
+                </div>
+
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="userType">Tipo de usuario</label>
+                    <select id="UserRole" name="UserRole" class="form-control">
+                        <option selected></option>
+                        @if(User.IsInRole("ShopAdmin")){
+                            <option value="ShopAdmin"> Jefe de Negocio </option>
+                        }else if(User.IsInRole("Admin"))
+                        {
+                            <option value="Admin"> Administrador </option>
+                            <option value="ShopAdmin"> Jefe de Negocio </option>
+                        }
+                        <option value="Seller"> Vendedor </option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-5">
+
+                </div>
+                <div class="form-group col-md-1">
+                    <a href="/index" class="btn btn-danger">Cancelar</a>
+                </div>
+                <div class="form-group col-md-1">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Create User Modal -->
+<div class="modal fade" id="CreateUserModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ModalTitle"></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <p> Creacion de usuario fallida </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Successful != null && !ViewBag.Successful)
+{
+    <script>
+        $('#CreateUserModal').modal('show');
+    </script>
+}
+
+<!-- Passwords dont match Modal -->
+<div class="modal fade" id="CheckPasswordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ModalTitle"></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <p> Las contraseñas no coinciden </p>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+﻿@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container anythingElseContent">
+        <br />
+        <h1> Productos </h1>
+        <div class="form-row">
+            <div class="form-group col-md-7">
+                <div class="inner-form">
+                    <div class="input-field first-wrap">
+                        <div class="svg-wrapper">
+                            <img src="~/images/icons/search.svg" width="20" height="20">
+                        </div>
+                        <input id="SearchBar"
+                               oninput="SearchProduct(this.value)"
+                               class="col-md-10"
+                               type="search"
+                               placeholder="Buscar productos"
+                               aria-label="Search">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group col-md-3 offset-2">
+                <button onclick="OpenProductModal('CreateProductModal', -1)"
+                        type="button"
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#ProductModal">
+                    Nuevo Producto
+                </button>
+                <a class="btn btn-success" href="/Inventory/InventoryMain">Mov Inventario</a>
+            </div>
+
+
+
+        </div>
+        <!--
+    <div class="form-row">
+
+        <div class="form-group offset-9 col-md-3">
+            <select id="userType" class="form-control" style=" font-weight:bolder;">
+                <option selected>Ver productos Activos</option>
+                <option>Ver productos Inactivos</option>
+                <option>Ver todos los productos</option>
+            </select>
+        </div>
+
+    </div>
+        -->
+        <br />
+        <table class="table tableHeader">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:112px"> Producto </th>
+                    <th scope="col" style="width:95px"> Precio </th>
+                    <th scope="col" style="width:50px"> Unidades </th>
+                    <th scope="col" style="width:80px"> Costo de pedido </th>
+                    <th scope="col" style="width:50px">  </th>
+                    <th scope="col" style="width:50px">  </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="responsiveScrollProducts">
+            <table class="table">
+                <tbody id="SearchProducts">
+                    <tr id="ProductList">
+                        <th scope="row" style="height:43vh; text-align:justify;">
+                        <td colspan="3">Ninguna busqueda realizada</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+<!-- Product Modal -->
+<div class="modal fade" id="ProductModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ModalTitle"></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="ProductForm" method="POST">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-8 offset-2">
+                            <label for="ProductName">Nombre del producto</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="ProductName"
+                                   name="ProductName"
+                                   placeholder="Nombre del producto"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4 center-block offset-2">
+                            <label for="ProductPrice">Precio</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="ProductPrice"
+                                   name="ProductPrice"
+                                   placeholder="Precio del producto"
+                                   required>
+                        </div>
+                        <div class="form-group col-md-4 center-block">
+                            <label for="ProductCost">Costo de pedido</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="ProductCost"
+                                   name="ProductCost"
+                                   placeholder="Costo de pedido"
+                                   required>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-8 center-block offset-2">
+                            <label id="ProductStockTitle" for="ProductStock">Inventario inicial</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="ProductStock"
+                                   name="ProductStock"
+                                   placeholder="Unidades iniciales del producto"
+                                   required>
+                        </div>
+
+                    </div>
+                    <hr />
+
+                    <input type="hidden" id="ProductId" name="ProductId" value="" />
+
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="margin-left:380px">Cerrar</button>
+                    <button id="SuccessModalButton" type="submit" class="btn btn-outline-success"></button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
