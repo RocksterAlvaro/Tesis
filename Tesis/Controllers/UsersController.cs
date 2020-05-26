@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
@@ -188,11 +189,18 @@ namespace Tesis.Controllers
         // Send Email
         public void SendEmail(string EmailTemplate, string link, AppUser CurrentUser, string Subject)
         {
+            // Gets the html to send via email
+            string templatePath = "http://tesis20200510041115.azurewebsites.net/templates/emailTemplate.html";
 
-            string htmlBody = "";
+            // Get the template from the Web API
+            var webClient = new WebClient();
+            string htmlTemplate = webClient.DownloadString(templatePath);
 
-            //Html template path
-            htmlBody = System.IO.File.ReadAllText("../Tesis/wwwroot/templates/emailTemplate.html");
+            // Html template path
+            string htmlBody = htmlTemplate;
+
+            // Local Path
+            //htmlBody = System.IO.File.ReadAllText("../Tesis/wwwroot/templates/emailTemplate.html");
 
             //Pass data to the template (user name and password recovery link)
 
@@ -221,18 +229,18 @@ namespace Tesis.Controllers
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
             smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new System.Net.NetworkCredential("rocksteralvaro@gmail.com", "deadrockisalie07@");
+            smtpClient.Credentials = new System.Net.NetworkCredential("NepWheels@gmail.com", "stardustgirl1");
             smtpClient.Host = "smtp.gmail.com";
 
             MailMessage Message = new MailMessage(
-                from: "rocksteralvaro@gmail.com",
+                from: "NepWheels@gmail.com",
                 to: CurrentUser.Email,
                 subject: Subject,
                 body: FinalHtml
                 );
 
             //Show "Tesis Pos" as reminent instead of rocksteralvaro 
-            Message.From = new MailAddress("rocksteralvaro@gmail.com", "Tesis POS");
+            Message.From = new MailAddress("NepWheels@gmail.com", "Tesis POS");
             Message.IsBodyHtml = true;
 
             smtpClient.Send(Message);

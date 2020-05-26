@@ -30,7 +30,7 @@ namespace Tesis
         {
             // Use db context
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AppDbContext")));
+            options.UseSqlServer(Configuration.GetConnectionString("AppDbContextAzure")));
 
             // Use identity
             services.AddIdentity<AppUser, IdentityRole>()
@@ -89,6 +89,7 @@ namespace Tesis
             app.UseHttpsRedirection();
             app.UseAuthentication();
 
+            /* Use Error page when production
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -97,6 +98,10 @@ namespace Tesis
             {
                 app.UseExceptionHandler("/Error");
             }
+            */
+
+            // User exception oage even in production
+            app.UseDeveloperExceptionPage();
 
             app.UseMvc(routes =>
             {

@@ -1,0 +1,13 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css",
+      "wwwroot/css/inventory.css",
+      "wwwroot/css/layout.css",
+      "wwwroot/css/login.css",
+      "wwwroot/css/products.css",
+      "wwwroot/css/selling.css"
+    ]
+  }
+]
