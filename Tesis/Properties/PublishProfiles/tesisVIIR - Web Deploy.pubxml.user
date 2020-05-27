@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAUjYXi07/6kuv0uzs0rdvcwAAAAACAAAAAAAQZgAAAAEAACAAAAD2T54cIzJCUSV0kgnjJG2QIoFDrU6gzb3hFHaCLkn8KgAAAAAOgAAAAAIAACAAAAAsYayEnvDsV/ZLkF/Y1dm7WrQFwUe9S9wE5zt347ZfqYAAAADWYQ6iCDDTAA5Rzh/GR0o30zsiDE21RY74u+881grHfjOsoQy4DA8OFNKKFKmYnS3M6Vxn/sOV6Vebrou/bDQiBIeP2OYFVAbZ0z3ZjI33CIBGZ1ceHePJeCVdGlWM12NDhO4AGaDQf//jpryUZaGY6gGd/0B010ROjWpysBWFQ0AAAACV4GApRuAx8xTzc/jB/2FgvWFdNFMOLE3Ux3t5mf5AeLZCG9OqBP7Wu5ASCgE35DF4ZsqDElQ4yy8BHmLCbZU5</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="AppDBContextAzure">
+      <Value>Server=tcp:tesisdbserver.database.windows.net,1433%3bInitial Catalog=TesisDB%3bPersist Security Info=False%3bUser ID=user%3bPassword=Arkamcity5%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="IIS Web Application Name" description="" value="Tesis20200510041115" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Rockster_Laptop\\Desktop\\Tesis\\Tesis\\obj\\Release\\netcoreapp2\.1\\PubTmp\\Out\\$" />
+  <parameter name="IIS Web Application Name" description="" value="Tesis20200527113739" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Saito\\Desktop\\TesisNoire\\AzureNoire\\Tesis-master\\Tesis\\obj\\Release\\netcoreapp2\.1\\PubTmp\\Out\\$" />
   </parameter>
 </parameters>

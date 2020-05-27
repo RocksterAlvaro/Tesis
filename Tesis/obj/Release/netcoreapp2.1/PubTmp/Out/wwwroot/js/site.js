@@ -918,11 +918,11 @@ function eoq(nnResults, ProductList, DateToPredict){
     $("#PredictProductsTableBody").empty();
 
     for (var i = 0; i < ProductList.length; i++) {
-        console.log(nnResults[0][0].soldStock);
-        console.log(nnResults[1][0].soldStock);
+        //console.log(nnResults[0][0].soldStock);
+        //console.log(nnResults[1][0].soldStock);
         // Predict Formula
         //vuestra pinche madre alvaro
-        optimalQuanty[i] = Math.sqrt((2 * nnResults[i][0].soldStock * ProductList[i].ProductCost) / (ProductList[i].ProductPrice * 0.02080/*0.000694*/));
+        optimalQuanty[i] = Math.sqrt((2 * nnResults[i][0].soldStock * ProductList[i].ProductCost) / (ProductList[i].ProductPrice * /*0.02080*/0.000694));
         //console.log(ProductList[i].ProductCost);
         //console.log(ProductList[i].ProductPrice);
         // optimalQuanty[i] = Math.sqrt((2 * DEMANDA *COSTO DE ORDENAR)/COSTO DE ALAMCENAR);

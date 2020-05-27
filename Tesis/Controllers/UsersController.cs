@@ -190,7 +190,7 @@ namespace Tesis.Controllers
         public void SendEmail(string EmailTemplate, string link, AppUser CurrentUser, string Subject)
         {
             // Gets the html to send via email
-            string templatePath = "http://tesis20200510041115.azurewebsites.net/templates/emailTemplate.html";
+            string templatePath = "http://tesis20200527113739.azurewebsites.net/templates/emailTemplate.html";
 
             // Get the template from the Web API
             var webClient = new WebClient();
@@ -229,18 +229,18 @@ namespace Tesis.Controllers
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
             smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new System.Net.NetworkCredential("NepWheels@gmail.com", "stardustgirl1");
+            smtpClient.Credentials = new System.Net.NetworkCredential("nepwheels2@gmail.com", "neptunebreak");
             smtpClient.Host = "smtp.gmail.com";
 
             MailMessage Message = new MailMessage(
-                from: "NepWheels@gmail.com",
+                from: "nepwheels2@gmail.com",
                 to: CurrentUser.Email,
                 subject: Subject,
                 body: FinalHtml
                 );
 
             //Show "Tesis Pos" as reminent instead of rocksteralvaro 
-            Message.From = new MailAddress("NepWheels@gmail.com", "Tesis POS");
+            Message.From = new MailAddress("nepwheels2@gmail.com", "Tesis POS");
             Message.IsBodyHtml = true;
 
             smtpClient.Send(Message);
