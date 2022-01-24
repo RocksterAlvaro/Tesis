@@ -1,4 +1,6 @@
-# Tesis
+# Tesis Alvaro Lopez y Nicolas Bernal
+
+Titulo del proyecto: DESARROLLO DE UN PROTOTIPO DE SISTEMA DE FACTURACIÓN E INVENTARIOS PARA TIENDAS MINORISTAS DE ROPA QUE MEDIANTE REDES NEURONALES MEJORE EL CONTROL DE INVENTARIOS
 
 Tesis de Alvaro Lopes y Nicolas Bernal para el titulo de Ingenieria de Sistemas en la Universidad Autonoma de Bucaramanga.
 
